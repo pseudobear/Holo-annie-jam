@@ -99,6 +99,24 @@ class MenuEntry {
 
     #endregion
 
+    #region Utils
+
+    /// <summary>
+    /// Determines whether or not the mouse is hovering over this menu entry. Needs screen to calculate size of entry
+    /// </summary>
+    public bool IsMouseHovering(InputManager input, MenuScreen screen) {
+        Point mousePoint = new Point(input.CurrentMouseState.X, input.CurrentMouseState.Y);
+        Rectangle entryBounds = new Rectangle(
+            (int)this.Position.X, 
+            (int)(this.Position.Y - this.GetHeight(screen) / 2), 
+            this.GetWidth(screen), 
+            this.GetHeight(screen)
+        );
+  
+        return entryBounds.Contains(mousePoint);
+    }
+    #endregion
+
     #region Update and Draw
 
 
@@ -141,6 +159,17 @@ class MenuEntry {
         SpriteFont font = screenManager.Font;
 
         Vector2 origin = new Vector2(0, font.LineSpacing / 2);
+
+        // OUTLINES FOR TESTING PURPOSES, SHOW MOUSEOVER BOUNDS
+        Texture2D pixel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
+        pixel.SetData(new Color[] { Color.DarkSlateGray });
+        Rectangle outline = new Rectangle(
+            (int)this.Position.X ,
+            (int)(this.Position.Y - this.GetHeight(screen)/2),
+            this.GetWidth(screen),
+            this.GetHeight(screen)
+        );
+        spriteBatch.Draw(pixel, outline, Color.Black);
 
         spriteBatch.DrawString(font, text, position, color, 0,
                                 origin, scale, SpriteEffects.None, 0);

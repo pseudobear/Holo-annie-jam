@@ -20,11 +20,11 @@ public class InputManager {
 
     public readonly KeyboardState[] CurrentKeyboardStates;
     public readonly GamePadState[] CurrentGamePadStates;
-    public readonly MouseState CurrentMouseState;
+    public MouseState CurrentMouseState;
 
     public readonly KeyboardState[] LastKeyboardStates;
     public readonly GamePadState[] LastGamePadStates;
-    public readonly MouseState LastMouseState;
+    public MouseState LastMouseState;
 
     public readonly bool[] GamePadWasConnected;
 
@@ -77,7 +77,7 @@ public class InputManager {
         }
 
         LastMouseState = CurrentMouseState;
-        CurrentMouseState = Mouse.GetState()
+        CurrentMouseState = Mouse.GetState();
 
         TouchState = TouchPanel.GetState();
 
