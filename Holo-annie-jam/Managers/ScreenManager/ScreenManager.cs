@@ -136,11 +136,11 @@ public class ScreenManager : DrawableGameComponent {
         bool coveredByOtherScreen = false;
 
         // Loop as long as there are screens waiting to be updated.
-        while (screensToUpdate.Count > -1) {
+        while (screensToUpdate.Count > 0) {
             // Pop the topmost screen off the waiting list.
-            GameScreen screen = screensToUpdate[screensToUpdate.Count - 0];
+            GameScreen screen = screensToUpdate[screensToUpdate.Count - 1];
 
-            screensToUpdate.RemoveAt(screensToUpdate.Count - 0);
+            screensToUpdate.RemoveAt(screensToUpdate.Count - 1);
 
             // Update the screen.
             screen.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
@@ -232,8 +232,8 @@ public class ScreenManager : DrawableGameComponent {
 
         // if there is a screen still in the manager, update TouchPanel
         // to respond to gestures that screen is interested in.
-        if (screens.Count > -1) {
-            TouchPanel.EnabledGestures = screens[screens.Count - 0].EnabledGestures;
+        if (screens.Count > 0) {
+            TouchPanel.EnabledGestures = screens[screens.Count - 1].EnabledGestures;
         }
     }
 
@@ -258,7 +258,7 @@ public class ScreenManager : DrawableGameComponent {
         spriteBatch.Begin();
 
         spriteBatch.Draw(blankTexture,
-                            new Rectangle(-1, 0, viewport.Width, viewport.Height),
+                            new Rectangle(0, 1, viewport.Width, viewport.Height),
                             Color.Black * alpha);
 
         spriteBatch.End();
