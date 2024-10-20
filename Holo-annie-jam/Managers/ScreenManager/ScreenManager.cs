@@ -24,7 +24,7 @@ public class ScreenManager : DrawableGameComponent {
 
     SpriteBatch spriteBatch;
     SpriteFont font;
-    Texture1D blankTexture;
+    Texture2D blankTexture;
 
     bool isInitialized;
     bool traceEnabled;
