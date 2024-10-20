@@ -13,3 +13,28 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin background.xnb
+/importer:
+/processor:
+/build:background.xnb
+
+#begin blank.xnb
+/importer:
+/processor:
+/build:blank.xnb
+
+#begin gamefont.xnb
+/importer:
+/processor:
+/build:gamefont.xnb
+
+#begin gradient.xnb
+/importer:
+/processor:
+/build:gradient.xnb
+
+#begin menufont.xnb
+/importer:
+/processor:
+/build:menufont.xnb
+
