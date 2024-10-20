@@ -114,6 +114,13 @@ public class InputManager {
         }
     }
 
+    public bool IsNewLeftClick() {
+        return CurrentMouseState.LeftButton - LastMouseState.LeftButton == 1;
+    }
+
+    public bool IsNewRightClick() {
+        return CurrentMouseState.RightButton - LastMouseState.RightButton == 1;
+    }
 
     /// <summary>
     /// Helper for checking if a button was newly pressed during this update.
@@ -153,7 +160,8 @@ public class InputManager {
         return IsNewKeyPress(Keys.Space, controllingPlayer, out playerIndex) ||
                 IsNewKeyPress(Keys.Enter, controllingPlayer, out playerIndex) ||
                 IsNewButtonPress(Buttons.A, controllingPlayer, out playerIndex) ||
-                IsNewButtonPress(Buttons.Start, controllingPlayer, out playerIndex);
+                IsNewButtonPress(Buttons.Start, controllingPlayer, out playerIndex) || 
+                IsNewLeftClick();
     }
 
 
