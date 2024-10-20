@@ -171,7 +171,7 @@ public abstract class GameScreen {
     /// as possible with gestures to increase the accuracy of the gesture engine.
     /// For example, most menus only need Tap or perhaps Tap and VerticalDrag to operate.
     /// These gestures are handled by the ScreenManager when screens change and
-    /// all gestures are placed in the InputState passed to the HandleInput method.
+    /// all gestures are placed in the InputManager passed to the HandleInput method.
     /// </summary>
     public GestureType EnabledGestures {
         get { return enabledGestures; }
@@ -289,7 +289,7 @@ public abstract class GameScreen {
     /// is only called when the screen is active, and not when some other
     /// screen has taken the focus.
     /// </summary>
-    public virtual void HandleInput(InputState input) { }
+    public virtual void HandleInput(InputManager input) { }
 
 
     /// <summary>

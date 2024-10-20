@@ -66,7 +66,7 @@ abstract class MenuScreen : GameScreen {
     /// Responds to user input, changing the selected entry and accepting
     /// or cancelling the menu.
     /// </summary>
-    public override void HandleInput(InputState input) {
+    public override void HandleInput(InputManager input) {
         // Move to the previous menu entry?
         if (input.IsMenuUp(ControllingPlayer)) {
             selectedEntry--;
@@ -85,7 +85,7 @@ abstract class MenuScreen : GameScreen {
 
         // Accept or cancel the menu? We pass in our ControllingPlayer, which may
         // either be null (to accept input from any player) or a specific index.
-        // If we pass a null controlling player, the InputState helper returns to
+        // If we pass a null controlling player, the InputManager helper returns to
         // us which player actually provided the input. We pass that through to
         // OnSelectEntry and OnCancel, so they can tell which player triggered them.
         PlayerIndex playerIndex;

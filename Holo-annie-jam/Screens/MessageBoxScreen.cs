@@ -84,12 +84,12 @@ class MessageBoxScreen : GameScreen {
     /// <summary>
     /// Responds to user input, accepting or cancelling the message box.
     /// </summary>
-    public override void HandleInput(InputState input) {
+    public override void HandleInput(InputManager input) {
         PlayerIndex playerIndex;
 
         // We pass in our ControllingPlayer, which may either be null (to
         // accept input from any player) or a specific index. If we pass a null
-        // controlling player, the InputState helper returns to us which player
+        // controlling player, the InputManager helper returns to us which player
         // actually provided the input. We pass that through to our Accepted and
         // Cancelled events, so they can tell which player triggered them.
         if (input.IsMenuSelect(ControllingPlayer, out playerIndex)) {
