@@ -8,12 +8,10 @@
 #endregion
 
 #region Using Statements
-using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input.Touch;
-using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
 #endregion
 
 /// <summary>
@@ -92,8 +90,7 @@ abstract class MenuScreen : GameScreen {
 
         if (input.IsMenuSelect(ControllingPlayer, out playerIndex)) {
             OnSelectEntry(selectedEntry, playerIndex);
-        }
-        else if (input.IsMenuCancel(ControllingPlayer, out playerIndex)) {
+        } else if (input.IsMenuCancel(ControllingPlayer, out playerIndex)) {
             OnCancel(playerIndex);
         }
     }
@@ -136,7 +133,7 @@ abstract class MenuScreen : GameScreen {
         // Make the menu slide into place during transitions, using a
         // power curve to make things look more interesting (this makes
         // the movement slow down as it nears the end).
-        float transitionOffset = (float)Math.Pow(TransitionPosition, 2);
+        float transitionOffset = (float) Math.Pow(TransitionPosition, 2);
 
         // start at Y = 175; each X value is generated per entry
         Vector2 position = new Vector2(0f, 175f);
@@ -144,7 +141,7 @@ abstract class MenuScreen : GameScreen {
         // update each menu entry's location in turn
         for (int i = 0; i < menuEntries.Count; i++) {
             MenuEntry menuEntry = menuEntries[i];
-            
+
             // each entry is to be centered horizontally
             position.X = ScreenManager.GraphicsDevice.Viewport.Width / 2 - menuEntry.GetWidth(this) / 2;
 
@@ -203,7 +200,7 @@ abstract class MenuScreen : GameScreen {
         // Make the menu slide into place during transitions, using a
         // power curve to make things look more interesting (this makes
         // the movement slow down as it nears the end).
-        float transitionOffset = (float)Math.Pow(TransitionPosition, 2);
+        float transitionOffset = (float) Math.Pow(TransitionPosition, 2);
 
         // Draw the menu title centered on the screen
         Vector2 titlePosition = new Vector2(graphics.Viewport.Width / 2, 80);

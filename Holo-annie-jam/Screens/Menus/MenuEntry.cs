@@ -8,9 +8,9 @@
 #endregion
 
 #region Using Statements
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 #endregion
 
 /// <summary>
@@ -109,7 +109,7 @@ class MenuEntry {
         // When the menu selection changes, entries gradually fade between
         // their selected and deselected appearance, rather than instantly
         // popping to the new state.
-        float fadeSpeed = (float)gameTime.ElapsedGameTime.TotalSeconds * 4;
+        float fadeSpeed = (float) gameTime.ElapsedGameTime.TotalSeconds * 4;
 
         if (isSelected)
             selectionFade = Math.Min(selectionFade + fadeSpeed, 1);
@@ -127,8 +127,8 @@ class MenuEntry {
 
         // Pulsate the size of the selected menu entry.
         double time = gameTime.TotalGameTime.TotalSeconds;
-        
-        float pulsate = (float)Math.Sin(time * 6) + 1;
+
+        float pulsate = (float) Math.Sin(time * 6) + 1;
 
         float scale = 1 + pulsate * 0.05f * selectionFade;
 
@@ -159,7 +159,7 @@ class MenuEntry {
     /// Queries how wide the entry is, used for centering on the screen.
     /// </summary>
     public virtual int GetWidth(MenuScreen screen) {
-        return (int)screen.ScreenManager.Font.MeasureString(Text).X;
+        return (int) screen.ScreenManager.Font.MeasureString(Text).X;
     }
 
 
