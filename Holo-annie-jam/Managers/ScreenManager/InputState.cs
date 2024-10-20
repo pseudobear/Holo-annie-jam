@@ -71,8 +71,8 @@ public class InputState {
             LastKeyboardStates[i] = CurrentKeyboardStates[i];
             LastGamePadStates[i] = CurrentGamePadStates[i];
 
-            CurrentKeyboardStates[i] = Keyboard.GetState((PlayerIndex) i);
-            CurrentGamePadStates[i] = GamePad.GetState((PlayerIndex) i);
+            CurrentKeyboardStates[i] = Keyboard.GetState((PlayerIndex)i);
+            CurrentGamePadStates[i] = GamePad.GetState((PlayerIndex)i);
 
             // Keep track of whether a gamepad has ever been
             // connected, so we can detect if it is unplugged.
@@ -102,11 +102,12 @@ public class InputState {
             // Read input from the specified player.
             playerIndex = controllingPlayer.Value;
 
-            int i = (int) playerIndex;
+            int i = (int)playerIndex;
 
             return (CurrentKeyboardStates[i].IsKeyDown(key) &&
                     LastKeyboardStates[i].IsKeyUp(key));
-        } else {
+        }
+        else {
             // Accept input from any player.
             return (IsNewKeyPress(key, PlayerIndex.One, out playerIndex) ||
                     IsNewKeyPress(key, PlayerIndex.Two, out playerIndex) ||
@@ -128,11 +129,12 @@ public class InputState {
             // Read input from the specified player.
             playerIndex = controllingPlayer.Value;
 
-            int i = (int) playerIndex;
+            int i = (int)playerIndex;
 
             return (CurrentGamePadStates[i].IsButtonDown(button) &&
                     LastGamePadStates[i].IsButtonUp(button));
-        } else {
+        }
+        else {
             // Accept input from any player.
             return (IsNewButtonPress(button, PlayerIndex.One, out playerIndex) ||
                     IsNewButtonPress(button, PlayerIndex.Two, out playerIndex) ||

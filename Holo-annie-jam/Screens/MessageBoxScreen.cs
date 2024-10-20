@@ -8,10 +8,10 @@
 #endregion
 
 #region Using Statements
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 #endregion
 
 /// <summary>
@@ -49,8 +49,8 @@ class MessageBoxScreen : GameScreen {
     /// </summary>
     public MessageBoxScreen(string message, bool includeUsageText) {
         const string usageText = "\nA button, Space, Enter = ok" +
-                                    "\nB button, Esc = cancel";
-
+                                    "\nB button, Esc = cancel"; 
+        
         if (includeUsageText)
             this.message = message + usageText;
         else
@@ -98,7 +98,8 @@ class MessageBoxScreen : GameScreen {
                 Accepted(this, new PlayerIndexEventArgs(playerIndex));
 
             ExitScreen();
-        } else if (input.IsMenuCancel(ControllingPlayer, out playerIndex)) {
+        }
+        else if (input.IsMenuCancel(ControllingPlayer, out playerIndex)) {
             // Raise the cancelled event, then exit the message box.
             if (Cancelled != null)
                 Cancelled(this, new PlayerIndexEventArgs(playerIndex));
@@ -133,10 +134,10 @@ class MessageBoxScreen : GameScreen {
         const int hPad = 32;
         const int vPad = 16;
 
-        Rectangle backgroundRectangle = new Rectangle((int) textPosition.X - hPad,
-                                                        (int) textPosition.Y - vPad,
-                                                        (int) textSize.X + hPad * 2,
-                                                        (int) textSize.Y + vPad * 2);
+        Rectangle backgroundRectangle = new Rectangle((int)textPosition.X - hPad,
+                                                        (int)textPosition.Y - vPad,
+                                                        (int)textSize.X + hPad * 2,
+                                                        (int)textSize.Y + vPad * 2);
 
         // Fade the popup alpha during transitions.
         Color color = Color.White * TransitionAlpha;
