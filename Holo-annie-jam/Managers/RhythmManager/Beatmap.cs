@@ -16,9 +16,7 @@ public class Beatmap {
 	/// </summary>
 	public ImmutableArray<RhythmEvent> RhythmEvents { get; }
 
-	private Beatmap(List<RhythmEvent> rhythmEvents) {
-		this.RhythmEvents = [.. rhythmEvents];
-	}
+	private Beatmap(List<RhythmEvent> rhythmEvents) => this.RhythmEvents = [.. rhythmEvents];
 
 	/// <summary>
 	/// Loads a beatmap from a binary file with the given filename

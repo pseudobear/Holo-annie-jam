@@ -3,6 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+/// <summary>
+/// Creates a new beatmap player with the given visible timespan, beatmap, and song. 
+/// </summary>
+/// <remarks>
+/// Both the beatmap and the song should have a few seconds of delay at the start, greater than or equal to the visible
+/// timespan.
+/// </remarks>
 public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Song song) {
 
     // TODO: make this a more reasonable number
@@ -16,26 +23,38 @@ public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Song song
 	/// </summary>
 	public long VisibleTimespanTicks { get; } = visibleTimespanTicks;
 
-    private readonly Beatmap _beatmap = beatmap;
+    /// <summary>
+    /// Whether the beatmap is currently in play
+    /// </summary>
+	public bool Playing { get; private set; } = false;
+
+	/// <summary>
+	/// Whether the beatmap is currently paused
+	/// </summary>
+	public bool Paused { get; private set; } = false;
+
+	private readonly Beatmap _beatmap = beatmap;
     private readonly Song _song = song;
 
-    private bool playing = false;
-    private long startTick;
-    private bool paused = false;
-    private long pauseStartTick = 0;
     private int firstVisibleEventIdx;
     private int nextVisibleEventIdx;
 
-    public BeatmapPlayer(Beatmap beatmap, Song song) : this(DEFAULT_VISIBLE_TIMESPAN_TICKS, beatmap, song) { }
+	/// <summary>
+	/// Creates a new beatmap player with the default visible timespan and given beatmap and song. 
+	/// </summary>
+	/// <remarks>
+	/// Both the beatmap and the song should have a few seconds of delay at the start, greater than or equal to the
+	/// visible timespan.
+	/// </remarks>
+	public BeatmapPlayer(Beatmap beatmap, Song song) : this(DEFAULT_VISIBLE_TIMESPAN_TICKS, beatmap, song) { }
 
     /// <summary>
     /// Starts playing the beatmap
     /// </summary>
     public void Start() {
-        if (!this.playing) {
+        if (!this.Playing) {
 			this.Reset();
-			// delay start by the visible timespan, so that the beatmap always starts blank
-			this.startTick = DateTime.UtcNow.Ticks + this.VisibleTimespanTicks;
+            MediaPlayer.Play(_song);
         }
     }
 
@@ -43,33 +62,36 @@ public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Song song
     /// Pauses the beatmap
     /// </summary>
     public void Pause() {
-        if (!this.paused) {
-			this.paused = true;
-			this.pauseStartTick = DateTime.UtcNow.Ticks;
+        if (!this.Paused) {
+			this.Paused = true;
+            MediaPlayer.Pause();
         }
     }
 
     /// <summary>
-    /// Resumes the beatmap and gets an enumerable of currently visible rhythm events
+    /// Resumes the beatmap and calls <see cref="Update"/>
     /// </summary>
-    public IEnumerable<RhythmEvent> Resume() {
-        if (this.paused) {
-			this.paused = false;
-			// hacky way to ensure beatmap starts where it left off
-			this.startTick += DateTime.UtcNow.Ticks - this.pauseStartTick;
+    public IEnumerable<RhythmEvent>? Resume() {
+        if (this.Paused) {
+			this.Paused = false;
+            MediaPlayer.Resume();
         }
         return this.Update();
     }
 
     /// <summary>
-    /// Gets an enumerable of currently visible rhythm events
+    /// Gets an enumerable of currently visible rhythm events, or null if the beatmap is either already finished or not
+    /// currently playing
     /// </summary>
-    public IEnumerable<RhythmEvent> Update() {
-        long ticksElapsed = DateTime.UtcNow.Ticks - this.startTick;
-        while (this._beatmap.RhythmEvents[this.firstVisibleEventIdx].Tick < ticksElapsed) {
+    public IEnumerable<RhythmEvent>? Update() {
+        while (this._beatmap.RhythmEvents[this.firstVisibleEventIdx].Tick < MediaPlayer.PlayPosition.Ticks) {
 			this.firstVisibleEventIdx++;
+            if (this.firstVisibleEventIdx >= this._beatmap.RhythmEvents.Length) {
+                return null;
+            }
         }
-        while (this._beatmap.RhythmEvents[this.nextVisibleEventIdx].Tick < ticksElapsed + this.VisibleTimespanTicks) {
+        while (this.nextVisibleEventIdx < this._beatmap.RhythmEvents.Length &&
+               this._beatmap.RhythmEvents[this.nextVisibleEventIdx].Tick < MediaPlayer.PlayPosition.Ticks + this.VisibleTimespanTicks) {
 			this.nextVisibleEventIdx++;
         }
         return this._beatmap.RhythmEvents
@@ -78,12 +100,13 @@ public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Song song
     }
 
     /// <summary>
-    /// Resets the beatmap to a non-started state
+    /// Stops playing the beatmap, and resets the beatmap to a non-started state
     /// </summary>
     public void Reset() {
-		this.playing = false;
-		this.startTick = 0;
+		this.Playing = false;
+        this.Paused = false;
 		this.firstVisibleEventIdx = 0;
 		this.nextVisibleEventIdx = 0;
+        MediaPlayer.Stop();
     }
 }
