@@ -1,12 +1,3 @@
-#region File Description
-//-----------------------------------------------------------------------------
-// InputState.cs
-//
-// Microsoft XNA Community Game Platform
-// Copyright (C) Microsoft Corporation. All rights reserved.
-//-----------------------------------------------------------------------------
-#endregion
-
 #region Using Statements
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -22,7 +13,7 @@ using System.Collections.Generic;
 /// query methods for high level input actions such as "move up through the menu"
 /// or "pause the game".
 /// </summary>
-public class InputState {
+public class InputManager {
     #region Fields
 
     public const int MaxInputs = 4;
@@ -47,7 +38,7 @@ public class InputState {
     /// <summary>
     /// Constructs a new input state.
     /// </summary>
-    public InputState() {
+    public InputManager() {
         CurrentKeyboardStates = new KeyboardState[MaxInputs];
         CurrentGamePadStates = new GamePadState[MaxInputs];
 
