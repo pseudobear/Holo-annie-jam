@@ -21,8 +21,8 @@ namespace Holo_annie_jam {
         public ImmutableArray<RhythmEvent> RhythmEvents { get; }
 
         private Beatmap(uint bpm, List<RhythmEvent> rhythmEvents) {
-			BPM = bpm;
-            RhythmEvents = [.. rhythmEvents];
+			this.BPM = bpm;
+			this.RhythmEvents = [.. rhythmEvents];
 		}
 
 		/// <summary>
@@ -60,9 +60,9 @@ namespace Holo_annie_jam {
 			using FileStream stream = File.Open(filename, FileMode.Create, FileAccess.Write);
 			using BinaryWriter writer = new(stream, Encoding.UTF8, false);
 
-			writer.Write(BPM);
+			writer.Write(this.BPM);
 
-            foreach (RhythmEvent rhythmEvent in RhythmEvents) {
+            foreach (RhythmEvent rhythmEvent in this.RhythmEvents) {
                 writer.Write(rhythmEvent.Tick);
 				writer.Write(rhythmEvent.Lane);
 				writer.Write((uint)rhythmEvent.Type);

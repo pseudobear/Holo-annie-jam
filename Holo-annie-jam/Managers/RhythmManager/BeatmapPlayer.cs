@@ -27,10 +27,10 @@ namespace Holo_annie_jam {
         /// Starts playing the beatmap
         /// </summary>
         public void Start() {
-            if (!playing) {
-                Reset();
-                // delay start by the visible timespan, so that the beatmap always starts blank
-                startTick = DateTime.UtcNow.Ticks + EVENT_TICKS_VISIBLE;
+            if (!this.playing) {
+				this.Reset();
+				// delay start by the visible timespan, so that the beatmap always starts blank
+				this.startTick = DateTime.UtcNow.Ticks + EVENT_TICKS_VISIBLE;
             }
         }
 
@@ -38,9 +38,9 @@ namespace Holo_annie_jam {
         /// Pauses the beatmap
         /// </summary>
         public void Pause() {
-            if (!paused) {
-                paused = true;
-                pauseStartTick = DateTime.UtcNow.Ticks;
+            if (!this.paused) {
+				this.paused = true;
+				this.pauseStartTick = DateTime.UtcNow.Ticks;
             }
         }
 
@@ -48,36 +48,38 @@ namespace Holo_annie_jam {
         /// Resumes the beatmap and gets an enumerable of currently visible rhythm events
         /// </summary>
         public IEnumerable<RhythmEvent> Resume() {
-            if (paused) {
-                paused = false;
-                // hacky way to ensure beatmap starts where it left off
-                startTick += DateTime.UtcNow.Ticks - pauseStartTick;
+            if (this.paused) {
+				this.paused = false;
+				// hacky way to ensure beatmap starts where it left off
+				this.startTick += DateTime.UtcNow.Ticks - this.pauseStartTick;
             }
-            return Update();
+            return this.Update();
         }
 
         /// <summary>
         /// Gets an enumerable of currently visible rhythm events
         /// </summary>
         public IEnumerable<RhythmEvent> Update() {
-            long ticksElapsed = DateTime.UtcNow.Ticks - startTick;
-            while (_beatmap.RhythmEvents[firstVisibleEventIdx].Tick < ticksElapsed) {
-                firstVisibleEventIdx++;
+            long ticksElapsed = DateTime.UtcNow.Ticks - this.startTick;
+            while (this._beatmap.RhythmEvents[this.firstVisibleEventIdx].Tick < ticksElapsed) {
+				this.firstVisibleEventIdx++;
             }
-            while (_beatmap.RhythmEvents[nextVisibleEventIdx].Tick < ticksElapsed + EVENT_TICKS_VISIBLE) {
-                nextVisibleEventIdx++;
+            while (this._beatmap.RhythmEvents[this.nextVisibleEventIdx].Tick < ticksElapsed + EVENT_TICKS_VISIBLE) {
+				this.nextVisibleEventIdx++;
             }
-            return _beatmap.RhythmEvents.Skip(firstVisibleEventIdx).Take(nextVisibleEventIdx - firstVisibleEventIdx);
+            return this._beatmap.RhythmEvents
+                .Skip(this.firstVisibleEventIdx)
+                .Take(this.nextVisibleEventIdx - this.firstVisibleEventIdx);
         }
 
         /// <summary>
         /// Resets the beatmap to a non-started state
         /// </summary>
         public void Reset() {
-            playing = false;
-            startTick = 0;
-            firstVisibleEventIdx = 0;
-            nextVisibleEventIdx = 0;
+			this.playing = false;
+			this.startTick = 0;
+			this.firstVisibleEventIdx = 0;
+			this.nextVisibleEventIdx = 0;
         }
 	}
 }
