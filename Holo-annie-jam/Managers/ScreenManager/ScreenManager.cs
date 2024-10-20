@@ -20,7 +20,7 @@ public class ScreenManager : DrawableGameComponent {
     List<GameScreen> screens = new List<GameScreen>();
     List<GameScreen> screensToUpdate = new List<GameScreen>();
 
-    InputState input = new InputState();
+    InputManager input = new InputManager();
 
     SpriteBatch spriteBatch;
     SpriteFont font;
