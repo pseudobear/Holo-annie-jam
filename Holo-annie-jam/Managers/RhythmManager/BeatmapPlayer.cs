@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Media;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,13 +7,13 @@ using System.Linq;
 // TODO: replace MediaPlayer if memory is an issue
 
 /// <summary>
-/// Creates a new beatmap player with the given visible timespan, beatmap, and song. 
+/// Creates a new beatmap player with the given visible timespan, beatmap, with the wrapping game object. 
 /// </summary>
 /// <remarks>
 /// Both the beatmap and the song should have a few seconds of delay at the start, greater than or equal to the visible
 /// timespan.
 /// </remarks>
-public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Song song) {
+public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Game game) {
 
     // TODO: make this a more reasonable number
     /// <summary>
@@ -35,8 +36,9 @@ public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Song song
     /// </summary>
     public bool Paused { get; private set; } = false;
 
+    private readonly Game _game = game;
     private readonly Beatmap _beatmap = beatmap;
-    private readonly Song _song = song;
+    private readonly Song _song = game.Content.Load<Song>(beatmap.SongName);
 
     private int firstVisibleEventIdx;
     private int nextVisibleEventIdx;
@@ -48,7 +50,7 @@ public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Song song
     /// Both the beatmap and the song should have a few seconds of delay at the start, greater than or equal to the
     /// visible timespan.
     /// </remarks>
-    public BeatmapPlayer(Beatmap beatmap, Song song) : this(DEFAULT_VISIBLE_TIMESPAN_TICKS, beatmap, song) { }
+    public BeatmapPlayer(Beatmap beatmap, Game game) : this(DEFAULT_VISIBLE_TIMESPAN_TICKS, beatmap, game) { }
 
     /// <summary>
     /// Starts playing the beatmap
