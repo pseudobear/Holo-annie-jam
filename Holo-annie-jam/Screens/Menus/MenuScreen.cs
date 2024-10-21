@@ -47,7 +47,7 @@ abstract class MenuScreen : GameScreen {
     /// <summary>
     /// Constructor.
     /// </summary>
-    public MenuScreen(string menuTitle) {
+    public MenuScreen(string menuTitle) : base() {
         this.menuTitle = menuTitle;
 
         TransitionOnTime = TimeSpan.FromSeconds(0.5);

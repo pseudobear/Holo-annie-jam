@@ -33,7 +33,7 @@ class MainGameScreen : GameScreen {
     /// <summary>
     /// Constructor.
     /// </summary>
-    public MainGameScreen() {
+    public MainGameScreen() : base() {
         TransitionOnTime = TimeSpan.FromSeconds(1.5);
         TransitionOffTime = TimeSpan.FromSeconds(0.5);
     }

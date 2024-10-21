@@ -24,7 +24,7 @@ class GameplayBackgroundScreen : GameScreen {
     /// <summary>
     /// Constructor.
     /// </summary>
-    public GameplayBackgroundScreen() {
+    public GameplayBackgroundScreen() : base() {
         TransitionOnTime = TimeSpan.FromSeconds(0.5);
         TransitionOffTime = TimeSpan.FromSeconds(0.5);
     }
