@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 /// <summary>
 /// Represents a single beatmap, not including audio
@@ -16,8 +17,20 @@ public class Beatmap {
     /// </summary>
     public ImmutableArray<RhythmEvent> RhythmEvents { get; }
 
-    private Beatmap(List<RhythmEvent> rhythmEvents) => this.RhythmEvents = [.. rhythmEvents];
-    private Beatmap(IEnumerable<RhythmEvent> rhythmEvents) => this.RhythmEvents = rhythmEvents.ToImmutableArray();
+    /// <summary>
+    /// Song name of the song associated with the beatmap which can be loaded by passing the value to Content.Load
+    /// </summary>
+    public string SongName { get; }
+
+    private Beatmap(List<RhythmEvent> rhythmEvents, string songName) {
+        this.RhythmEvents = [.. rhythmEvents];
+        this.SongName = songName;
+    }
+
+    private Beatmap(IEnumerable<RhythmEvent> rhythmEvents, string songName) {
+        this.RhythmEvents = rhythmEvents.ToImmutableArray();
+        this.SongName = songName;
+    }
 
     /// <summary>
     /// Loads a beatmap from a binary file with the given filename
@@ -26,7 +39,9 @@ public class Beatmap {
         using FileStream stream = File.Open(filename, FileMode.Open, FileAccess.Read);
         using BinaryReader reader = new(stream, Encoding.UTF8, false);
 
-        uint bpm = reader.ReadUInt32();
+        int len = reader.ReadInt32();
+        string songName = new(reader.ReadChars(len));
+
         List<RhythmEvent> rhythmEvents = [];
 
         try {
@@ -44,7 +59,7 @@ public class Beatmap {
             }
         } catch (EndOfStreamException) { }
 
-        return new(rhythmEvents);
+        return new(rhythmEvents, songName);
     }
 
     /// <summary>
@@ -53,6 +68,9 @@ public class Beatmap {
     public void WriteToFile(string filename) {
         using FileStream stream = File.Open(filename, FileMode.Create, FileAccess.Write);
         using BinaryWriter writer = new(stream, Encoding.UTF8, false);
+
+        writer.Write(this.SongName.Length);
+        writer.Write(this.SongName.ToCharArray());
 
         foreach (RhythmEvent rhythmEvent in this.RhythmEvents) {
             writer.Write(rhythmEvent.Tick);
@@ -78,13 +96,18 @@ public class Beatmap {
         /// </summary>
         public List<RhythmEvent> RhythmEvents { get; }
 
+        public string SongName { get; }
+
         private readonly JsonSerializerOptions DefaultJsonSerializerOptions = new() {
             WriteIndented = true
         };
 
-        private Builder(List<RhythmEvent> rhythmEvents) => this.RhythmEvents = rhythmEvents;
+        private Builder(List<RhythmEvent> rhythmEvents, string songName) {
+            this.RhythmEvents = rhythmEvents;
+            this.SongName = songName;
+        }
 
-        public Builder() : this([]) { }
+        public Builder(string songName) : this([], songName) { }
 
         /// <summary>
         /// Builds the beatmap
@@ -101,16 +124,17 @@ public class Beatmap {
                 currentTickTime += (long) ((rhythmEvent.Tick - currentTickRhythm) * minutesPerTick * TimeSpan.TicksPerMinute);
                 if (rhythmEvent.Type == RhythmEventType.BpmChange) {
                     minutesPerTick = 1.0 / rhythmEvent.Value / TICKS_PER_BEAT;
+                } else {
+                    finalEvents.Add(new RhythmEvent() {
+                        Tick = currentTickTime,
+                        Lane = rhythmEvent.Lane,
+                        Type = rhythmEvent.Type,
+                        Value = rhythmEvent.Value
+                    });
                 }
-                finalEvents.Add(new RhythmEvent() {
-                    Tick = currentTickTime,
-                    Lane = rhythmEvent.Lane,
-                    Type = rhythmEvent.Type,
-                    Value = rhythmEvent.Value
-                });
                 currentTickRhythm = rhythmEvent.Tick;
             }
-            return new Beatmap(finalEvents.OrderBy(e => e.Tick));
+            return new Beatmap(finalEvents.OrderBy(e => e.Tick), this.SongName);
         }
 
         /// <summary>
@@ -140,6 +164,7 @@ public class RhythmEvent {
     /// <summary>
     /// The lane which the event is located
     /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public uint Lane { get; set; }
 
     /// <summary>
@@ -150,10 +175,40 @@ public class RhythmEvent {
     /// <summary>
     /// The value associated with the event, if the type requires it
     /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public uint Value { get; set; }
+
+    /// <summary>
+    /// The result of the hit by player input associated with this rhythm event
+    /// </summary>
+    [JsonIgnore]
+    public BeatmapHitResult HitResult { get; set; }
+
+    /// <summary>
+    /// Takes a user input and returns the hit result if this object would to consume the input
+    /// </summary>
+    public BeatmapHitResult PeekInputResult(long inputTick, InputType inputType) {
+        if (this.Type.GetValidInputTypes().Contains(inputType)) {
+            return inputType.GetHitResultFromOffset(this.Tick - inputTick);
+        }
+        return BeatmapHitResult.NoHit;
+    }
+
+    /// <summary>
+    /// Same as <see cref="PeekInputResult"/> but also sets this object's <see cref="HitResult"/> to the return value
+    /// </summary>
+    public BeatmapHitResult ConsumeInput(long inputTick, InputType inputType) => this.HitResult = this.PeekInputResult(inputTick, inputType);
 }
 
 public enum RhythmEventType {
     Normal = 0,
     BpmChange = 1
+}
+
+public enum InputType {
+    Normal
+}
+
+public enum BeatmapHitResult {
+    NoHit, Miss, Bad, Good, Great, Perfect
 }
