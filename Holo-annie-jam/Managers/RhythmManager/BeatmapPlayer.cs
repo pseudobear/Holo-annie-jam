@@ -1,18 +1,19 @@
-﻿using Microsoft.Xna.Framework.Media;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-// TODO: replace MediaPlayer with audio player that has more control over play position
+// TODO: replace MediaPlayer if memory is an issue
 
 /// <summary>
-/// Creates a new beatmap player with the given visible timespan, beatmap, and song. 
+/// Creates a new beatmap player with the given visible timespan, beatmap, with the wrapping game object. 
 /// </summary>
 /// <remarks>
 /// Both the beatmap and the song should have a few seconds of delay at the start, greater than or equal to the visible
 /// timespan.
 /// </remarks>
-public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Song song) {
+public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Game game) {
 
     // TODO: make this a more reasonable number
     /// <summary>
@@ -35,8 +36,9 @@ public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Song song
     /// </summary>
     public bool Paused { get; private set; } = false;
 
+    private readonly Game _game = game;
     private readonly Beatmap _beatmap = beatmap;
-    private readonly Song _song = song;
+    private readonly Song _song = game.Content.Load<Song>(beatmap.SongName);
 
     private int firstVisibleEventIdx;
     private int nextVisibleEventIdx;
@@ -48,7 +50,7 @@ public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Song song
     /// Both the beatmap and the song should have a few seconds of delay at the start, greater than or equal to the
     /// visible timespan.
     /// </remarks>
-    public BeatmapPlayer(Beatmap beatmap, Song song) : this(DEFAULT_VISIBLE_TIMESPAN_TICKS, beatmap, song) { }
+    public BeatmapPlayer(Beatmap beatmap, Game game) : this(DEFAULT_VISIBLE_TIMESPAN_TICKS, beatmap, game) { }
 
     /// <summary>
     /// Starts playing the beatmap
@@ -71,21 +73,30 @@ public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Song song
     }
 
     /// <summary>
-    /// Resumes the beatmap and calls <see cref="Update"/>
+    /// Resumes the beatmap and calls <see cref="GetVisibleEvents"/>
     /// </summary>
     public IEnumerable<RhythmEvent>? Resume() {
         if (this.Paused) {
             this.Paused = false;
             MediaPlayer.Resume();
         }
-        return this.Update();
+        return this.GetVisibleEvents();
     }
 
     /// <summary>
-    /// Gets an enumerable of currently visible rhythm events, or null if the beatmap is either already finished or not
+    /// Jump to a specified position in the beatmap and calls <see cref="GetVisibleEvents"/>
+    /// </summary>
+    public IEnumerable<RhythmEvent>? JumpTo(long tick) {
+        this.Reset();
+        MediaPlayer.Play(_song, new TimeSpan(tick));
+        return this.GetVisibleEvents();
+    }
+
+    /// <summary>
+    /// Gets an enumerable of currently visible rhythm events, or null if the beatmap is either already finished
     /// currently playing
     /// </summary>
-    public IEnumerable<RhythmEvent>? Update() {
+    public IEnumerable<RhythmEvent>? GetVisibleEvents() {
         while (this._beatmap.RhythmEvents[this.firstVisibleEventIdx].Tick < MediaPlayer.PlayPosition.Ticks) {
             this.firstVisibleEventIdx++;
             if (this.firstVisibleEventIdx >= this._beatmap.RhythmEvents.Length) {
