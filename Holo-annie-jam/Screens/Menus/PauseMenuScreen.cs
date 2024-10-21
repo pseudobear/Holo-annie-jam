@@ -1,5 +1,4 @@
 #region Using Statements
-using Microsoft.Xna.Framework;
 #endregion
 /// <summary>
 /// The pause menu comes up over the top of the game,

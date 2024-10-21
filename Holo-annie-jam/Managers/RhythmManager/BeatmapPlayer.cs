@@ -105,7 +105,7 @@ public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Game game
             }
         }
         while (this.nextVisibleEventIdx < this._beatmap.RhythmEvents.Length &&
-               this._beatmap.RhythmEvents[this.nextVisibleEventIdx].Tick < MediaPlayer.PlayPosition.Ticks + this.VisibleTimespanTicks) {
+                this._beatmap.RhythmEvents[this.nextVisibleEventIdx].Tick < MediaPlayer.PlayPosition.Ticks + this.VisibleTimespanTicks) {
             this.nextVisibleEventIdx++;
         }
         return this._beatmap.RhythmEvents
@@ -130,7 +130,8 @@ public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Game game
         if (result != BeatmapHitResult.NoHit && result != BeatmapHitResult.Miss) {
             this.nextConsumableEventIdx = eventIdx;
         } else {
-            while (this.nextConsumableEventIdx < this._beatmap.RhythmEvents.Length && this._beatmap.RhythmEvents[this.nextConsumableEventIdx].Tick < tick - RhythmHelpers.INPUT_MAX_THRESHOLD) {
+            while (this.nextConsumableEventIdx < this._beatmap.RhythmEvents.Length &&
+                    this._beatmap.RhythmEvents[this.nextConsumableEventIdx].Tick < tick - RhythmHelpers.INPUT_MAX_THRESHOLD) {
                 this.nextConsumableEventIdx++;
             }
         }
