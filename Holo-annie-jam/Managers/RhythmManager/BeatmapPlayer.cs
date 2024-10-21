@@ -42,6 +42,7 @@ public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Game game
 
     private int firstVisibleEventIdx;
     private int nextVisibleEventIdx;
+    private int nextConsumableEventIdx;
 
     /// <summary>
     /// Creates a new beatmap player with the default visible timespan and given beatmap and song. 
@@ -87,7 +88,7 @@ public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Game game
     /// Jump to a specified position in the beatmap and calls <see cref="GetVisibleEvents"/>
     /// </summary>
     public IEnumerable<RhythmEvent>? JumpTo(long tick) {
-        this.Reset();
+        this.Reset(tick);
         MediaPlayer.Play(_song, new TimeSpan(tick));
         return this.GetVisibleEvents();
     }
@@ -113,13 +114,48 @@ public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Game game
     }
 
     /// <summary>
+    /// Takes player input, assuming input was at current time, and matches it to a rhythm event in the beatmap to
+    /// consume it. If no match was found, one of NoHit and Miss will be returned.
+    /// </summary>
+    public BeatmapHitResult ConsumePlayerInput(InputType inputType) {
+        long tick = MediaPlayer.PlayPosition.Ticks;
+        BeatmapHitResult result = BeatmapHitResult.Miss;
+        int eventIdx = this.nextConsumableEventIdx;
+        while (eventIdx < this._beatmap.RhythmEvents.Length &&
+                (result == BeatmapHitResult.NoHit || result == BeatmapHitResult.Miss) &&
+                this._beatmap.RhythmEvents[eventIdx].Tick < tick + RhythmHelpers.INPUT_MAX_THRESHOLD) {
+            result = this._beatmap.RhythmEvents[eventIdx].PeekInputResult(tick, inputType);
+            eventIdx++;
+        }
+        if (result != BeatmapHitResult.NoHit && result != BeatmapHitResult.Miss) {
+            this.nextConsumableEventIdx = eventIdx;
+        } else {
+            while (this.nextConsumableEventIdx < this._beatmap.RhythmEvents.Length && this._beatmap.RhythmEvents[this.nextConsumableEventIdx].Tick < tick - RhythmHelpers.INPUT_MAX_THRESHOLD) {
+                this.nextConsumableEventIdx++;
+            }
+        }
+        return result;
+    }
+
+    /// <summary>
     /// Stops playing the beatmap, and resets the beatmap to a non-started state
     /// </summary>
-    public void Reset() {
+    public void Reset() => this.Reset(0);
+
+    /// <summary>
+    /// Soft resets the beatmap and moves it to a specific tick
+    /// </summary>
+    private void Reset(long tick) {
         this.Playing = false;
         this.Paused = false;
         this.firstVisibleEventIdx = 0;
         this.nextVisibleEventIdx = 0;
+        this.nextConsumableEventIdx = 0;
         MediaPlayer.Stop();
+        foreach (RhythmEvent rhythmEvent in this._beatmap.RhythmEvents) {
+            if (rhythmEvent.Tick > tick) {
+                rhythmEvent.HitResult = BeatmapHitResult.NoHit;
+            }
+        }
     }
 }
