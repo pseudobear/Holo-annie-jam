@@ -1,10 +1,10 @@
 #region Using Statements
-using System;
-using System.Threading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Threading;
 #endregion
 
 /// <summary>
@@ -92,8 +92,8 @@ class MainGameScreen : GameScreen {
             // Apply some random jitter to make the enemy move around.
             const float randomization = 10;
 
-            enemyPosition.X += (float)(random.NextDouble() - 0.5) * randomization;
-            enemyPosition.Y += (float)(random.NextDouble() - 0.5) * randomization;
+            enemyPosition.X += (float) (random.NextDouble() - 0.5) * randomization;
+            enemyPosition.Y += (float) (random.NextDouble() - 0.5) * randomization;
 
             // Apply a stabilizing force to stop the enemy moving off the screen.
             Vector2 targetPosition = new Vector2(
@@ -117,7 +117,7 @@ class MainGameScreen : GameScreen {
             throw new ArgumentNullException("input");
 
         // Look up inputs for the active player profile.
-        int playerIndex = (int)ControllingPlayer.Value;
+        int playerIndex = (int) ControllingPlayer.Value;
 
         KeyboardState keyboardState = input.CurrentKeyboardStates[playerIndex];
         GamePadState gamePadState = input.CurrentGamePadStates[playerIndex];
@@ -131,8 +131,7 @@ class MainGameScreen : GameScreen {
 
         if (input.IsPauseGame(ControllingPlayer) || gamePadDisconnected) {
             ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
-        }
-        else {
+        } else {
             // Otherwise move the player position.
             Vector2 movement = Vector2.Zero;
 

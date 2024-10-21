@@ -178,14 +178,37 @@ public class RhythmEvent {
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public uint Value { get; set; }
 
-    [JsonIgnore]
     /// <summary>
-    /// True if an input has already consumed this event, false otherwise
+    /// The result of the hit by player input associated with this rhythm event
     /// </summary>
-    public bool IsConsumed { get; set; } = false;
+    [JsonIgnore]
+    public BeatmapHitResult HitResult { get; set; }
+
+    /// <summary>
+    /// Takes a user input and returns the hit result if this object would to consume the input
+    /// </summary>
+    public BeatmapHitResult PeekInputResult(long inputTick, InputType inputType) {
+        if (this.Type.GetValidInputTypes().Contains(inputType)) {
+            return inputType.GetHitResultFromOffset(this.Tick - inputTick);
+        }
+        return BeatmapHitResult.NoHit;
+    }
+
+    /// <summary>
+    /// Same as <see cref="PeekInputResult"/> but also sets this object's <see cref="HitResult"/> to the return value
+    /// </summary>
+    public BeatmapHitResult ConsumeInput(long inputTick, InputType inputType) => this.HitResult = this.PeekInputResult(inputTick, inputType);
 }
 
 public enum RhythmEventType {
     Normal = 0,
     BpmChange = 1
+}
+
+public enum InputType {
+    Normal
+}
+
+public enum BeatmapHitResult {
+    NoHit, Miss, Bad, Good, Great, Perfect
 }
