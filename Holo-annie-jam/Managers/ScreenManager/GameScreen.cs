@@ -32,6 +32,11 @@ public enum ScreenState {
 /// as screens.
 /// </summary>
 public abstract class GameScreen {
+    #region  Fields
+
+    private bool isLoaded;
+
+    #endregion
     #region Properties
 
 
@@ -193,11 +198,22 @@ public abstract class GameScreen {
 
     #region Initialization
 
+    /// <summary>
+    /// Constructor.
+    /// </summary>
+    public GameScreen() {
+        this.isLoaded = false;
+    }
 
     /// <summary>
     /// Load graphics content for the screen.
     /// </summary>
     public virtual void LoadContent() { }
+
+    /// <summary>
+    /// Runs immediately after the screen becomes active (after LoadContent and transition completes)
+    /// </summary>
+    public virtual void OnLoad() { }
 
 
     /// <summary>
@@ -226,6 +242,7 @@ public abstract class GameScreen {
 
             if (!UpdateTransition(gameTime, transitionOffTime, 1)) {
                 // When the transition finishes, remove the screen.
+                this.isLoaded = false;
                 ScreenManager.RemoveScreen(this);
             }
         } else if (coveredByOtherScreen) {
@@ -245,6 +262,10 @@ public abstract class GameScreen {
             } else {
                 // Transition finished!
                 screenState = ScreenState.Active;
+                if (!this.isLoaded) {
+                    this.isLoaded = true;
+                    this.OnLoad();
+                }
             }
         }
     }

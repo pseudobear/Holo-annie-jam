@@ -17,6 +17,9 @@ class MainGameScreen : GameScreen {
 
     ContentManager content;
     SpriteFont gameFont;
+    BeatmapPlayer beatmapPlayer;
+    Beatmap beatmap;
+    string beatmapFilename;
 
     Vector2 playerPosition = new Vector2(100, 100);
     Vector2 enemyPosition = new Vector2(100, 100);
@@ -33,9 +36,10 @@ class MainGameScreen : GameScreen {
     /// <summary>
     /// Constructor.
     /// </summary>
-    public MainGameScreen() {
+    public MainGameScreen(string beatmapFilename) : base() {
         TransitionOnTime = TimeSpan.FromSeconds(1.5);
         TransitionOffTime = TimeSpan.FromSeconds(0.5);
+        this.beatmapFilename = beatmapFilename;
     }
 
 
@@ -48,6 +52,9 @@ class MainGameScreen : GameScreen {
 
         gameFont = content.Load<SpriteFont>("gamefont");
 
+        // this.beatmap = Beatmap.LoadFromFile(this.beatmapFilename);
+        // this.beatmapPlayer = BeatmapPlayer()
+
         // A real game would probably have more content than this sample, so
         // it would take longer to load. We simulate that by delaying for a
         // while, giving you a chance to admire the beautiful loading screen.
@@ -59,6 +66,9 @@ class MainGameScreen : GameScreen {
         ScreenManager.Game.ResetElapsedTime();
     }
 
+    public override void OnLoad() {
+        // this.beatmapPlayer.Start();
+    }
 
     /// <summary>
     /// Unload graphics content used by the game.
@@ -101,9 +111,6 @@ class MainGameScreen : GameScreen {
                 200);
 
             enemyPosition = Vector2.Lerp(enemyPosition, targetPosition, 0.05f);
-
-            // TODO: this game isn't very fun! You could probably improve
-            // it by inserting something more interesting in this space :-)
         }
     }
 

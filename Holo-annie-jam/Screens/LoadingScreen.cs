@@ -36,7 +36,7 @@ class LoadingScreen : GameScreen {
     /// be activated via the static Load method instead.
     /// </summary>
     private LoadingScreen(ScreenManager screenManager, bool loadingIsSlow,
-                            GameScreen[] screensToLoad) {
+                            GameScreen[] screensToLoad) : base() {
         this.loadingIsSlow = loadingIsSlow;
         this.screensToLoad = screensToLoad;
 

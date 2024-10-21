@@ -15,6 +15,12 @@ class GameplayBackgroundScreen : GameScreen {
 
     ContentManager content;
     Texture2D backgroundTexture;
+    Texture2D groundTexture;
+    Texture2D gradientTexture;
+    BasicEffect basicEffect;
+
+    float groundScrollX;
+    float groundScrollY;
 
     #endregion
 
@@ -24,7 +30,7 @@ class GameplayBackgroundScreen : GameScreen {
     /// <summary>
     /// Constructor.
     /// </summary>
-    public GameplayBackgroundScreen() {
+    public GameplayBackgroundScreen() : base() {
         TransitionOnTime = TimeSpan.FromSeconds(0.5);
         TransitionOffTime = TimeSpan.FromSeconds(0.5);
     }
@@ -41,7 +47,33 @@ class GameplayBackgroundScreen : GameScreen {
         if (content == null)
             content = new ContentManager(ScreenManager.Game.Services, "Content");
 
+        Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
+
         backgroundTexture = content.Load<Texture2D>("background");
+        groundTexture = content.Load<Texture2D>("GameplayAssets/Background/cobblestone_3");
+        gradientTexture = content.Load<Texture2D>("gradient");
+
+        basicEffect = new BasicEffect(ScreenManager.GraphicsDevice) {
+            TextureEnabled = true,
+            VertexColorEnabled = true,
+        };
+
+        Vector3 cameraPosition = new Vector3(0f, -3000f, 1000f);
+        Vector3 cameraTarget = new Vector3(0.0f, 0.0f, 0.0f); // Look back at the origin
+
+        float fovAngle = MathHelper.ToRadians(75);  // convert 45 degrees to radians
+        float aspectRatio = 4 / 3;
+        float near = 0.01f; // the near clipping plane distance
+        float far = 10000f; // the far clipping plane distance
+
+        // y+ is forward, x+ is right, z+ is up, try to get y=0 at bottom of screen
+        Matrix world = Matrix.CreateTranslation(0.0f, -(viewport.Height) - 1600, 0.0f);
+        Matrix view = Matrix.CreateLookAt(cameraPosition, cameraTarget, Vector3.Up);
+        Matrix projection = Matrix.CreatePerspectiveFieldOfView(fovAngle, aspectRatio, near, far);
+
+        basicEffect.World = world;
+        basicEffect.View = view;
+        basicEffect.Projection = projection;
     }
 
 
@@ -68,6 +100,9 @@ class GameplayBackgroundScreen : GameScreen {
     public override void Update(GameTime gameTime, bool otherScreenHasFocus,
                                                     bool coveredByOtherScreen) {
         base.Update(gameTime, otherScreenHasFocus, false);
+
+        // Scroll ground
+        groundScrollY += 40f;
     }
 
 
@@ -84,6 +119,23 @@ class GameplayBackgroundScreen : GameScreen {
         spriteBatch.Draw(backgroundTexture, fullscreen,
                             new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha));
 
+        spriteBatch.End();
+
+        // Draw ground
+        spriteBatch.Begin(
+            sortMode: SpriteSortMode.Deferred, 
+            blendState: null, 
+            samplerState: SamplerState.LinearWrap, 
+            depthStencilState: null, 
+            rasterizerState: RasterizerState.CullNone,
+            effect: basicEffect
+        );
+        spriteBatch.Draw(
+            groundTexture,
+            new Vector2(-groundTexture.Width, 0),
+            new Rectangle((int)this.groundScrollX, (int)this.groundScrollY, groundTexture.Width*2, groundTexture.Height*5),
+            Color.White
+        );
         spriteBatch.End();
     }
 
