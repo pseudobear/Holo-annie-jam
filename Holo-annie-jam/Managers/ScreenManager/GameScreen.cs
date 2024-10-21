@@ -8,10 +8,9 @@
 #endregion
 
 #region Using Statements
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input.Touch;
-using System.IO;
+using System;
 #endregion
 
 /// <summary>
@@ -229,26 +228,21 @@ public abstract class GameScreen {
                 // When the transition finishes, remove the screen.
                 ScreenManager.RemoveScreen(this);
             }
-        }
-        else if (coveredByOtherScreen) {
+        } else if (coveredByOtherScreen) {
             // If the screen is covered by another, it should transition off.
             if (UpdateTransition(gameTime, transitionOffTime, 1)) {
                 // Still busy transitioning.
                 screenState = ScreenState.TransitionOff;
-            }
-            else {
+            } else {
                 // Transition finished!
                 screenState = ScreenState.Hidden;
             }
-        }
-        else
-        {
+        } else {
             // Otherwise the screen should transition on and become active.
             if (UpdateTransition(gameTime, transitionOnTime, -1)) {
                 // Still busy transitioning.
                 screenState = ScreenState.TransitionOn;
-            }
-            else {
+            } else {
                 // Transition finished!
                 screenState = ScreenState.Active;
             }
@@ -266,7 +260,7 @@ public abstract class GameScreen {
         if (time == TimeSpan.Zero)
             transitionDelta = 1;
         else
-            transitionDelta = (float)(gameTime.ElapsedGameTime.TotalMilliseconds /
+            transitionDelta = (float) (gameTime.ElapsedGameTime.TotalMilliseconds /
                                         time.TotalMilliseconds);
 
         // Update the transition position.
@@ -312,8 +306,7 @@ public abstract class GameScreen {
         if (TransitionOffTime == TimeSpan.Zero) {
             // If the screen has a zero transition time, remove it immediately.
             ScreenManager.RemoveScreen(this);
-        }
-        else {
+        } else {
             // Otherwise flag that it should transition off and then exit.
             isExiting = true;
         }

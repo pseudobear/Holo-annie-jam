@@ -8,9 +8,9 @@
 #endregion
 
 #region Using Statements
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 #endregion
 
 /// <summary>
@@ -107,12 +107,12 @@ class MenuEntry {
     public bool IsMouseHovering(InputManager input, MenuScreen screen) {
         Point mousePoint = new Point(input.CurrentMouseState.X, input.CurrentMouseState.Y);
         Rectangle entryBounds = new Rectangle(
-            (int)this.Position.X, 
-            (int)(this.Position.Y - this.GetHeight(screen) / 2), 
-            this.GetWidth(screen), 
+            (int) this.Position.X,
+            (int) (this.Position.Y - this.GetHeight(screen) / 2),
+            this.GetWidth(screen),
             this.GetHeight(screen)
         );
-  
+
         return entryBounds.Contains(mousePoint);
     }
     #endregion
@@ -127,7 +127,7 @@ class MenuEntry {
         // When the menu selection changes, entries gradually fade between
         // their selected and deselected appearance, rather than instantly
         // popping to the new state.
-        float fadeSpeed = (float)gameTime.ElapsedGameTime.TotalSeconds * 4;
+        float fadeSpeed = (float) gameTime.ElapsedGameTime.TotalSeconds * 4;
 
         if (isSelected)
             selectionFade = Math.Min(selectionFade + fadeSpeed, 1);
@@ -145,8 +145,8 @@ class MenuEntry {
 
         // Pulsate the size of the selected menu entry.
         double time = gameTime.TotalGameTime.TotalSeconds;
-        
-        float pulsate = (float)Math.Sin(time * 6) + 1;
+
+        float pulsate = (float) Math.Sin(time * 6) + 1;
 
         float scale = 1 + pulsate * 0.05f * selectionFade;
 
@@ -164,8 +164,8 @@ class MenuEntry {
         Texture2D pixel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
         pixel.SetData(new Color[] { Color.DarkSlateGray });
         Rectangle outline = new Rectangle(
-            (int)this.Position.X ,
-            (int)(this.Position.Y - this.GetHeight(screen)/2),
+            (int) this.Position.X,
+            (int) (this.Position.Y - this.GetHeight(screen) / 2),
             this.GetWidth(screen),
             this.GetHeight(screen)
         );
@@ -188,7 +188,7 @@ class MenuEntry {
     /// Queries how wide the entry is, used for centering on the screen.
     /// </summary>
     public virtual int GetWidth(MenuScreen screen) {
-        return (int)screen.ScreenManager.Font.MeasureString(Text).X;
+        return (int) screen.ScreenManager.Font.MeasureString(Text).X;
     }
 
 
