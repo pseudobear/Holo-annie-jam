@@ -47,6 +47,8 @@ class GameplayBackgroundScreen : GameScreen {
         if (content == null)
             content = new ContentManager(ScreenManager.Game.Services, "Content");
 
+        Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
+
         backgroundTexture = content.Load<Texture2D>("background");
         groundTexture = content.Load<Texture2D>("GameplayAssets/Background/cobblestone_3");
         gradientTexture = content.Load<Texture2D>("gradient");
@@ -64,8 +66,8 @@ class GameplayBackgroundScreen : GameScreen {
         float near = 0.01f; // the near clipping plane distance
         float far = 10000f; // the far clipping plane distance
 
-        // y+ is forward, x+ is right, z+ is up
-        Matrix world = Matrix.CreateTranslation(-500.0f, -4000.0f, 0.0f);
+        // y+ is forward, x+ is right, z+ is up, try to get y=0 at bottom of screen
+        Matrix world = Matrix.CreateTranslation(0.0f, -(viewport.Height) - 1600, 0.0f);
         Matrix view = Matrix.CreateLookAt(cameraPosition, cameraTarget, Vector3.Up);
         Matrix projection = Matrix.CreatePerspectiveFieldOfView(fovAngle, aspectRatio, near, far);
 
@@ -130,8 +132,8 @@ class GameplayBackgroundScreen : GameScreen {
         );
         spriteBatch.Draw(
             groundTexture,
-            Vector2.Zero,
-            new Rectangle((int)this.groundScrollX, (int)this.groundScrollY, groundTexture.Width, groundTexture.Height*5),
+            new Vector2(-groundTexture.Width, 0),
+            new Rectangle((int)this.groundScrollX, (int)this.groundScrollY, groundTexture.Width*2, groundTexture.Height*5),
             Color.White
         );
         spriteBatch.End();
