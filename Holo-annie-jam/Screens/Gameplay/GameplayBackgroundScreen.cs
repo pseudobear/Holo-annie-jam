@@ -16,6 +16,8 @@ class GameplayBackgroundScreen : GameScreen {
     ContentManager content;
     Texture2D backgroundTexture;
     Texture2D groundTexture;
+    Texture2D gradientTexture;
+    BasicEffect basicEffect;
 
     float groundScrollX;
     float groundScrollY;
@@ -47,6 +49,29 @@ class GameplayBackgroundScreen : GameScreen {
 
         backgroundTexture = content.Load<Texture2D>("background");
         groundTexture = content.Load<Texture2D>("GameplayAssets/Background/cobblestone_3");
+        gradientTexture = content.Load<Texture2D>("gradient");
+
+        basicEffect = new BasicEffect(ScreenManager.GraphicsDevice) {
+            TextureEnabled = true,
+            VertexColorEnabled = true,
+        };
+
+        Vector3 cameraPosition = new Vector3(0f, -3000f, 1000f);
+        Vector3 cameraTarget = new Vector3(0.0f, 0.0f, 0.0f); // Look back at the origin
+
+        float fovAngle = MathHelper.ToRadians(75);  // convert 45 degrees to radians
+        float aspectRatio = 4 / 3;
+        float near = 0.01f; // the near clipping plane distance
+        float far = 10000f; // the far clipping plane distance
+
+        // y+ is forward, x+ is right, z+ is up
+        Matrix world = Matrix.CreateTranslation(-500.0f, -4000.0f, 0.0f);
+        Matrix view = Matrix.CreateLookAt(cameraPosition, cameraTarget, Vector3.Up);
+        Matrix projection = Matrix.CreatePerspectiveFieldOfView(fovAngle, aspectRatio, near, far);
+
+        basicEffect.World = world;
+        basicEffect.View = view;
+        basicEffect.Projection = projection;
     }
 
 
@@ -75,7 +100,7 @@ class GameplayBackgroundScreen : GameScreen {
         base.Update(gameTime, otherScreenHasFocus, false);
 
         // Scroll ground
-        groundScrollY += 10.5f;
+        groundScrollY += 40f;
     }
 
 
@@ -94,13 +119,19 @@ class GameplayBackgroundScreen : GameScreen {
 
         spriteBatch.End();
 
-
-        // Ground scrolling 
-        spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, null, null);
+        // Draw ground
+        spriteBatch.Begin(
+            sortMode: SpriteSortMode.Deferred, 
+            blendState: null, 
+            samplerState: SamplerState.LinearWrap, 
+            depthStencilState: null, 
+            rasterizerState: RasterizerState.CullNone,
+            effect: basicEffect
+        );
         spriteBatch.Draw(
             groundTexture,
             Vector2.Zero,
-            new Rectangle(-(int)this.groundScrollX, -(int)this.groundScrollY, groundTexture.Width, groundTexture.Height),
+            new Rectangle((int)this.groundScrollX, (int)this.groundScrollY, groundTexture.Width, groundTexture.Height*5),
             Color.White
         );
         spriteBatch.End();

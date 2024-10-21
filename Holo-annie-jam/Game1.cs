@@ -19,7 +19,10 @@ public class Game1 : Game {
     }
 
     protected override void Initialize() {
-        // TODO: Add your initialization logic here
+        _graphics.IsFullScreen = false;
+        _graphics.PreferredBackBufferWidth = 1280;
+        _graphics.PreferredBackBufferHeight = 720;
+        _graphics.ApplyChanges();
 
         base.Initialize();
     }
