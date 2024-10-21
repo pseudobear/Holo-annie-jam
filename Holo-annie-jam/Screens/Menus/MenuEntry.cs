@@ -107,12 +107,12 @@ class MenuEntry {
     public bool IsMouseHovering(InputManager input, MenuScreen screen) {
         Point mousePoint = new Point(input.CurrentMouseState.X, input.CurrentMouseState.Y);
         Rectangle entryBounds = new Rectangle(
-            (int)this.Position.X, 
-            (int)(this.Position.Y - this.GetHeight(screen) / 2), 
-            this.GetWidth(screen), 
+            (int) this.Position.X,
+            (int) (this.Position.Y - this.GetHeight(screen) / 2),
+            this.GetWidth(screen),
             this.GetHeight(screen)
         );
-  
+
         return entryBounds.Contains(mousePoint);
     }
     #endregion
@@ -164,8 +164,8 @@ class MenuEntry {
         Texture2D pixel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
         pixel.SetData(new Color[] { Color.DarkSlateGray });
         Rectangle outline = new Rectangle(
-            (int)this.Position.X ,
-            (int)(this.Position.Y - this.GetHeight(screen)/2),
+            (int) this.Position.X,
+            (int) (this.Position.Y - this.GetHeight(screen) / 2),
             this.GetWidth(screen),
             this.GetHeight(screen)
         );
