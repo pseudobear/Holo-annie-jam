@@ -128,6 +128,7 @@ public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Game game
             eventIdx++;
         }
         if (result != BeatmapHitResult.NoHit && result != BeatmapHitResult.Miss) {
+            this._beatmap.RhythmEvents[eventIdx - 1].HitResult = result;
             this.nextConsumableEventIdx = eventIdx;
         } else {
             while (this.nextConsumableEventIdx < this._beatmap.RhythmEvents.Length &&
