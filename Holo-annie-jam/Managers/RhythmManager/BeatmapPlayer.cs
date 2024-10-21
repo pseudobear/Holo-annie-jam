@@ -115,16 +115,20 @@ public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Game game
 
     /// <summary>
     /// Takes player input, assuming input was at current time, and matches it to a rhythm event in the beatmap to
-    /// consume it. If no match was found, one of NoHit and Miss will be returned.
+    /// consume it. If no match was found, one of NoHit or Miss will be returned.
     /// </summary>
-    public BeatmapHitResult ConsumePlayerInput(InputType inputType) {
+    public BeatmapHitResult ConsumePlayerInput(InputType inputType, uint lane) {
         long tick = MediaPlayer.PlayPosition.Ticks;
         BeatmapHitResult result = BeatmapHitResult.Miss;
         int eventIdx = this.nextConsumableEventIdx;
         while (eventIdx < this._beatmap.RhythmEvents.Length &&
                 (result == BeatmapHitResult.NoHit || result == BeatmapHitResult.Miss) &&
                 this._beatmap.RhythmEvents[eventIdx].Tick < tick + RhythmHelpers.INPUT_MAX_THRESHOLD) {
-            result = this._beatmap.RhythmEvents[eventIdx].PeekInputResult(tick, inputType);
+            // require lane to be strictly equal for now
+            // later, it may be possible that we can introduce more lanes and input lenience (e.g. BanG Dream allows 1 lane difference)
+            if (this._beatmap.RhythmEvents[eventIdx].Lane == lane) {
+                result = this._beatmap.RhythmEvents[eventIdx].PeekInputResult(tick, inputType);
+            }
             eventIdx++;
         }
         if (result != BeatmapHitResult.NoHit && result != BeatmapHitResult.Miss) {
