@@ -81,6 +81,12 @@ abstract class MenuScreen : GameScreen {
                 selectedEntry = 0;
         }
 
+        for (int i = 0; i < menuEntries.Count; i++) {
+            if (menuEntries[i].IsMouseHovering(input, this)) {
+                selectedEntry = i;
+            }
+        }
+
         // Accept or cancel the menu? We pass in our ControllingPlayer, which may
         // either be null (to accept input from any player) or a specific index.
         // If we pass a null controlling player, the InputManager helper returns to

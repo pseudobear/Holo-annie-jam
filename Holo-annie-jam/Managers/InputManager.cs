@@ -20,9 +20,11 @@ public class InputManager {
 
     public readonly KeyboardState[] CurrentKeyboardStates;
     public readonly GamePadState[] CurrentGamePadStates;
+    public MouseState CurrentMouseState;
 
     public readonly KeyboardState[] LastKeyboardStates;
     public readonly GamePadState[] LastGamePadStates;
+    public MouseState LastMouseState;
 
     public readonly bool[] GamePadWasConnected;
 
@@ -41,9 +43,11 @@ public class InputManager {
     public InputManager() {
         CurrentKeyboardStates = new KeyboardState[MaxInputs];
         CurrentGamePadStates = new GamePadState[MaxInputs];
+        CurrentMouseState = new MouseState();
 
         LastKeyboardStates = new KeyboardState[MaxInputs];
         LastGamePadStates = new GamePadState[MaxInputs];
+        LastMouseState = new MouseState();
 
         GamePadWasConnected = new bool[MaxInputs];
     }
@@ -71,6 +75,9 @@ public class InputManager {
                 GamePadWasConnected[i] = true;
             }
         }
+
+        LastMouseState = CurrentMouseState;
+        CurrentMouseState = Mouse.GetState();
 
         TouchState = TouchPanel.GetState();
 
@@ -106,6 +113,13 @@ public class InputManager {
         }
     }
 
+    public bool IsNewLeftClick() {
+        return CurrentMouseState.LeftButton - LastMouseState.LeftButton == 1;
+    }
+
+    public bool IsNewRightClick() {
+        return CurrentMouseState.RightButton - LastMouseState.RightButton == 1;
+    }
 
     /// <summary>
     /// Helper for checking if a button was newly pressed during this update.
@@ -144,7 +158,8 @@ public class InputManager {
         return IsNewKeyPress(Keys.Space, controllingPlayer, out playerIndex) ||
                 IsNewKeyPress(Keys.Enter, controllingPlayer, out playerIndex) ||
                 IsNewButtonPress(Buttons.A, controllingPlayer, out playerIndex) ||
-                IsNewButtonPress(Buttons.Start, controllingPlayer, out playerIndex);
+                IsNewButtonPress(Buttons.Start, controllingPlayer, out playerIndex) || 
+                IsNewLeftClick();
     }
 
 
