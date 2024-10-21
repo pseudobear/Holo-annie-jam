@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+// TODO: replace MediaPlayer with audio player that has more control over play position
+
 /// <summary>
 /// Creates a new beatmap player with the given visible timespan, beatmap, and song. 
 /// </summary>
