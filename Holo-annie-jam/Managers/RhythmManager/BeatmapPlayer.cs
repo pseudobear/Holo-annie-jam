@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-// TODO: replace MediaPlayer with audio player that has more control over play position
+// TODO: replace MediaPlayer if memory is an issue
 
 /// <summary>
 /// Creates a new beatmap player with the given visible timespan, beatmap, and song. 
@@ -71,21 +71,30 @@ public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Song song
     }
 
     /// <summary>
-    /// Resumes the beatmap and calls <see cref="Update"/>
+    /// Resumes the beatmap and calls <see cref="GetVisibleEvents"/>
     /// </summary>
     public IEnumerable<RhythmEvent>? Resume() {
         if (this.Paused) {
             this.Paused = false;
             MediaPlayer.Resume();
         }
-        return this.Update();
+        return this.GetVisibleEvents();
     }
 
     /// <summary>
-    /// Gets an enumerable of currently visible rhythm events, or null if the beatmap is either already finished or not
+    /// Jump to a specified position in the beatmap and calls <see cref="GetVisibleEvents"/>
+    /// </summary>
+    public IEnumerable<RhythmEvent>? JumpTo(long tick) {
+        this.Reset();
+        MediaPlayer.Play(_song, new TimeSpan(tick));
+        return this.GetVisibleEvents();
+    }
+
+    /// <summary>
+    /// Gets an enumerable of currently visible rhythm events, or null if the beatmap is either already finished
     /// currently playing
     /// </summary>
-    public IEnumerable<RhythmEvent>? Update() {
+    public IEnumerable<RhythmEvent>? GetVisibleEvents() {
         while (this._beatmap.RhythmEvents[this.firstVisibleEventIdx].Tick < MediaPlayer.PlayPosition.Ticks) {
             this.firstVisibleEventIdx++;
             if (this.firstVisibleEventIdx >= this._beatmap.RhythmEvents.Length) {
