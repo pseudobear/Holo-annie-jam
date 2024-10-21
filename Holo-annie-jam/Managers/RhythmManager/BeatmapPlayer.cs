@@ -28,7 +28,7 @@ public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Song song
     /// <summary>
     /// Whether the beatmap is currently in play
     /// </summary>
-	public bool Playing { get; private set; } = false;
+    public bool Playing { get; private set; } = false;
 
     /// <summary>
     /// Whether the beatmap is currently paused
