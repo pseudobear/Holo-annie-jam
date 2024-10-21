@@ -15,6 +15,10 @@ class GameplayBackgroundScreen : GameScreen {
 
     ContentManager content;
     Texture2D backgroundTexture;
+    Texture2D groundTexture;
+
+    float groundScrollX;
+    float groundScrollY;
 
     #endregion
 
@@ -42,6 +46,7 @@ class GameplayBackgroundScreen : GameScreen {
             content = new ContentManager(ScreenManager.Game.Services, "Content");
 
         backgroundTexture = content.Load<Texture2D>("background");
+        groundTexture = content.Load<Texture2D>("GameplayAssets/Background/cobblestone_3");
     }
 
 
@@ -68,6 +73,9 @@ class GameplayBackgroundScreen : GameScreen {
     public override void Update(GameTime gameTime, bool otherScreenHasFocus,
                                                     bool coveredByOtherScreen) {
         base.Update(gameTime, otherScreenHasFocus, false);
+
+        // Scroll ground
+        groundScrollY += 10.5f;
     }
 
 
@@ -84,6 +92,17 @@ class GameplayBackgroundScreen : GameScreen {
         spriteBatch.Draw(backgroundTexture, fullscreen,
                             new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha));
 
+        spriteBatch.End();
+
+
+        // Ground scrolling 
+        spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, null, null);
+        spriteBatch.Draw(
+            groundTexture,
+            Vector2.Zero,
+            new Rectangle(-(int)this.groundScrollX, -(int)this.groundScrollY, groundTexture.Width, groundTexture.Height),
+            Color.White
+        );
         spriteBatch.End();
     }
 
