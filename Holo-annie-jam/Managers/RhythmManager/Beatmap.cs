@@ -12,11 +12,12 @@ using System.Text.Json;
 public class Beatmap {
 
     /// <summary>
-    /// Immutable array of rhythm events representing the beatmap
+    /// Immutable array of rhythm events representing the beatmap. This array is sorted.
     /// </summary>
     public ImmutableArray<RhythmEvent> RhythmEvents { get; }
 
     private Beatmap(List<RhythmEvent> rhythmEvents) => this.RhythmEvents = [.. rhythmEvents];
+    private Beatmap(IEnumerable<RhythmEvent> rhythmEvents) => this.RhythmEvents = rhythmEvents.ToImmutableArray();
 
     /// <summary>
     /// Loads a beatmap from a binary file with the given filename
@@ -109,7 +110,7 @@ public class Beatmap {
                 });
                 currentTickRhythm = rhythmEvent.Tick;
             }
-            return new Beatmap(finalEvents);
+            return new Beatmap(finalEvents.OrderBy(e => e.Tick));
         }
 
         /// <summary>
@@ -153,5 +154,6 @@ public class RhythmEvent {
 }
 
 public enum RhythmEventType {
-    Normal, BpmChange
+    Normal = 0,
+    BpmChange = 1
 }
