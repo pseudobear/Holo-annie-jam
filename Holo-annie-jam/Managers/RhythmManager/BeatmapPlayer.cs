@@ -13,7 +13,7 @@ using System.Linq;
 /// Both the beatmap and the song should have a few seconds of delay at the start, greater than or equal to the visible
 /// timespan.
 /// </remarks>
-public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Game game) {
+public class BeatmapPlayer {
 
     // TODO: make this a more reasonable number
     /// <summary>
@@ -24,7 +24,7 @@ public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Game game
     /// <summary>
     /// The timespan that is visible on the screen when playing a beatmap, in ticks (100 nanoseconds).
     /// </summary>
-    public long VisibleTimespanTicks { get; } = visibleTimespanTicks;
+    public long VisibleTimespanTicks { get; }
 
     /// <summary>
     /// Whether the beatmap is currently in play
@@ -36,9 +36,9 @@ public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Game game
     /// </summary>
     public bool Paused { get; private set; } = false;
 
-    private readonly Game _game = game;
-    private readonly Beatmap _beatmap = beatmap;
-    private readonly Song _song = game.Content.Load<Song>(beatmap.SongName);
+    private readonly Game _game;
+    private readonly Beatmap _beatmap;
+    private readonly Song _song;
 
     private int firstVisibleEventIdx;
     private int nextVisibleEventIdx;
@@ -51,7 +51,15 @@ public class BeatmapPlayer(long visibleTimespanTicks, Beatmap beatmap, Game game
     /// Both the beatmap and the song should have a few seconds of delay at the start, greater than or equal to the
     /// visible timespan.
     /// </remarks>
-    public BeatmapPlayer(Beatmap beatmap, Game game) : this(DEFAULT_VISIBLE_TIMESPAN_TICKS, beatmap, game) { }
+    public BeatmapPlayer(Beatmap beatmap, Game game) : this(beatmap, game, DEFAULT_VISIBLE_TIMESPAN_TICKS) { }
+
+    public BeatmapPlayer(Beatmap beatmap, Game game, long visibleTimespanTicks) {
+        this._game = game;
+        this._beatmap = beatmap;
+        this._song = game.Content.Load<Song>(beatmap.SongName);
+
+        this.VisibleTimespanTicks = visibleTimespanTicks;
+    }
 
     /// <summary>
     /// Starts playing the beatmap
