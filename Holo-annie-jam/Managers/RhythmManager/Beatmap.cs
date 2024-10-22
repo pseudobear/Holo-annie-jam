@@ -22,8 +22,9 @@ public class Beatmap {
     /// </summary>
     public string SongName { get; }
 
+    // Note: separate from IEnumerable due to presumed performance difference
     private Beatmap(List<RhythmEvent> rhythmEvents, string songName) {
-        this.RhythmEvents = [.. rhythmEvents];
+        this.RhythmEvents = rhythmEvents.ToImmutableArray();
         this.SongName = songName;
     }
 
@@ -42,7 +43,7 @@ public class Beatmap {
         int len = reader.ReadInt32();
         string songName = new(reader.ReadChars(len));
 
-        List<RhythmEvent> rhythmEvents = [];
+        List<RhythmEvent> rhythmEvents = new();
 
         try {
             while (true) {
@@ -107,7 +108,7 @@ public class Beatmap {
             this.SongName = songName;
         }
 
-        public Builder(string songName) : this([], songName) { }
+        public Builder(string songName) : this(new List<RhythmEvent>(), songName) { }
 
         /// <summary>
         /// Builds the beatmap
@@ -116,7 +117,7 @@ public class Beatmap {
             if (this.RhythmEvents[0].Type != RhythmEventType.BpmChange) {
                 throw new InvalidOperationException("first event must be a BPM event");
             }
-            List<RhythmEvent> finalEvents = [];
+            List<RhythmEvent> finalEvents = new();
             long currentTickTime = 0;
             long currentTickRhythm = 0;
             double minutesPerTick = 1.0 / this.RhythmEvents[0].Value / TICKS_PER_BEAT;
@@ -170,7 +171,7 @@ public class RhythmEvent {
     /// <summary>
     /// The type of the event
     /// </summary>
-	public RhythmEventType Type { get; set; }
+    public RhythmEventType Type { get; set; }
 
     /// <summary>
     /// The value associated with the event, if the type requires it

@@ -16,8 +16,8 @@ public static class RhythmHelpers {
     public static bool HasValue(this RhythmEventType type) => type == RhythmEventType.BpmChange;
 
     public static InputType[] GetValidInputTypes(this RhythmEventType type) => type switch {
-        RhythmEventType.Normal => [InputType.Normal],
-        _ => []
+        RhythmEventType.Normal => new InputType[] { InputType.Normal },
+        _ => Array.Empty<InputType>(),
     };
 
     public static BeatmapHitResult GetHitResultFromOffset(this InputType type, long signedOffset) {
