@@ -52,8 +52,8 @@ class MainGameScreen : GameScreen {
 
         gameFont = content.Load<SpriteFont>("gamefont");
 
-        // this.beatmap = Beatmap.LoadFromFile(this.beatmapFilename);
-        // this.beatmapPlayer = BeatmapPlayer()
+        this.beatmap = Beatmap.LoadFromFile(this.beatmapFilename);
+        this.beatmapPlayer = new BeatmapPlayer(beatmap, ScreenManager.Game);
 
         // A real game would probably have more content than this sample, so
         // it would take longer to load. We simulate that by delaying for a
