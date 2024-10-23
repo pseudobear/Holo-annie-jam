@@ -15,8 +15,20 @@ using System.Threading;
 class MainGameScreen : GameScreen {
     #region Fields
 
+    static readonly Vector2 TOP_LEFT = new(0, 0);
+    static readonly Vector2 TOP_RIGHT = new(1, 0);
+    static readonly Vector2 BOTTOM_LEFT = new(0, 1);
+    static readonly Vector2 BOTTOM_RIGHT = new(1, 1);
+    static readonly float BOTTOM_WIDTH = BOTTOM_RIGHT.X - BOTTOM_LEFT.X;
+    static readonly float TOP_WIDTH = TOP_RIGHT.X - TOP_LEFT.X;
+    static readonly float WIDTH_DIFFERENCE = BOTTOM_WIDTH - TOP_WIDTH;
+    static readonly float HEIGHT = BOTTOM_LEFT.Y - TOP_LEFT.Y;
+
     ContentManager content;
     SpriteFont gameFont;
+    Texture2D note;
+    const int NOTE_HALF_WIDTH = 50;
+    const int NOTE_HALF_HEIGHT = 50;
     BeatmapPlayer beatmapPlayer;
     Beatmap beatmap;
     string beatmapFilename;
@@ -51,14 +63,50 @@ class MainGameScreen : GameScreen {
             content = new ContentManager(ScreenManager.Game.Services, "Content");
 
         gameFont = content.Load<SpriteFont>("gamefont");
+        note = content.Load<Texture2D>("GameplayAssets/Beatmap Objects/note");
 
-        this.beatmap = Beatmap.LoadFromFile(this.beatmapFilename);
-        this.beatmapPlayer = new BeatmapPlayer(beatmap, ScreenManager.Game);
+        this.beatmap = Beatmap.LoadFromFile(beatmapFilename);
+        this.beatmapPlayer = new BeatmapPlayer(beatmap);
 
         // A real game would probably have more content than this sample, so
         // it would take longer to load. We simulate that by delaying for a
         // while, giving you a chance to admire the beautiful loading screen.
         Thread.Sleep(1000);
+
+        // generate sample beatmap
+        //Beatmap.Builder builder = new("Sample Song", "Content/Beatmaps/Sample Beatmap/sample_song.ogg");
+        //builder.RhythmEvents.Add(new RhythmEvent() {
+        //    Tick = 0,
+        //    Type = RhythmEventType.BpmChange,
+        //    Value = 144
+        //});
+        //builder.RhythmEvents.Add(new RhythmEvent() {
+        //    Tick = 3840,
+        //    Type = RhythmEventType.Normal,
+        //    Lane = 1
+        //});
+        //builder.RhythmEvents.Add(new RhythmEvent() {
+        //    Tick = 3840,
+        //    Type = RhythmEventType.Normal,
+        //    Lane = 3
+        //});
+        //builder.RhythmEvents.Add(new RhythmEvent() {
+        //    Tick = 4800,
+        //    Type = RhythmEventType.Normal,
+        //    Lane = 1
+        //});
+        //builder.RhythmEvents.Add(new RhythmEvent() {
+        //    Tick = 5760,
+        //    Type = RhythmEventType.Normal,
+        //    Lane = 1
+        //});
+        //builder.RhythmEvents.Add(new RhythmEvent() {
+        //    Tick = 6240,
+        //    Type = RhythmEventType.Normal,
+        //    Lane = 3
+        //});
+        //builder.WriteToFile("sample_beatmap_builder.json");
+        //builder.Build().WriteToFile("sample_beatmap.bin");
 
         // once the load has finished, we use ResetElapsedTime to tell the game's
         // timing mechanism that we have just finished a very long frame, and that
@@ -67,7 +115,7 @@ class MainGameScreen : GameScreen {
     }
 
     public override void OnLoad() {
-        // this.beatmapPlayer.Start();
+        this.beatmapPlayer.Start();
     }
 
     /// <summary>
@@ -174,15 +222,33 @@ class MainGameScreen : GameScreen {
         // Clear handled by GameplayBackgroundScreen
         // ScreenManager.GraphicsDevice.Clear(ClearOptions.Target, Color.CornflowerBlue, 0, 0);
 
-        // Our player and enemy are both actually just text strings.
         SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 
         spriteBatch.Begin();
 
-        spriteBatch.DrawString(gameFont, "// TODO", playerPosition, Color.Green);
+        Vector2 screen = new(ScreenManager.GraphicsDevice.Viewport.Width, ScreenManager.GraphicsDevice.Viewport.Height);
 
-        spriteBatch.DrawString(gameFont, "Insert Gameplay Here",
-                                enemyPosition, Color.DarkRed);
+        //spriteBatch.DrawString(gameFont, "TOP LEFT", TOP_LEFT * screen, Color.Green);
+        //spriteBatch.DrawString(gameFont, "TOP RIGHT", TOP_RIGHT * screen * 0.8f, Color.Green);
+        //spriteBatch.DrawString(gameFont, "BOTTOM LEFT", BOTTOM_LEFT * screen * 0.8f, Color.Green);
+        //spriteBatch.DrawString(gameFont, "BOTTOM RIGHT", BOTTOM_RIGHT * screen * 0.8f, Color.Green);
+
+        VisibleBeatmapEvents visibleEvents = beatmapPlayer.GetVisibleEvents();
+        long totalTicksVisible = beatmapPlayer.VisibleTimespanTicks + beatmapPlayer.TrailingTimespanTicks;
+        long startingTickVisible = visibleEvents.Tick - beatmapPlayer.TrailingTimespanTicks;
+        foreach (RhythmEvent rhythmEvent in visibleEvents.RhythmEvents ?? Array.Empty<RhythmEvent>()) {
+            // number of lanes is currently hardcoded to 3: later, we should store this in the beatmap file
+
+            double relativeX = (2 * rhythmEvent.Lane - 1) / 6.0;
+            double relativeY = 1 - (double) (rhythmEvent.Tick - startingTickVisible) / totalTicksVisible;
+
+            double widthAtLine = BOTTOM_WIDTH - (WIDTH_DIFFERENCE * relativeY);
+            double edgeX = BOTTOM_LEFT.X + (WIDTH_DIFFERENCE * relativeY);
+            int x = (int) Math.Round((widthAtLine * relativeX + edgeX) * screen.X);
+            int y = (int) Math.Round((TOP_LEFT.Y + (relativeY * HEIGHT)) * screen.Y);
+            // TODO zoom
+            spriteBatch.Draw(note, new Rectangle(x - NOTE_HALF_WIDTH, y - NOTE_HALF_HEIGHT, 2 * NOTE_HALF_WIDTH, 2 * NOTE_HALF_HEIGHT), Color.White);
+        }
 
         spriteBatch.End();
 

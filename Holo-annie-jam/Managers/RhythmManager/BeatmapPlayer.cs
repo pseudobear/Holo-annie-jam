@@ -1,18 +1,12 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Media;
+﻿using ManagedBass;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
-// TODO: replace MediaPlayer if memory is an issue
-
 /// <summary>
-/// Creates a new beatmap player with the given visible timespan, beatmap, with the wrapping game object. 
+/// Class representing beatmap player. Note that Bass.Init() MUST be called prior to using any of the play functions.
 /// </summary>
-/// <remarks>
-/// Both the beatmap and the song should have a few seconds of delay at the start, greater than or equal to the visible
-/// timespan.
-/// </remarks>
 public class BeatmapPlayer {
 
     // TODO: make this a more reasonable number
@@ -22,9 +16,16 @@ public class BeatmapPlayer {
     public const long DEFAULT_VISIBLE_TIMESPAN_TICKS = 2 * TimeSpan.TicksPerSecond;
 
     /// <summary>
+    /// The default timespan that is still visible on the screen after the rhythm event has passed
+    /// </summary>
+    public const long DEFAULT_TRAILING_TIMESPAN_TICKS = RhythmHelpers.INPUT_MAX_THRESHOLD;
+
+    /// <summary>
     /// The timespan that is visible on the screen when playing a beatmap, in ticks (100 nanoseconds).
     /// </summary>
     public long VisibleTimespanTicks { get; }
+
+    public long TrailingTimespanTicks { get; }
 
     /// <summary>
     /// Whether the beatmap is currently in play
@@ -36,9 +37,8 @@ public class BeatmapPlayer {
     /// </summary>
     public bool Paused { get; private set; } = false;
 
-    private readonly Game _game;
     private readonly Beatmap _beatmap;
-    private readonly Song _song;
+    private readonly int _songId;
 
     private int firstVisibleEventIdx;
     private int nextVisibleEventIdx;
@@ -51,14 +51,19 @@ public class BeatmapPlayer {
     /// Both the beatmap and the song should have a few seconds of delay at the start, greater than or equal to the
     /// visible timespan.
     /// </remarks>
-    public BeatmapPlayer(Beatmap beatmap, Game game) : this(beatmap, game, DEFAULT_VISIBLE_TIMESPAN_TICKS) { }
+    public BeatmapPlayer(Beatmap beatmap) : this(beatmap, DEFAULT_VISIBLE_TIMESPAN_TICKS, DEFAULT_TRAILING_TIMESPAN_TICKS) { }
 
-    public BeatmapPlayer(Beatmap beatmap, Game game, long visibleTimespanTicks) {
-        this._game = game;
+    public BeatmapPlayer(Beatmap beatmap, long visibleTimespanTicks, long trailingTimespanTicks) {
         this._beatmap = beatmap;
-        this._song = game.Content.Load<Song>(beatmap.SongName);
+        var a = File.Exists(beatmap.AudioLocation);
+        this._songId = Bass.CreateStream(beatmap.AudioLocation);
 
         this.VisibleTimespanTicks = visibleTimespanTicks;
+        this.TrailingTimespanTicks = trailingTimespanTicks;
+    }
+
+    ~BeatmapPlayer() {
+        Bass.StreamFree(_songId);
     }
 
     /// <summary>
@@ -67,7 +72,7 @@ public class BeatmapPlayer {
     public void Start() {
         if (!this.Playing) {
             this.Reset();
-            MediaPlayer.Play(_song);
+            Bass.ChannelPlay(this._songId);
         }
     }
 
@@ -77,27 +82,29 @@ public class BeatmapPlayer {
     public void Pause() {
         if (!this.Paused) {
             this.Paused = true;
-            MediaPlayer.Pause();
+            Bass.ChannelPause(this._songId);
         }
     }
 
     /// <summary>
     /// Resumes the beatmap and calls <see cref="GetVisibleEvents"/>
     /// </summary>
-    public IEnumerable<RhythmEvent>? Resume() {
+    public VisibleBeatmapEvents Resume() {
         if (this.Paused) {
             this.Paused = false;
-            MediaPlayer.Resume();
+            Bass.ChannelPlay(this._songId);
         }
         return this.GetVisibleEvents();
     }
 
     /// <summary>
-    /// Jump to a specified position in the beatmap and calls <see cref="GetVisibleEvents"/>
+    /// Jump to a specified position in the beatmap and calls <see cref="GetVisibleEvents"/>. Note that the position
+    /// that it jumps to may not be exact to the given tick.
     /// </summary>
-    public IEnumerable<RhythmEvent>? JumpTo(long tick) {
+    public VisibleBeatmapEvents JumpTo(long tick) {
         this.Reset(tick);
-        MediaPlayer.Play(_song, new TimeSpan(tick));
+        Bass.ChannelSetPosition(this._songId, Bass.ChannelSeconds2Bytes(this._songId, tick / (double) TimeSpan.TicksPerSecond));
+        Bass.ChannelPlay(this._songId);
         return this.GetVisibleEvents();
     }
 
@@ -105,20 +112,31 @@ public class BeatmapPlayer {
     /// Gets an enumerable of currently visible rhythm events, or null if the beatmap is either already finished
     /// currently playing
     /// </summary>
-    public IEnumerable<RhythmEvent>? GetVisibleEvents() {
-        while (this._beatmap.RhythmEvents[this.firstVisibleEventIdx].Tick < MediaPlayer.PlayPosition.Ticks) {
+    public VisibleBeatmapEvents GetVisibleEvents() {
+        long tick = this.GetCurrentPosition();
+        if (this.firstVisibleEventIdx >= this._beatmap.RhythmEvents.Length) {
+            return new() {
+                Tick = tick
+            };
+        }
+        while (this._beatmap.RhythmEvents[this.firstVisibleEventIdx].Tick < tick - this.TrailingTimespanTicks) {
             this.firstVisibleEventIdx++;
             if (this.firstVisibleEventIdx >= this._beatmap.RhythmEvents.Length) {
-                return null;
+                return new() {
+                    Tick = tick
+                };
             }
         }
         while (this.nextVisibleEventIdx < this._beatmap.RhythmEvents.Length &&
-                this._beatmap.RhythmEvents[this.nextVisibleEventIdx].Tick < MediaPlayer.PlayPosition.Ticks + this.VisibleTimespanTicks) {
+                this._beatmap.RhythmEvents[this.nextVisibleEventIdx].Tick < tick + this.VisibleTimespanTicks) {
             this.nextVisibleEventIdx++;
         }
-        return this._beatmap.RhythmEvents
-            .Skip(this.firstVisibleEventIdx)
-            .Take(this.nextVisibleEventIdx - this.firstVisibleEventIdx);
+        return new VisibleBeatmapEvents() {
+            Tick = tick,
+            RhythmEvents = this._beatmap.RhythmEvents
+                .Skip(this.firstVisibleEventIdx)
+                .Take(this.nextVisibleEventIdx - this.firstVisibleEventIdx)
+        };
     }
 
     /// <summary>
@@ -126,7 +144,7 @@ public class BeatmapPlayer {
     /// consume it. If no match was found, one of NoHit or Miss will be returned.
     /// </summary>
     public BeatmapHitResult ConsumePlayerInput(InputType inputType, uint lane) {
-        long tick = MediaPlayer.PlayPosition.Ticks;
+        long tick = this.GetCurrentPosition();
         BeatmapHitResult result = BeatmapHitResult.Miss;
         int eventIdx = this.nextConsumableEventIdx;
         while (eventIdx < this._beatmap.RhythmEvents.Length &&
@@ -156,6 +174,8 @@ public class BeatmapPlayer {
     /// </summary>
     public void Reset() => this.Reset(0);
 
+    public long GetCurrentPosition() => (long) Math.Round(Bass.ChannelBytes2Seconds(this._songId, Bass.ChannelGetPosition(this._songId)) * TimeSpan.TicksPerSecond);
+
     /// <summary>
     /// Soft resets the beatmap and moves it to a specific tick
     /// </summary>
@@ -165,11 +185,17 @@ public class BeatmapPlayer {
         this.firstVisibleEventIdx = 0;
         this.nextVisibleEventIdx = 0;
         this.nextConsumableEventIdx = 0;
-        MediaPlayer.Stop();
+        Bass.ChannelStop(_songId);
+        Bass.ChannelSetPosition(_songId, 0);
         foreach (RhythmEvent rhythmEvent in this._beatmap.RhythmEvents) {
             if (rhythmEvent.Tick > tick) {
                 rhythmEvent.HitResult = BeatmapHitResult.NoHit;
             }
         }
     }
+}
+
+public class VisibleBeatmapEvents {
+    public long Tick { get; set; }
+    public IEnumerable<RhythmEvent>? RhythmEvents { get; set; }
 }

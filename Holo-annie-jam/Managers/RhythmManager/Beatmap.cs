@@ -18,19 +18,26 @@ public class Beatmap {
     public ImmutableArray<RhythmEvent> RhythmEvents { get; }
 
     /// <summary>
-    /// Song name of the song associated with the beatmap which can be loaded by passing the value to Content.Load
+    /// Song name of the song associated with the beatmap
     /// </summary>
     public string SongName { get; }
 
+    /// <summary>
+    /// The location of the audio file
+    /// </summary>
+    public string AudioLocation { get; }
+
     // Note: separate from IEnumerable due to presumed performance difference
-    private Beatmap(List<RhythmEvent> rhythmEvents, string songName) {
+    private Beatmap(List<RhythmEvent> rhythmEvents, string songName, string audioLocation) {
         this.RhythmEvents = rhythmEvents.ToImmutableArray();
         this.SongName = songName;
+        this.AudioLocation = audioLocation;
     }
 
-    private Beatmap(IEnumerable<RhythmEvent> rhythmEvents, string songName) {
+    private Beatmap(IEnumerable<RhythmEvent> rhythmEvents, string songName, string audioLocation) {
         this.RhythmEvents = rhythmEvents.ToImmutableArray();
         this.SongName = songName;
+        this.AudioLocation = audioLocation;
     }
 
     /// <summary>
@@ -42,6 +49,8 @@ public class Beatmap {
 
         int len = reader.ReadInt32();
         string songName = new(reader.ReadChars(len));
+        len = reader.ReadInt32();
+        string audioLocation = new(reader.ReadChars(len));
 
         List<RhythmEvent> rhythmEvents = new();
 
@@ -60,7 +69,7 @@ public class Beatmap {
             }
         } catch (EndOfStreamException) { }
 
-        return new(rhythmEvents, songName);
+        return new(rhythmEvents, songName, audioLocation);
     }
 
     /// <summary>
@@ -72,6 +81,8 @@ public class Beatmap {
 
         writer.Write(this.SongName.Length);
         writer.Write(this.SongName.ToCharArray());
+        writer.Write(this.AudioLocation.Length);
+        writer.Write(this.AudioLocation.ToCharArray());
 
         foreach (RhythmEvent rhythmEvent in this.RhythmEvents) {
             writer.Write(rhythmEvent.Tick);
@@ -95,26 +106,29 @@ public class Beatmap {
         /// RhythmEvent objects here are DIFFERENT than the ticks used to represent time in a beatmap: here, a tick is
         /// 1/960th of a quarter note.
         /// </summary>
-        public List<RhythmEvent> RhythmEvents { get; }
+        public List<RhythmEvent> RhythmEvents { get; set; }
 
-        public string SongName { get; }
+        public string SongName { get; set; }
+
+        public string AudioLocation { get; set; }
 
         private readonly JsonSerializerOptions DefaultJsonSerializerOptions = new() {
             WriteIndented = true
         };
 
-        private Builder(List<RhythmEvent> rhythmEvents, string songName) {
+        private Builder(List<RhythmEvent> rhythmEvents, string songName, string audioLocation) {
             this.RhythmEvents = rhythmEvents;
             this.SongName = songName;
+            this.AudioLocation = audioLocation;
         }
 
-        public Builder(string songName) : this(new List<RhythmEvent>(), songName) { }
+        public Builder(string songName, string audioLocation) : this(new List<RhythmEvent>(), songName, audioLocation) { }
 
         /// <summary>
         /// Builds the beatmap
         /// </summary>
         public Beatmap Build() {
-            if (this.RhythmEvents[0].Type != RhythmEventType.BpmChange) {
+            if (this.RhythmEvents.Count == 0 || this.RhythmEvents[0].Type != RhythmEventType.BpmChange) {
                 throw new InvalidOperationException("first event must be a BPM event");
             }
             List<RhythmEvent> finalEvents = new();
@@ -135,7 +149,7 @@ public class Beatmap {
                 }
                 currentTickRhythm = rhythmEvent.Tick;
             }
-            return new Beatmap(finalEvents.OrderBy(e => e.Tick), this.SongName);
+            return new Beatmap(finalEvents.OrderBy(e => e.Tick), this.SongName, this.AudioLocation);
         }
 
         /// <summary>
