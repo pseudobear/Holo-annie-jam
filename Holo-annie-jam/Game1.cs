@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using ManagedBass;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 public class Game1 : Game {
@@ -23,6 +25,10 @@ public class Game1 : Game {
         _graphics.PreferredBackBufferWidth = 1280;
         _graphics.PreferredBackBufferHeight = 720;
         _graphics.ApplyChanges();
+
+        if (!Bass.Init()) {
+            throw new ContentLoadException("failed to initialize audio manager");
+        }
 
         base.Initialize();
     }

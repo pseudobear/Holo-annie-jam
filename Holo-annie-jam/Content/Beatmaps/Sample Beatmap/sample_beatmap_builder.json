@@ -1,0 +1,36 @@
+{
+  "RhythmEvents": [
+    {
+      "Tick": 0,
+      "Type": 1,
+      "Value": 144
+    },
+    {
+      "Tick": 3840,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 3840,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 4800,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 5760,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 6240,
+      "Lane": 3,
+      "Type": 0
+    }
+  ],
+  "SongName": "Sample Song",
+  "AudioLocation": "Content/Beatmaps/Sample Beatmap/sample_song.ogg"
+}

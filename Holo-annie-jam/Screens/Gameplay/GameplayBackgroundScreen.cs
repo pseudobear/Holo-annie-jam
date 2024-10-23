@@ -61,7 +61,7 @@ class GameplayBackgroundScreen : GameScreen {
         Vector3 cameraPosition = new Vector3(0f, -3000f, 1000f);
         Vector3 cameraTarget = new Vector3(0.0f, 0.0f, 0.0f); // Look back at the origin
 
-        float fovAngle = MathHelper.ToRadians(75);  // convert 45 degrees to radians
+        float fovAngle = MathHelper.ToRadians(75);
         float aspectRatio = 4 / 3;
         float near = 0.01f; // the near clipping plane distance
         float far = 10000f; // the far clipping plane distance
@@ -123,17 +123,17 @@ class GameplayBackgroundScreen : GameScreen {
 
         // Draw ground
         spriteBatch.Begin(
-            sortMode: SpriteSortMode.Deferred, 
-            blendState: null, 
-            samplerState: SamplerState.LinearWrap, 
-            depthStencilState: null, 
+            sortMode: SpriteSortMode.Deferred,
+            blendState: null,
+            samplerState: SamplerState.LinearWrap,
+            depthStencilState: null,
             rasterizerState: RasterizerState.CullNone,
             effect: basicEffect
         );
         spriteBatch.Draw(
             groundTexture,
             new Vector2(-groundTexture.Width, 0),
-            new Rectangle((int)this.groundScrollX, (int)this.groundScrollY, groundTexture.Width*2, groundTexture.Height*5),
+            new Rectangle((int) this.groundScrollX, (int) this.groundScrollY, groundTexture.Width * 2, groundTexture.Height * 5),
             Color.White
         );
         spriteBatch.End();

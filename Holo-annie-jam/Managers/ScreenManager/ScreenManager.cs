@@ -24,6 +24,7 @@ public class ScreenManager : DrawableGameComponent {
     SpriteBatch spriteBatch;
     SpriteFont font;
     Texture2D blankTexture;
+    Game game;
 
     bool isInitialized;
     bool traceEnabled;
@@ -60,6 +61,13 @@ public class ScreenManager : DrawableGameComponent {
         set { traceEnabled = value; }
     }
 
+    /// <summary>
+    /// Reference to game object
+    /// </summary>
+    public Game Game {
+        get { return game; }
+    }
+
 
     #endregion
 
@@ -73,6 +81,7 @@ public class ScreenManager : DrawableGameComponent {
         // we must set EnabledGestures before we can query for them, but
         // we don't assume the game wants to read them.
         TouchPanel.EnabledGestures = GestureType.None;
+        this.game = game;
     }
 
 
