@@ -114,10 +114,7 @@ class MainGameScreen : GameScreen {
 
         Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
 
-        uprightObjectEffect = new BasicEffect(ScreenManager.GraphicsDevice) {
-            TextureEnabled = true,
-            VertexColorEnabled = true,
-        };
+        uprightObjectEffect = new BasicEffect(ScreenManager.GraphicsDevice);
 
         Vector3 cameraPosition = new Vector3(0f, -3000f, 1000f);
         Vector3 cameraTarget = new Vector3(0.0f, 0.0f, 0.0f); // Look back at the origin
@@ -131,7 +128,6 @@ class MainGameScreen : GameScreen {
         Matrix world = Matrix.CreateTranslation(0.0f, -(viewport.Height) - 1600, 0.0f);
         Matrix view = Matrix.CreateLookAt(cameraPosition, cameraTarget, Vector3.Up);
         Matrix projection = Matrix.CreatePerspectiveFieldOfView(fovAngle, aspectRatio, near, far);
-
         uprightObjectEffect.World = world;
         uprightObjectEffect.View = view;
         uprightObjectEffect.Projection = projection;
