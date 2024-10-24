@@ -40,6 +40,9 @@ class MainGameScreen : GameScreen {
 
     float pauseAlpha;
 
+    // 3d graphics processing
+    BasicEffect uprightObjectEffect;
+
     #endregion
 
     #region Initialization
@@ -67,11 +70,6 @@ class MainGameScreen : GameScreen {
 
         this.beatmap = Beatmap.LoadFromFile(beatmapFilename);
         this.beatmapPlayer = new BeatmapPlayer(beatmap);
-
-        // A real game would probably have more content than this sample, so
-        // it would take longer to load. We simulate that by delaying for a
-        // while, giving you a chance to admire the beautiful loading screen.
-        Thread.Sleep(1000);
 
         // generate sample beatmap
         //Beatmap.Builder builder = new("Sample Song", "Content/Beatmaps/Sample Beatmap/sample_song.ogg");
@@ -111,6 +109,34 @@ class MainGameScreen : GameScreen {
         // once the load has finished, we use ResetElapsedTime to tell the game's
         // timing mechanism that we have just finished a very long frame, and that
         // it should not try to catch up.
+
+
+        // transform setups
+
+        Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
+
+        uprightObjectEffect = new BasicEffect(ScreenManager.GraphicsDevice) {
+            TextureEnabled = true,
+            VertexColorEnabled = true,
+        };
+
+        Vector3 cameraPosition = new Vector3(0f, -3000f, 1000f);
+        Vector3 cameraTarget = new Vector3(0.0f, 0.0f, 0.0f); // Look back at the origin
+
+        float fovAngle = MathHelper.ToRadians(75);
+        float aspectRatio = 4 / 3;
+        float near = 0.01f; // the near clipping plane distance
+        float far = 10000f; // the far clipping plane distance
+
+        // y+ is forward, x+ is right, z+ is up, try to get y=0 at bottom of screen
+        Matrix world = Matrix.CreateTranslation(0.0f, -(viewport.Height) - 1600, 0.0f);
+        Matrix view = Matrix.CreateLookAt(cameraPosition, cameraTarget, Vector3.Up);
+        Matrix projection = Matrix.CreatePerspectiveFieldOfView(fovAngle, aspectRatio, near, far);
+
+        uprightObjectEffect.World = world;
+        uprightObjectEffect.View = view;
+        uprightObjectEffect.Projection = projection;
+
         ScreenManager.Game.ResetElapsedTime();
     }
 
@@ -223,19 +249,19 @@ class MainGameScreen : GameScreen {
         // ScreenManager.GraphicsDevice.Clear(ClearOptions.Target, Color.CornflowerBlue, 0, 0);
 
         SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
+        Vector2 screen = new(ScreenManager.GraphicsDevice.Viewport.Width, ScreenManager.GraphicsDevice.Viewport.Height);
+
+        VisibleBeatmapEvents visibleEvents = beatmapPlayer.GetVisibleEvents();
+        long totalTicksVisible = beatmapPlayer.VisibleTimespanTicks + beatmapPlayer.TrailingTimespanTicks;
+        long startingTickVisible = visibleEvents.Tick - beatmapPlayer.TrailingTimespanTicks;
 
         spriteBatch.Begin();
-
-        Vector2 screen = new(ScreenManager.GraphicsDevice.Viewport.Width, ScreenManager.GraphicsDevice.Viewport.Height);
 
         //spriteBatch.DrawString(gameFont, "TOP LEFT", TOP_LEFT * screen, Color.Green);
         //spriteBatch.DrawString(gameFont, "TOP RIGHT", TOP_RIGHT * screen * 0.8f, Color.Green);
         //spriteBatch.DrawString(gameFont, "BOTTOM LEFT", BOTTOM_LEFT * screen * 0.8f, Color.Green);
         //spriteBatch.DrawString(gameFont, "BOTTOM RIGHT", BOTTOM_RIGHT * screen * 0.8f, Color.Green);
 
-        VisibleBeatmapEvents visibleEvents = beatmapPlayer.GetVisibleEvents();
-        long totalTicksVisible = beatmapPlayer.VisibleTimespanTicks + beatmapPlayer.TrailingTimespanTicks;
-        long startingTickVisible = visibleEvents.Tick - beatmapPlayer.TrailingTimespanTicks;
         foreach (RhythmEvent rhythmEvent in visibleEvents.RhythmEvents ?? Array.Empty<RhythmEvent>()) {
             // number of lanes is currently hardcoded to 3: later, we should store this in the beatmap file
 
@@ -246,7 +272,7 @@ class MainGameScreen : GameScreen {
             double edgeX = BOTTOM_LEFT.X + (WIDTH_DIFFERENCE * relativeY);
             int x = (int) Math.Round((widthAtLine * relativeX + edgeX) * screen.X);
             int y = (int) Math.Round((TOP_LEFT.Y + (relativeY * HEIGHT)) * screen.Y);
-            // TODO zoom
+
             spriteBatch.Draw(note, new Rectangle(x - NOTE_HALF_WIDTH, y - NOTE_HALF_HEIGHT, 2 * NOTE_HALF_WIDTH, 2 * NOTE_HALF_HEIGHT), Color.White);
         }
 
