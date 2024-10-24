@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Threading;
+using System.Collections.Generic;
 #endregion
 
 /// <summary>
@@ -19,10 +20,6 @@ class MainGameScreen : GameScreen {
     static readonly Vector2 TOP_RIGHT = new(1, 0);
     static readonly Vector2 BOTTOM_LEFT = new(0, 1);
     static readonly Vector2 BOTTOM_RIGHT = new(1, 1);
-    static readonly float BOTTOM_WIDTH = BOTTOM_RIGHT.X - BOTTOM_LEFT.X;
-    static readonly float TOP_WIDTH = TOP_RIGHT.X - TOP_LEFT.X;
-    static readonly float WIDTH_DIFFERENCE = BOTTOM_WIDTH - TOP_WIDTH;
-    static readonly float HEIGHT = BOTTOM_LEFT.Y - TOP_LEFT.Y;
 
     ContentManager content;
     SpriteFont gameFont;
@@ -33,6 +30,10 @@ class MainGameScreen : GameScreen {
     BeatmapPlayer beatmapPlayer;
     Beatmap beatmap;
     string beatmapFilename;
+
+    // rhythm events 
+    VisibleBeatmapEvents visibleEvents;
+    Dictionary<RhythmEvent, Quad> rhythmQuadMap = new Dictionary<RhythmEvent, Quad>();
 
     Vector2 playerPosition = new Vector2(100, 100);
     Vector2 enemyPosition = new Vector2(100, 100);
@@ -107,11 +108,6 @@ class MainGameScreen : GameScreen {
         //builder.WriteToFile("sample_beatmap_builder.json");
         //builder.Build().WriteToFile("sample_beatmap.bin");
 
-        // once the load has finished, we use ResetElapsedTime to tell the game's
-        // timing mechanism that we have just finished a very long frame, and that
-        // it should not try to catch up.
-
-
         // transform setups
 
         Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
@@ -137,6 +133,7 @@ class MainGameScreen : GameScreen {
         uprightObjectEffect.World = world;
         uprightObjectEffect.View = view;
         uprightObjectEffect.Projection = projection;
+        uprightObjectEffect.TextureEnabled = true;
 
         ScreenManager.Game.ResetElapsedTime();
     }
@@ -152,6 +149,18 @@ class MainGameScreen : GameScreen {
         content.Unload();
     }
 
+
+    #endregion
+
+    #region helpers
+
+    /// <summary>
+    /// Creates a Quad for holding an enemy sprite starting from NOTE_HORIZON_DISTANCE
+    /// </summary>
+    private Quad MakeNewEnemyQuad(uint lane, int distanceBetweenLanes) {
+        int x = (int)(lane - 2) * (int)distanceBetweenLanes;
+        return new Quad(new Vector3(x, NOTE_HORIZON_DISTANCE, 0), Vector3.Backward, Vector3.Up, 1, 1);
+    }
 
     #endregion
 
@@ -186,6 +195,17 @@ class MainGameScreen : GameScreen {
                 200);
 
             enemyPosition = Vector2.Lerp(enemyPosition, targetPosition, 0.05f);
+        }
+
+        // update visible events and assign quads to visible rhythm events
+        visibleEvents = beatmapPlayer.GetVisibleEvents();
+
+        foreach (RhythmEvent rhythmEvent in visibleEvents.RhythmEvents ?? Array.Empty<RhythmEvent>()) { 
+            if (rhythmQuadMap.ContainsKey(rhythmEvent)) {
+                // TODO: move quad down the Y axis towards 0
+            } else {
+                rhythmQuadMap.Add(rhythmEvent, MakeNewEnemyQuad(rhythmEvent.Lane, ScreenManager.GraphicsDevice.Viewport.Width));
+            }
         }
     }
 
@@ -252,7 +272,7 @@ class MainGameScreen : GameScreen {
         SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
         Vector2 screen = new(ScreenManager.GraphicsDevice.Viewport.Width, ScreenManager.GraphicsDevice.Viewport.Height);
 
-        VisibleBeatmapEvents visibleEvents = beatmapPlayer.GetVisibleEvents();
+        visibleEvents = beatmapPlayer.GetVisibleEvents();
         long totalTicksVisible = beatmapPlayer.VisibleTimespanTicks + beatmapPlayer.TrailingTimespanTicks;
         long startingTickVisible = visibleEvents.Tick - beatmapPlayer.TrailingTimespanTicks;
 
@@ -277,7 +297,7 @@ class MainGameScreen : GameScreen {
             double relativeY = 1 - (double) (rhythmEvent.Tick - startingTickVisible) / totalTicksVisible;
 
             int x = (int)(rhythmEvent.Lane - 2) * (int)screen.X;
-            int y = (int) (NOTE_HORIZON_DISTANCE - Math.Round((TOP_LEFT.Y + (relativeY * HEIGHT)) * NOTE_HORIZON_DISTANCE));
+            int y = (int) (NOTE_HORIZON_DISTANCE - Math.Round(relativeY * NOTE_HORIZON_DISTANCE));
 
             spriteBatch.Draw(note, new Rectangle(x - NOTE_HALF_WIDTH, y - NOTE_HALF_HEIGHT, 2 * NOTE_HALF_WIDTH, 2 * NOTE_HALF_HEIGHT), Color.White);
         }
