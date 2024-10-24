@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Threading;
 using System.Collections.Generic;
+using System.Linq;
 #endregion
 
 /// <summary>
@@ -205,6 +206,13 @@ class MainGameScreen : GameScreen {
                 // TODO: move quad down the Y axis towards 0
             } else {
                 rhythmQuadMap.Add(rhythmEvent, MakeNewEnemyQuad(rhythmEvent.Lane, ScreenManager.GraphicsDevice.Viewport.Width));
+            }
+        }
+
+        // deload invisible events
+        foreach (RhythmEvent rhythmEvent in rhythmQuadMap.Keys.ToList()) {
+            if (!(visibleEvents.RhythmEvents ?? Array.Empty<RhythmEvent>()).Contains(rhythmEvent)) {
+                rhythmQuadMap.Remove(rhythmEvent);
             }
         }
     }
