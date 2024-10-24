@@ -25,8 +25,8 @@ class MainGameScreen : GameScreen {
     ContentManager content;
     SpriteFont gameFont;
     Texture2D note;
-    const int NOTE_HALF_WIDTH = 50;
-    const int NOTE_HALF_HEIGHT = 50;
+    const int NOTE_WIDTH = 500;
+    const int NOTE_HEIGHT = 1000;
     const int NOTE_HORIZON_DISTANCE = 10000;
     BeatmapPlayer beatmapPlayer;
     Beatmap beatmap;
@@ -170,7 +170,13 @@ class MainGameScreen : GameScreen {
     /// </summary>
     private Quad MakeNewEnemyQuad(uint lane, int distanceBetweenLanes) {
         int x = (int)(lane - 2) * (int)distanceBetweenLanes;
-        return new Quad(new Vector3(x, NOTE_HORIZON_DISTANCE/4, 0), new Vector3(0, -1, 0), new Vector3(0, 0, 1), 100, 500);
+        return new Quad(
+            new Vector3(x, NOTE_HORIZON_DISTANCE, 0), 
+            new Vector3(0, -1, 0), 
+            new Vector3(0, 0, 1), 
+            NOTE_WIDTH, 
+            NOTE_HEIGHT
+        );
     }
 
     #endregion
@@ -193,27 +199,20 @@ class MainGameScreen : GameScreen {
         else
             pauseAlpha = Math.Max(pauseAlpha - 1f / 32, 0);
 
-        if (IsActive) {
-            // Apply some random jitter to make the enemy move around.
-            const float randomization = 10;
-
-            enemyPosition.X += (float) (random.NextDouble() - 0.5) * randomization;
-            enemyPosition.Y += (float) (random.NextDouble() - 0.5) * randomization;
-
-            // Apply a stabilizing force to stop the enemy moving off the screen.
-            Vector2 targetPosition = new Vector2(
-                ScreenManager.GraphicsDevice.Viewport.Width / 2 - gameFont.MeasureString("Insert Gameplay Here").X / 2,
-                200);
-
-            enemyPosition = Vector2.Lerp(enemyPosition, targetPosition, 0.05f);
-        }
-
         // update visible events and assign quads to visible rhythm events
         visibleEvents = beatmapPlayer.GetVisibleEvents();
+        long totalTicksVisible = beatmapPlayer.VisibleTimespanTicks + beatmapPlayer.TrailingTimespanTicks;
+        long startingTickVisible = visibleEvents.Tick - beatmapPlayer.TrailingTimespanTicks;
 
         foreach (RhythmEvent rhythmEvent in visibleEvents.RhythmEvents ?? Array.Empty<RhythmEvent>()) { 
+            double relativeY = 1 - (double) (rhythmEvent.Tick - startingTickVisible) / totalTicksVisible;
+
             if (rhythmQuadMap.ContainsKey(rhythmEvent)) {
-                // TODO: move quad down the Y axis towards 0
+                rhythmQuadMap[rhythmEvent].Origin = new Vector3(
+                    rhythmQuadMap[rhythmEvent].Origin.X,
+                    (float)(NOTE_HORIZON_DISTANCE - Math.Round(relativeY * NOTE_HORIZON_DISTANCE)),
+                    rhythmQuadMap[rhythmEvent].Origin.Z
+                );
             } else {
                 rhythmQuadMap.Add(rhythmEvent, MakeNewEnemyQuad(rhythmEvent.Lane, ScreenManager.GraphicsDevice.Viewport.Width));
             }
@@ -290,38 +289,6 @@ class MainGameScreen : GameScreen {
         SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
         Vector2 screen = new(ScreenManager.GraphicsDevice.Viewport.Width, ScreenManager.GraphicsDevice.Viewport.Height);
 
-        visibleEvents = beatmapPlayer.GetVisibleEvents();
-        long totalTicksVisible = beatmapPlayer.VisibleTimespanTicks + beatmapPlayer.TrailingTimespanTicks;
-        long startingTickVisible = visibleEvents.Tick - beatmapPlayer.TrailingTimespanTicks;
-
-        // draw upright objects in perspective.
-        spriteBatch.Begin(
-            sortMode: SpriteSortMode.Deferred,
-            blendState: null,
-            samplerState: SamplerState.LinearWrap,
-            depthStencilState: null,
-            rasterizerState: RasterizerState.CullNone,
-            effect: uprightObjectEffect
-        );
-
-        //spriteBatch.DrawString(gameFont, "TOP LEFT", TOP_LEFT * screen, Color.Green);
-        //spriteBatch.DrawString(gameFont, "TOP RIGHT", TOP_RIGHT * screen * 0.8f, Color.Green);
-        //spriteBatch.DrawString(gameFont, "BOTTOM LEFT", BOTTOM_LEFT * screen * 0.8f, Color.Green);
-        //spriteBatch.DrawString(gameFont, "BOTTOM RIGHT", BOTTOM_RIGHT * screen * 0.8f, Color.Green);
-        
-        foreach (RhythmEvent rhythmEvent in visibleEvents.RhythmEvents ?? Array.Empty<RhythmEvent>()) {
-            // number of lanes is currently hardcoded to 3: later, we should store this in the beatmap file
-
-            double relativeY = 1 - (double) (rhythmEvent.Tick - startingTickVisible) / totalTicksVisible;
-
-            int x = (int)(rhythmEvent.Lane - 2) * (int)screen.X;
-            int y = (int) (NOTE_HORIZON_DISTANCE - Math.Round(relativeY * NOTE_HORIZON_DISTANCE));
-
-            spriteBatch.Draw(note, new Rectangle(x - NOTE_HALF_WIDTH, y - NOTE_HALF_HEIGHT, 2 * NOTE_HALF_WIDTH, 2 * NOTE_HALF_HEIGHT), Color.White);
-        }
-
-        spriteBatch.End();
-
         foreach (EffectPass pass in uprightObjectEffect.CurrentTechnique.Passes) {
             pass.Apply();
 
@@ -331,10 +298,13 @@ class MainGameScreen : GameScreen {
                     PrimitiveType.TriangleList,
                     entry.Value.Vertices, 0, 4,
                     entry.Value.Indices, 0, 2);
+
+                /* list all of the coordinates in the quad
                 System.Diagnostics.Debug.WriteLine("-------------------------------------------");
                 foreach (var v in entry.Value.Vertices) {
                     System.Diagnostics.Debug.WriteLine(v);
                 }
+                */ 
             }
         }
 
