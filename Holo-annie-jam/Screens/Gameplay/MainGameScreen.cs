@@ -29,6 +29,7 @@ class MainGameScreen : GameScreen {
     Texture2D note;
     const int NOTE_HALF_WIDTH = 50;
     const int NOTE_HALF_HEIGHT = 50;
+    const int NOTE_HORIZON_DISTANCE = 10000;
     BeatmapPlayer beatmapPlayer;
     Beatmap beatmap;
     string beatmapFilename;
@@ -128,7 +129,7 @@ class MainGameScreen : GameScreen {
         float near = 0.01f; // the near clipping plane distance
         float far = 10000f; // the far clipping plane distance
 
-        // y+ is forward, x+ is right, z+ is up, try to get y=0 at bottom of screen
+        // y+ is forward, x+ is right, z+ is up, try to get world's y=0 at bottom of screen
         Matrix world = Matrix.CreateTranslation(0.0f, -(viewport.Height) - 1600, 0.0f);
         Matrix view = Matrix.CreateLookAt(cameraPosition, cameraTarget, Vector3.Up);
         Matrix projection = Matrix.CreatePerspectiveFieldOfView(fovAngle, aspectRatio, near, far);
@@ -255,7 +256,15 @@ class MainGameScreen : GameScreen {
         long totalTicksVisible = beatmapPlayer.VisibleTimespanTicks + beatmapPlayer.TrailingTimespanTicks;
         long startingTickVisible = visibleEvents.Tick - beatmapPlayer.TrailingTimespanTicks;
 
-        spriteBatch.Begin();
+        // draw upright objects in perspective.
+        spriteBatch.Begin(
+            sortMode: SpriteSortMode.Deferred,
+            blendState: null,
+            samplerState: SamplerState.LinearWrap,
+            depthStencilState: null,
+            rasterizerState: RasterizerState.CullNone,
+            effect: uprightObjectEffect
+        );
 
         //spriteBatch.DrawString(gameFont, "TOP LEFT", TOP_LEFT * screen, Color.Green);
         //spriteBatch.DrawString(gameFont, "TOP RIGHT", TOP_RIGHT * screen * 0.8f, Color.Green);
@@ -265,13 +274,10 @@ class MainGameScreen : GameScreen {
         foreach (RhythmEvent rhythmEvent in visibleEvents.RhythmEvents ?? Array.Empty<RhythmEvent>()) {
             // number of lanes is currently hardcoded to 3: later, we should store this in the beatmap file
 
-            double relativeX = (2 * rhythmEvent.Lane - 1) / 6.0;
             double relativeY = 1 - (double) (rhythmEvent.Tick - startingTickVisible) / totalTicksVisible;
 
-            double widthAtLine = BOTTOM_WIDTH - (WIDTH_DIFFERENCE * relativeY);
-            double edgeX = BOTTOM_LEFT.X + (WIDTH_DIFFERENCE * relativeY);
-            int x = (int) Math.Round((widthAtLine * relativeX + edgeX) * screen.X);
-            int y = (int) Math.Round((TOP_LEFT.Y + (relativeY * HEIGHT)) * screen.Y);
+            int x = (int)(rhythmEvent.Lane - 2) * (int)screen.X;
+            int y = (int) (NOTE_HORIZON_DISTANCE - Math.Round((TOP_LEFT.Y + (relativeY * HEIGHT)) * NOTE_HORIZON_DISTANCE));
 
             spriteBatch.Draw(note, new Rectangle(x - NOTE_HALF_WIDTH, y - NOTE_HALF_HEIGHT, 2 * NOTE_HALF_WIDTH, 2 * NOTE_HALF_HEIGHT), Color.White);
         }
