@@ -25,6 +25,12 @@
 /processorParam:TextureFormat=Color
 /build:background.png
 
+#begin Beatmaps/Sample Beatmap/sample_song.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Beatmaps/Sample Beatmap/sample_song.ogg
+
 #begin blank.png
 /importer:TextureImporter
 /processor:TextureProcessor

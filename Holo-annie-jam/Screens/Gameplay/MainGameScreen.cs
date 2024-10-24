@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Threading;
+using System.Collections.Generic;
+using System.Linq;
 #endregion
 
 /// <summary>
@@ -19,19 +21,21 @@ class MainGameScreen : GameScreen {
     static readonly Vector2 TOP_RIGHT = new(1, 0);
     static readonly Vector2 BOTTOM_LEFT = new(0, 1);
     static readonly Vector2 BOTTOM_RIGHT = new(1, 1);
-    static readonly float BOTTOM_WIDTH = BOTTOM_RIGHT.X - BOTTOM_LEFT.X;
-    static readonly float TOP_WIDTH = TOP_RIGHT.X - TOP_LEFT.X;
-    static readonly float WIDTH_DIFFERENCE = BOTTOM_WIDTH - TOP_WIDTH;
-    static readonly float HEIGHT = BOTTOM_LEFT.Y - TOP_LEFT.Y;
 
     ContentManager content;
     SpriteFont gameFont;
     Texture2D note;
-    const int NOTE_HALF_WIDTH = 50;
-    const int NOTE_HALF_HEIGHT = 50;
+    const int NOTE_WIDTH = 500;
+    const int NOTE_HEIGHT = 1000;
+    const int NOTE_HORIZON_DISTANCE = 10000;
     BeatmapPlayer beatmapPlayer;
     Beatmap beatmap;
     string beatmapFilename;
+    VertexDeclaration vertexDeclaration;
+
+    // rhythm events 
+    VisibleBeatmapEvents visibleEvents;
+    Dictionary<RhythmEvent, Quad> rhythmQuadMap = new Dictionary<RhythmEvent, Quad>();
 
     Vector2 playerPosition = new Vector2(100, 100);
     Vector2 enemyPosition = new Vector2(100, 100);
@@ -39,6 +43,9 @@ class MainGameScreen : GameScreen {
     Random random = new Random();
 
     float pauseAlpha;
+
+    // 3d graphics processing
+    BasicEffect uprightObjectEffect;
 
     #endregion
 
@@ -67,11 +74,6 @@ class MainGameScreen : GameScreen {
 
         this.beatmap = Beatmap.LoadFromFile(beatmapFilename);
         this.beatmapPlayer = new BeatmapPlayer(beatmap);
-
-        // A real game would probably have more content than this sample, so
-        // it would take longer to load. We simulate that by delaying for a
-        // while, giving you a chance to admire the beautiful loading screen.
-        Thread.Sleep(1000);
 
         // generate sample beatmap
         //Beatmap.Builder builder = new("Sample Song", "Content/Beatmaps/Sample Beatmap/sample_song.ogg");
@@ -108,9 +110,37 @@ class MainGameScreen : GameScreen {
         //builder.WriteToFile("sample_beatmap_builder.json");
         //builder.Build().WriteToFile("sample_beatmap.bin");
 
-        // once the load has finished, we use ResetElapsedTime to tell the game's
-        // timing mechanism that we have just finished a very long frame, and that
-        // it should not try to catch up.
+        // transform setups
+
+        Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
+
+        uprightObjectEffect = new BasicEffect(ScreenManager.GraphicsDevice);
+
+        Vector3 cameraPosition = new Vector3(0f, -3000f, 1000f);
+        Vector3 cameraTarget = new Vector3(0.0f, 0.0f, 0.0f); // Look back at the origin
+
+        float fovAngle = MathHelper.ToRadians(75);
+        float aspectRatio = 4 / 3;
+        float near = 0.01f; // the near clipping plane distance
+        float far = 10000f; // the far clipping plane distance
+
+        // y+ is forward, x+ is right, z+ is up, try to get world's y=0 at bottom of screen
+        Matrix world = Matrix.CreateTranslation(0.0f, -(viewport.Height) - 1600, 0.0f);
+        Matrix view = Matrix.CreateLookAt(cameraPosition, cameraTarget, Vector3.Up);
+        Matrix projection = Matrix.CreatePerspectiveFieldOfView(fovAngle, aspectRatio, near, far);
+        uprightObjectEffect.World = world;
+        uprightObjectEffect.View = view;
+        uprightObjectEffect.Projection = projection;
+        uprightObjectEffect.TextureEnabled = true;
+        uprightObjectEffect.Texture = note;
+
+        vertexDeclaration = new VertexDeclaration(new VertexElement[] {
+                new VertexElement(0, VertexElementFormat.Vector3, VertexElementUsage.Position, 0),
+                new VertexElement(12, VertexElementFormat.Vector3, VertexElementUsage.Normal, 0),
+                new VertexElement(24, VertexElementFormat.Vector2, VertexElementUsage.TextureCoordinate, 0)
+            }
+        );
+
         ScreenManager.Game.ResetElapsedTime();
     }
 
@@ -125,6 +155,25 @@ class MainGameScreen : GameScreen {
         content.Unload();
     }
 
+
+    #endregion
+
+    #region helpers
+
+    /// <summary>
+    /// Creates a Quad for holding an enemy sprite starting from NOTE_HORIZON_DISTANCE
+    /// Note that we want to draw our enemnies upright, so normal is y-, up is z+, which contradicts vector3's stuff
+    /// </summary>
+    private Quad MakeNewEnemyQuad(uint lane, int distanceBetweenLanes) {
+        int x = (int)(lane - 2) * (int)distanceBetweenLanes;
+        return new Quad(
+            new Vector3(x, NOTE_HORIZON_DISTANCE, 0), 
+            new Vector3(0, -1, 0), 
+            new Vector3(0, 0, 1), 
+            NOTE_WIDTH, 
+            NOTE_HEIGHT
+        );
+    }
 
     #endregion
 
@@ -146,19 +195,30 @@ class MainGameScreen : GameScreen {
         else
             pauseAlpha = Math.Max(pauseAlpha - 1f / 32, 0);
 
-        if (IsActive) {
-            // Apply some random jitter to make the enemy move around.
-            const float randomization = 10;
+        // update visible events and assign quads to visible rhythm events
+        visibleEvents = beatmapPlayer.GetVisibleEvents();
+        long totalTicksVisible = beatmapPlayer.VisibleTimespanTicks + beatmapPlayer.TrailingTimespanTicks;
+        long startingTickVisible = visibleEvents.Tick - beatmapPlayer.TrailingTimespanTicks;
 
-            enemyPosition.X += (float) (random.NextDouble() - 0.5) * randomization;
-            enemyPosition.Y += (float) (random.NextDouble() - 0.5) * randomization;
+        foreach (RhythmEvent rhythmEvent in visibleEvents.RhythmEvents ?? Array.Empty<RhythmEvent>()) { 
+            double relativeY = 1 - (double) (rhythmEvent.Tick - startingTickVisible) / totalTicksVisible;
 
-            // Apply a stabilizing force to stop the enemy moving off the screen.
-            Vector2 targetPosition = new Vector2(
-                ScreenManager.GraphicsDevice.Viewport.Width / 2 - gameFont.MeasureString("Insert Gameplay Here").X / 2,
-                200);
+            if (rhythmQuadMap.ContainsKey(rhythmEvent)) {
+                rhythmQuadMap[rhythmEvent].Origin = new Vector3(
+                    rhythmQuadMap[rhythmEvent].Origin.X,
+                    (float)(NOTE_HORIZON_DISTANCE - Math.Round(relativeY * NOTE_HORIZON_DISTANCE)),
+                    rhythmQuadMap[rhythmEvent].Origin.Z
+                );
+            } else {
+                rhythmQuadMap.Add(rhythmEvent, MakeNewEnemyQuad(rhythmEvent.Lane, ScreenManager.GraphicsDevice.Viewport.Width));
+            }
+        }
 
-            enemyPosition = Vector2.Lerp(enemyPosition, targetPosition, 0.05f);
+        // deload invisible events
+        foreach (RhythmEvent rhythmEvent in rhythmQuadMap.Keys.ToList()) {
+            if (!(visibleEvents.RhythmEvents ?? Array.Empty<RhythmEvent>()).Contains(rhythmEvent)) {
+                rhythmQuadMap.Remove(rhythmEvent);
+            }
         }
     }
 
@@ -223,34 +283,26 @@ class MainGameScreen : GameScreen {
         // ScreenManager.GraphicsDevice.Clear(ClearOptions.Target, Color.CornflowerBlue, 0, 0);
 
         SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
-
-        spriteBatch.Begin();
-
         Vector2 screen = new(ScreenManager.GraphicsDevice.Viewport.Width, ScreenManager.GraphicsDevice.Viewport.Height);
 
-        //spriteBatch.DrawString(gameFont, "TOP LEFT", TOP_LEFT * screen, Color.Green);
-        //spriteBatch.DrawString(gameFont, "TOP RIGHT", TOP_RIGHT * screen * 0.8f, Color.Green);
-        //spriteBatch.DrawString(gameFont, "BOTTOM LEFT", BOTTOM_LEFT * screen * 0.8f, Color.Green);
-        //spriteBatch.DrawString(gameFont, "BOTTOM RIGHT", BOTTOM_RIGHT * screen * 0.8f, Color.Green);
+        foreach (EffectPass pass in uprightObjectEffect.CurrentTechnique.Passes) {
+            pass.Apply();
 
-        VisibleBeatmapEvents visibleEvents = beatmapPlayer.GetVisibleEvents();
-        long totalTicksVisible = beatmapPlayer.VisibleTimespanTicks + beatmapPlayer.TrailingTimespanTicks;
-        long startingTickVisible = visibleEvents.Tick - beatmapPlayer.TrailingTimespanTicks;
-        foreach (RhythmEvent rhythmEvent in visibleEvents.RhythmEvents ?? Array.Empty<RhythmEvent>()) {
-            // number of lanes is currently hardcoded to 3: later, we should store this in the beatmap file
+            foreach (KeyValuePair<RhythmEvent, Quad> entry in rhythmQuadMap) {
+                ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives
+                    <VertexPositionNormalTexture>(
+                    PrimitiveType.TriangleList,
+                    entry.Value.Vertices, 0, 4,
+                    entry.Value.Indices, 0, 2);
 
-            double relativeX = (2 * rhythmEvent.Lane - 1) / 6.0;
-            double relativeY = 1 - (double) (rhythmEvent.Tick - startingTickVisible) / totalTicksVisible;
-
-            double widthAtLine = BOTTOM_WIDTH - (WIDTH_DIFFERENCE * relativeY);
-            double edgeX = BOTTOM_LEFT.X + (WIDTH_DIFFERENCE * relativeY);
-            int x = (int) Math.Round((widthAtLine * relativeX + edgeX) * screen.X);
-            int y = (int) Math.Round((TOP_LEFT.Y + (relativeY * HEIGHT)) * screen.Y);
-            // TODO zoom
-            spriteBatch.Draw(note, new Rectangle(x - NOTE_HALF_WIDTH, y - NOTE_HALF_HEIGHT, 2 * NOTE_HALF_WIDTH, 2 * NOTE_HALF_HEIGHT), Color.White);
+                /* list all of the coordinates in the quad
+                System.Diagnostics.Debug.WriteLine("-------------------------------------------");
+                foreach (var v in entry.Value.Vertices) {
+                    System.Diagnostics.Debug.WriteLine(v);
+                }
+                */ 
+            }
         }
-
-        spriteBatch.End();
 
         // If the game is transitioning on or off, fade it out to black.
         if (TransitionPosition > 0 || pauseAlpha > 0) {
