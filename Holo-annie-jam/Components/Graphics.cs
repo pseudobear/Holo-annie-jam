@@ -19,40 +19,53 @@ class Quad {
     }
     short[] indices; 
 
-    Vector3 Origin;
-    Vector3 Normal;
-    Vector3 Up;
-    Vector3 Left;
-    Vector3 uppercenter;
-    Vector3 UpperLeft;
-    Vector3 UpperRight;
-    Vector3 LowerLeft;
-    Vector3 LowerRight;
+
+    public Vector3 Origin {
+        get { return origin; } 
+        set {
+            origin = value;
+            FillVertices();
+        }
+    }
+    Vector3 origin;
+
+    Vector3 normal;
+    Vector3 up;
+    Vector3 left;
+    Vector3 upperCenter;
+    Vector3 upperLeft;
+    Vector3 upperRight;
+    Vector3 lowerLeft;
+    Vector3 lowerRight;
+    float width;
+    float height;
 
     public Quad(Vector3 origin, Vector3 normal, Vector3 up, float width, float height) {
         vertices = new VertexPositionNormalTexture[4];
         indices = new short[6];
-        Origin = origin;
-        Normal = normal;
-        Up = up;
+        this.origin = origin;
+        this.normal = normal;
+        this.up = up;
+        this.width = width;
+        this.height = height;
 
+        FillVertices();
+    }
+
+    private void FillVertices() {
         // Calculate the quad corners
-        Left = Vector3.Cross(normal, Up);
-        uppercenter = (Up * height / 2) + origin;
-        UpperLeft = uppercenter + (Left * width / 2);
-        UpperRight = uppercenter - (Left * width / 2);
-        LowerLeft = UpperLeft - (Up * height);
-        LowerRight = UpperRight - (Up * height);
-
-        Fillvertices();
+        left = Vector3.Cross(normal, up);
+        upperCenter = (up * height / 2) + origin;
+        upperLeft = upperCenter + (left * width / 2);
+        upperRight = upperCenter - (left * width / 2);
+        lowerLeft = upperLeft - (up * height);
+        lowerRight = upperRight - (up * height);
 
         // Provide a normal for each vertex
         for (int i = 0; i < vertices.Length; i++) {
-            vertices[i].Normal = Normal;
+            vertices[i].Normal = normal;
         }
-    }
 
-    private void Fillvertices() {
         // Fill in texture coordinates to display full texture
         // on quad
         Vector2 textureUpperLeft = new Vector2(0.0f, 0.0f);
@@ -62,13 +75,13 @@ class Quad {
 
         // Set the position and texture coordinate for each
         // vertex
-        vertices[0].Position = LowerLeft;
+        vertices[0].Position = lowerLeft;
         vertices[0].TextureCoordinate = textureLowerLeft;
-        vertices[1].Position = UpperLeft;
+        vertices[1].Position = upperLeft;
         vertices[1].TextureCoordinate = textureUpperLeft;
-        vertices[2].Position = LowerRight;
+        vertices[2].Position = lowerRight;
         vertices[2].TextureCoordinate = textureLowerRight;
-        vertices[3].Position = UpperRight;
+        vertices[3].Position = upperRight;
         vertices[3].TextureCoordinate = textureUpperRight;
 
         // Set the index buffer for each vertex, using
