@@ -31,6 +31,7 @@ class MainGameScreen : GameScreen {
     BeatmapPlayer beatmapPlayer;
     Beatmap beatmap;
     string beatmapFilename;
+    VertexDeclaration vertexDeclaration;
 
     // rhythm events 
     VisibleBeatmapEvents visibleEvents;
@@ -135,6 +136,14 @@ class MainGameScreen : GameScreen {
         uprightObjectEffect.View = view;
         uprightObjectEffect.Projection = projection;
         uprightObjectEffect.TextureEnabled = true;
+        uprightObjectEffect.Texture = note;
+
+        vertexDeclaration = new VertexDeclaration(new VertexElement[] {
+                new VertexElement(0, VertexElementFormat.Vector3, VertexElementUsage.Position, 0),
+                new VertexElement(12, VertexElementFormat.Vector3, VertexElementUsage.Normal, 0),
+                new VertexElement(24, VertexElementFormat.Vector2, VertexElementUsage.TextureCoordinate, 0)
+            }
+        );
 
         ScreenManager.Game.ResetElapsedTime();
     }
@@ -157,10 +166,11 @@ class MainGameScreen : GameScreen {
 
     /// <summary>
     /// Creates a Quad for holding an enemy sprite starting from NOTE_HORIZON_DISTANCE
+    /// Note that we want to draw our enemnies upright, so normal is y-, up is z+, which contradicts vector3's stuff
     /// </summary>
     private Quad MakeNewEnemyQuad(uint lane, int distanceBetweenLanes) {
         int x = (int)(lane - 2) * (int)distanceBetweenLanes;
-        return new Quad(new Vector3(x, NOTE_HORIZON_DISTANCE, 0), Vector3.Backward, Vector3.Up, 1, 1);
+        return new Quad(new Vector3(x, NOTE_HORIZON_DISTANCE/4, 0), new Vector3(0, -1, 0), new Vector3(0, 0, 1), 100, 500);
     }
 
     #endregion
@@ -298,7 +308,7 @@ class MainGameScreen : GameScreen {
         //spriteBatch.DrawString(gameFont, "TOP RIGHT", TOP_RIGHT * screen * 0.8f, Color.Green);
         //spriteBatch.DrawString(gameFont, "BOTTOM LEFT", BOTTOM_LEFT * screen * 0.8f, Color.Green);
         //spriteBatch.DrawString(gameFont, "BOTTOM RIGHT", BOTTOM_RIGHT * screen * 0.8f, Color.Green);
-
+        
         foreach (RhythmEvent rhythmEvent in visibleEvents.RhythmEvents ?? Array.Empty<RhythmEvent>()) {
             // number of lanes is currently hardcoded to 3: later, we should store this in the beatmap file
 
@@ -311,6 +321,22 @@ class MainGameScreen : GameScreen {
         }
 
         spriteBatch.End();
+
+        foreach (EffectPass pass in uprightObjectEffect.CurrentTechnique.Passes) {
+            pass.Apply();
+
+            foreach (KeyValuePair<RhythmEvent, Quad> entry in rhythmQuadMap) {
+                ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives
+                    <VertexPositionNormalTexture>(
+                    PrimitiveType.TriangleList,
+                    entry.Value.Vertices, 0, 4,
+                    entry.Value.Indices, 0, 2);
+                System.Diagnostics.Debug.WriteLine("-------------------------------------------");
+                foreach (var v in entry.Value.Vertices) {
+                    System.Diagnostics.Debug.WriteLine(v);
+                }
+            }
+        }
 
         // If the game is transitioning on or off, fade it out to black.
         if (TransitionPosition > 0 || pauseAlpha > 0) {
