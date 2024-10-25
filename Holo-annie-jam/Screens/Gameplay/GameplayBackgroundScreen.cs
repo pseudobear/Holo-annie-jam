@@ -51,6 +51,9 @@ class GameplayBackgroundScreen : GameScreen {
         if (content == null)
             content = new ContentManager(ScreenManager.Game.Services, "Content");
 
+        groundScrollX = 0;
+        groundScrollY = 0;
+
         Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
 
         backgroundTexture = content.Load<Texture2D>("background");
@@ -113,6 +116,20 @@ class GameplayBackgroundScreen : GameScreen {
 
         // Scroll ground
         groundScrollY += 40f;
+
+        // scroll walls
+        // dont ask me why, I just lucked on this number and it's perfect for this texture for now
+        // will need to actually do the math to figure out how to get this to correlate to whatever we choose
+        leftWall.SetTextureCoords(
+            new Vector2(groundScrollY/10000, 0f),
+            1f,
+            1f
+        );
+        rightWall.SetTextureCoords(
+            new Vector2(-groundScrollY/10000, 0f),
+            1f,
+            1f
+        );
     }
 
 
@@ -124,6 +141,8 @@ class GameplayBackgroundScreen : GameScreen {
         Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
         Rectangle fullscreen = new Rectangle(0, 0, viewport.Width, viewport.Height);
 
+        // sampler wraps textures to scroll evenly
+        ScreenManager.GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
         foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes) {
             pass.Apply();
 
