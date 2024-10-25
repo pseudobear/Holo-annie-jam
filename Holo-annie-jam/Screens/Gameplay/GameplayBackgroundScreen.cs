@@ -124,13 +124,6 @@ class GameplayBackgroundScreen : GameScreen {
         Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
         Rectangle fullscreen = new Rectangle(0, 0, viewport.Width, viewport.Height);
 
-        spriteBatch.Begin();
-
-        spriteBatch.Draw(backgroundTexture, fullscreen,
-                            new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha));
-
-        spriteBatch.End();
-        
         foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes) {
             pass.Apply();
 
