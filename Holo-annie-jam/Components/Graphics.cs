@@ -40,6 +40,9 @@ class Quad {
     float width;
     float height;
 
+    /// <summary>
+    /// Constructor, origin is the center of the quad 
+    /// </summary>
     public Quad(Vector3 origin, Vector3 normal, Vector3 up, float width, float height) {
         vertices = new VertexPositionNormalTexture[4];
         indices = new short[6];

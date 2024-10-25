@@ -21,6 +21,7 @@ class GameplayBackgroundScreen : GameScreen {
 
     float groundScrollX;
     float groundScrollY;
+    float groundWidth;
 
     Quad leftWall;
     Quad rightWall;
@@ -58,20 +59,31 @@ class GameplayBackgroundScreen : GameScreen {
 
         basicEffect = new BasicEffect(ScreenManager.GraphicsDevice);
         basicEffect.TextureEnabled = true;
+        basicEffect.Texture = groundTexture;
         basicEffect.World = GameplayTransforms.GetWorldMatrix(viewport.Height);
         basicEffect.View = GameplayTransforms.GetViewMatrix();
         basicEffect.Projection = GameplayTransforms.GetProjectionMatrix();
 
-        /*
-        Quad leftWall = new Quad(
-            new Vector3(x, 0, 0),
-            new Vector3(),
-            new Vector3(),
-            
-        );
-        Quad rightWall = new Quad(
+        groundWidth = groundTexture.Width * 4;
 
-        );*/
+        float wallWidth = GameConstants.NOTE_HORIZON_DISTANCE;
+        float wallHeight = viewport.Height * 4;
+
+        leftWall = new Quad(
+            new Vector3(-(groundWidth / 2), wallWidth / 2, wallHeight / 2),
+            new Vector3(1, 0, 0),
+            new Vector3(0, 0, 1),
+            wallWidth,
+            wallHeight
+        );
+
+        rightWall = new Quad(
+            new Vector3(groundWidth / 2, wallWidth / 2, wallHeight / 2),
+            new Vector3(-1, 0, 0),
+            new Vector3(0, 0, 1),
+            wallWidth,
+            wallHeight
+        );
     }
 
 
@@ -118,6 +130,23 @@ class GameplayBackgroundScreen : GameScreen {
                             new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha));
 
         spriteBatch.End();
+        
+        foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes) {
+            pass.Apply();
+
+            // draw walls
+            ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(
+                PrimitiveType.TriangleList,
+                leftWall.Vertices, 0, 4,
+                leftWall.Indices, 0, 2
+            );
+
+            ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(
+                PrimitiveType.TriangleList,
+                rightWall.Vertices, 0, 4,
+                rightWall.Indices, 0, 2
+            );
+        }
 
         // Draw ground
         spriteBatch.Begin(
@@ -130,30 +159,11 @@ class GameplayBackgroundScreen : GameScreen {
         );
         spriteBatch.Draw(
             groundTexture,
-            new Vector2(-groundTexture.Width, 0),
-            new Rectangle((int) this.groundScrollX, (int) this.groundScrollY, groundTexture.Width * 2, groundTexture.Height * 5),
+            new Vector2(-(groundWidth / 2), 0),
+            new Rectangle((int) this.groundScrollX, (int) this.groundScrollY, (int)groundWidth, GameConstants.NOTE_HORIZON_DISTANCE),
             Color.White
         );
         spriteBatch.End();
-
-        foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes) {
-            pass.Apply();
-
-            /*
-            ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives
-                <VertexPositionNormalTexture>(
-                PrimitiveType.TriangleList,
-                entry.Value.Vertices, 0, 4,
-                entry.Value.Indices, 0, 2);
-            */
-
-            /* list all of the coordinates in the quad
-            System.Diagnostics.Debug.WriteLine("-------------------------------------------");
-            foreach (var v in entry.Value.Vertices) {
-                System.Diagnostics.Debug.WriteLine(v);
-            }
-            */
-        }
     }
     #endregion
 }
