@@ -24,6 +24,7 @@ public class Game1 : Game {
         _graphics.IsFullScreen = false;
         _graphics.PreferredBackBufferWidth = 1280;
         _graphics.PreferredBackBufferHeight = 720;
+        _graphics.PreferMultiSampling = true;
         _graphics.ApplyChanges();
 
         if (!Bass.Init()) {
