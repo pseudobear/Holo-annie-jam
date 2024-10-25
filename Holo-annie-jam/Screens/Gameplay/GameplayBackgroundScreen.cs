@@ -53,27 +53,11 @@ class GameplayBackgroundScreen : GameScreen {
         groundTexture = content.Load<Texture2D>("GameplayAssets/Background/cobblestone_3");
         gradientTexture = content.Load<Texture2D>("gradient");
 
-        basicEffect = new BasicEffect(ScreenManager.GraphicsDevice) {
-            TextureEnabled = true,
-            VertexColorEnabled = true,
-        };
-
-        Vector3 cameraPosition = new Vector3(0f, -3000f, 1000f);
-        Vector3 cameraTarget = new Vector3(0.0f, 0.0f, 0.0f); // Look back at the origin
-
-        float fovAngle = MathHelper.ToRadians(75);
-        float aspectRatio = 4 / 3;
-        float near = 0.01f; // the near clipping plane distance
-        float far = 10000f; // the far clipping plane distance
-
-        // y+ is forward, x+ is right, z+ is up, try to get y=0 at bottom of screen
-        Matrix world = Matrix.CreateTranslation(0.0f, -(viewport.Height) - 1600, 0.0f);
-        Matrix view = Matrix.CreateLookAt(cameraPosition, cameraTarget, Vector3.Up);
-        Matrix projection = Matrix.CreatePerspectiveFieldOfView(fovAngle, aspectRatio, near, far);
-
-        basicEffect.World = world;
-        basicEffect.View = view;
-        basicEffect.Projection = projection;
+        basicEffect = new BasicEffect(ScreenManager.GraphicsDevice);
+        basicEffect.TextureEnabled = true;
+        basicEffect.World = GameplayTransforms.GetWorldMatrix(viewport.Height);
+        basicEffect.View = GameplayTransforms.GetViewMatrix();
+        basicEffect.Projection = GameplayTransforms.GetProjectionMatrix();
     }
 
 
