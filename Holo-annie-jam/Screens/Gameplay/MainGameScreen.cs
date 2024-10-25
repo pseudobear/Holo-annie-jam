@@ -25,9 +25,6 @@ class MainGameScreen : GameScreen {
     ContentManager content;
     SpriteFont gameFont;
     Texture2D note;
-    const int NOTE_WIDTH = 500;
-    const int NOTE_HEIGHT = 1000;
-    const int NOTE_HORIZON_DISTANCE = 10000;
     BeatmapPlayer beatmapPlayer;
     Beatmap beatmap;
     string beatmapFilename;
@@ -143,17 +140,17 @@ class MainGameScreen : GameScreen {
     #region helpers
 
     /// <summary>
-    /// Creates a Quad for holding an enemy sprite starting from NOTE_HORIZON_DISTANCE
+    /// Creates a Quad for holding an enemy sprite starting from GameConstants.NOTE_HORIZON_DISTANCE
     /// Note that we want to draw our enemnies upright, so normal is y-, up is z+, which contradicts vector3's stuff
     /// </summary>
     private Quad MakeNewEnemyQuad(uint lane, int distanceBetweenLanes) {
         int x = (int)(lane - 2) * (int)distanceBetweenLanes;
         return new Quad(
-            new Vector3(x, NOTE_HORIZON_DISTANCE, 0), 
+            new Vector3(x, GameConstants.NOTE_HORIZON_DISTANCE, 0), 
             new Vector3(0, -1, 0), 
             new Vector3(0, 0, 1), 
-            NOTE_WIDTH, 
-            NOTE_HEIGHT
+            GameConstants.NOTE_WIDTH, 
+            GameConstants.NOTE_HEIGHT
         );
     }
 
@@ -188,7 +185,7 @@ class MainGameScreen : GameScreen {
             if (rhythmQuadMap.ContainsKey(rhythmEvent)) {
                 rhythmQuadMap[rhythmEvent].Origin = new Vector3(
                     rhythmQuadMap[rhythmEvent].Origin.X,
-                    (float)(NOTE_HORIZON_DISTANCE - Math.Round(relativeY * NOTE_HORIZON_DISTANCE)),
+                    (float)(GameConstants.NOTE_HORIZON_DISTANCE - Math.Round(relativeY * GameConstants.NOTE_HORIZON_DISTANCE)),
                     rhythmQuadMap[rhythmEvent].Origin.Z
                 );
             } else {
@@ -247,6 +244,7 @@ class MainGameScreen : GameScreen {
         foreach (EffectPass pass in uprightObjectEffect.CurrentTechnique.Passes) {
             pass.Apply();
 
+            // TODO: draw these in correct order, may need to use ordered dictionary or maintain a stack of rhythmevents
             foreach (KeyValuePair<RhythmEvent, Quad> entry in rhythmQuadMap) {
                 ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives
                     <VertexPositionNormalTexture>(

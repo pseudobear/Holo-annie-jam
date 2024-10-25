@@ -3,6 +3,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
+static class GameConstants {
+    public const int NOTE_WIDTH = 500;
+    public const int NOTE_HEIGHT = 1000;
+    public const int NOTE_HORIZON_DISTANCE = 10000;
+}
+
 static class GameplayTransforms {
     static Vector3 cameraPosition = new Vector3(0f, -3000f, 1000f);
     static Vector3 cameraTarget = new Vector3(0.0f, 0.0f, 0.0f); // Look back at the origin

@@ -22,6 +22,9 @@ class GameplayBackgroundScreen : GameScreen {
     float groundScrollX;
     float groundScrollY;
 
+    Quad leftWall;
+    Quad rightWall;
+
     #endregion
 
     #region Initialization
@@ -58,6 +61,17 @@ class GameplayBackgroundScreen : GameScreen {
         basicEffect.World = GameplayTransforms.GetWorldMatrix(viewport.Height);
         basicEffect.View = GameplayTransforms.GetViewMatrix();
         basicEffect.Projection = GameplayTransforms.GetProjectionMatrix();
+
+        /*
+        Quad leftWall = new Quad(
+            new Vector3(x, 0, 0),
+            new Vector3(),
+            new Vector3(),
+            
+        );
+        Quad rightWall = new Quad(
+
+        );*/
     }
 
 
@@ -121,8 +135,25 @@ class GameplayBackgroundScreen : GameScreen {
             Color.White
         );
         spriteBatch.End();
+
+        foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes) {
+            pass.Apply();
+
+            /*
+            ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives
+                <VertexPositionNormalTexture>(
+                PrimitiveType.TriangleList,
+                entry.Value.Vertices, 0, 4,
+                entry.Value.Indices, 0, 2);
+            */
+
+            /* list all of the coordinates in the quad
+            System.Diagnostics.Debug.WriteLine("-------------------------------------------");
+            foreach (var v in entry.Value.Vertices) {
+                System.Diagnostics.Debug.WriteLine(v);
+            }
+            */
+        }
     }
-
-
     #endregion
 }
