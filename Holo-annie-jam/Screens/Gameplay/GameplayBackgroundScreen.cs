@@ -21,6 +21,10 @@ class GameplayBackgroundScreen : GameScreen {
 
     float groundScrollX;
     float groundScrollY;
+    float groundWidth;
+
+    Quad leftWall;
+    Quad rightWall;
 
     #endregion
 
@@ -47,33 +51,42 @@ class GameplayBackgroundScreen : GameScreen {
         if (content == null)
             content = new ContentManager(ScreenManager.Game.Services, "Content");
 
+        groundScrollX = 0;
+        groundScrollY = 0;
+
         Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
 
         backgroundTexture = content.Load<Texture2D>("background");
         groundTexture = content.Load<Texture2D>("GameplayAssets/Background/cobblestone_3");
         gradientTexture = content.Load<Texture2D>("gradient");
 
-        basicEffect = new BasicEffect(ScreenManager.GraphicsDevice) {
-            TextureEnabled = true,
-            VertexColorEnabled = true,
-        };
+        basicEffect = new BasicEffect(ScreenManager.GraphicsDevice);
+        basicEffect.TextureEnabled = true;
+        basicEffect.Texture = groundTexture;
+        basicEffect.World = GameplayTransforms.GetWorldMatrix(viewport.Height);
+        basicEffect.View = GameplayTransforms.GetViewMatrix();
+        basicEffect.Projection = GameplayTransforms.GetProjectionMatrix();
 
-        Vector3 cameraPosition = new Vector3(0f, -3000f, 1000f);
-        Vector3 cameraTarget = new Vector3(0.0f, 0.0f, 0.0f); // Look back at the origin
+        groundWidth = groundTexture.Width * 4;
 
-        float fovAngle = MathHelper.ToRadians(75);
-        float aspectRatio = 4 / 3;
-        float near = 0.01f; // the near clipping plane distance
-        float far = 10000f; // the far clipping plane distance
+        float wallWidth = GameConstants.NOTE_HORIZON_DISTANCE;
+        float wallHeight = viewport.Height * 4;
 
-        // y+ is forward, x+ is right, z+ is up, try to get y=0 at bottom of screen
-        Matrix world = Matrix.CreateTranslation(0.0f, -(viewport.Height) - 1600, 0.0f);
-        Matrix view = Matrix.CreateLookAt(cameraPosition, cameraTarget, Vector3.Up);
-        Matrix projection = Matrix.CreatePerspectiveFieldOfView(fovAngle, aspectRatio, near, far);
+        leftWall = new Quad(
+            new Vector3(-(groundWidth / 2), wallWidth / 2, wallHeight / 2),
+            new Vector3(1, 0, 0),
+            new Vector3(0, 0, 1),
+            wallWidth,
+            wallHeight
+        );
 
-        basicEffect.World = world;
-        basicEffect.View = view;
-        basicEffect.Projection = projection;
+        rightWall = new Quad(
+            new Vector3(groundWidth / 2, wallWidth / 2, wallHeight / 2),
+            new Vector3(-1, 0, 0),
+            new Vector3(0, 0, 1),
+            wallWidth,
+            wallHeight
+        );
     }
 
 
@@ -103,6 +116,20 @@ class GameplayBackgroundScreen : GameScreen {
 
         // Scroll ground
         groundScrollY += 40f;
+
+        // scroll walls
+        // dont ask me why, I just lucked on this number and it's perfect for this texture for now
+        // will need to actually do the math to figure out how to get this to correlate to whatever we choose
+        leftWall.SetTextureCoords(
+            new Vector2(groundScrollY/10000, 0f),
+            1f,
+            1f
+        );
+        rightWall.SetTextureCoords(
+            new Vector2(-groundScrollY/10000, 0f),
+            1f,
+            1f
+        );
     }
 
 
@@ -114,12 +141,24 @@ class GameplayBackgroundScreen : GameScreen {
         Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
         Rectangle fullscreen = new Rectangle(0, 0, viewport.Width, viewport.Height);
 
-        spriteBatch.Begin();
+        // sampler wraps textures to scroll evenly
+        ScreenManager.GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
+        foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes) {
+            pass.Apply();
 
-        spriteBatch.Draw(backgroundTexture, fullscreen,
-                            new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha));
+            // draw walls
+            ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(
+                PrimitiveType.TriangleList,
+                leftWall.Vertices, 0, 4,
+                leftWall.Indices, 0, 2
+            );
 
-        spriteBatch.End();
+            ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(
+                PrimitiveType.TriangleList,
+                rightWall.Vertices, 0, 4,
+                rightWall.Indices, 0, 2
+            );
+        }
 
         // Draw ground
         spriteBatch.Begin(
@@ -132,13 +171,11 @@ class GameplayBackgroundScreen : GameScreen {
         );
         spriteBatch.Draw(
             groundTexture,
-            new Vector2(-groundTexture.Width, 0),
-            new Rectangle((int) this.groundScrollX, (int) this.groundScrollY, groundTexture.Width * 2, groundTexture.Height * 5),
+            new Vector2(-(groundWidth / 2), 0),
+            new Rectangle((int) this.groundScrollX, (int) this.groundScrollY, (int)groundWidth, GameConstants.NOTE_HORIZON_DISTANCE),
             Color.White
         );
         spriteBatch.End();
     }
-
-
     #endregion
 }

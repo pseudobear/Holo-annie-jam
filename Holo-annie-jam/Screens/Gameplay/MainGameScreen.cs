@@ -25,9 +25,6 @@ class MainGameScreen : GameScreen {
     ContentManager content;
     SpriteFont gameFont;
     Texture2D note;
-    const int NOTE_WIDTH = 500;
-    const int NOTE_HEIGHT = 1000;
-    const int NOTE_HORIZON_DISTANCE = 10000;
     BeatmapPlayer beatmapPlayer;
     Beatmap beatmap;
     string beatmapFilename;
@@ -36,11 +33,6 @@ class MainGameScreen : GameScreen {
     // rhythm events 
     VisibleBeatmapEvents visibleEvents;
     Dictionary<RhythmEvent, Quad> rhythmQuadMap = new Dictionary<RhythmEvent, Quad>();
-
-    Vector2 playerPosition = new Vector2(100, 100);
-    Vector2 enemyPosition = new Vector2(100, 100);
-
-    Random random = new Random();
 
     float pauseAlpha;
 
@@ -115,22 +107,9 @@ class MainGameScreen : GameScreen {
         Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
 
         uprightObjectEffect = new BasicEffect(ScreenManager.GraphicsDevice);
-
-        Vector3 cameraPosition = new Vector3(0f, -3000f, 1000f);
-        Vector3 cameraTarget = new Vector3(0.0f, 0.0f, 0.0f); // Look back at the origin
-
-        float fovAngle = MathHelper.ToRadians(75);
-        float aspectRatio = 4 / 3;
-        float near = 0.01f; // the near clipping plane distance
-        float far = 10000f; // the far clipping plane distance
-
-        // y+ is forward, x+ is right, z+ is up, try to get world's y=0 at bottom of screen
-        Matrix world = Matrix.CreateTranslation(0.0f, -(viewport.Height) - 1600, 0.0f);
-        Matrix view = Matrix.CreateLookAt(cameraPosition, cameraTarget, Vector3.Up);
-        Matrix projection = Matrix.CreatePerspectiveFieldOfView(fovAngle, aspectRatio, near, far);
-        uprightObjectEffect.World = world;
-        uprightObjectEffect.View = view;
-        uprightObjectEffect.Projection = projection;
+        uprightObjectEffect.World = GameplayTransforms.GetWorldMatrix(viewport.Height);
+        uprightObjectEffect.View = GameplayTransforms.GetViewMatrix();
+        uprightObjectEffect.Projection = GameplayTransforms.GetProjectionMatrix();
         uprightObjectEffect.TextureEnabled = true;
         uprightObjectEffect.Texture = note;
 
@@ -161,17 +140,17 @@ class MainGameScreen : GameScreen {
     #region helpers
 
     /// <summary>
-    /// Creates a Quad for holding an enemy sprite starting from NOTE_HORIZON_DISTANCE
+    /// Creates a Quad for holding an enemy sprite starting from GameConstants.NOTE_HORIZON_DISTANCE
     /// Note that we want to draw our enemnies upright, so normal is y-, up is z+, which contradicts vector3's stuff
     /// </summary>
     private Quad MakeNewEnemyQuad(uint lane, int distanceBetweenLanes) {
         int x = (int)(lane - 2) * (int)distanceBetweenLanes;
         return new Quad(
-            new Vector3(x, NOTE_HORIZON_DISTANCE, 0), 
+            new Vector3(x, GameConstants.NOTE_HORIZON_DISTANCE, 0), 
             new Vector3(0, -1, 0), 
             new Vector3(0, 0, 1), 
-            NOTE_WIDTH, 
-            NOTE_HEIGHT
+            GameConstants.NOTE_WIDTH, 
+            GameConstants.NOTE_HEIGHT
         );
     }
 
@@ -206,7 +185,7 @@ class MainGameScreen : GameScreen {
             if (rhythmQuadMap.ContainsKey(rhythmEvent)) {
                 rhythmQuadMap[rhythmEvent].Origin = new Vector3(
                     rhythmQuadMap[rhythmEvent].Origin.X,
-                    (float)(NOTE_HORIZON_DISTANCE - Math.Round(relativeY * NOTE_HORIZON_DISTANCE)),
+                    (float)(GameConstants.NOTE_HORIZON_DISTANCE - Math.Round(relativeY * GameConstants.NOTE_HORIZON_DISTANCE)),
                     rhythmQuadMap[rhythmEvent].Origin.Z
                 );
             } else {
@@ -247,30 +226,7 @@ class MainGameScreen : GameScreen {
         if (input.IsPauseGame(ControllingPlayer) || gamePadDisconnected) {
             ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
         } else {
-            // Otherwise move the player position.
-            Vector2 movement = Vector2.Zero;
-
-            if (keyboardState.IsKeyDown(Keys.Left))
-                movement.X--;
-
-            if (keyboardState.IsKeyDown(Keys.Right))
-                movement.X++;
-
-            if (keyboardState.IsKeyDown(Keys.Up))
-                movement.Y--;
-
-            if (keyboardState.IsKeyDown(Keys.Down))
-                movement.Y++;
-
-            Vector2 thumbstick = gamePadState.ThumbSticks.Left;
-
-            movement.X += thumbstick.X;
-            movement.Y -= thumbstick.Y;
-
-            if (movement.Length() > 1)
-                movement.Normalize();
-
-            playerPosition += movement * 2;
+            // Otherwise do game stuff:
         }
     }
 
@@ -288,6 +244,7 @@ class MainGameScreen : GameScreen {
         foreach (EffectPass pass in uprightObjectEffect.CurrentTechnique.Passes) {
             pass.Apply();
 
+            // TODO: draw these in correct order, may need to use ordered dictionary or maintain a stack of rhythmevents
             foreach (KeyValuePair<RhythmEvent, Quad> entry in rhythmQuadMap) {
                 ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives
                     <VertexPositionNormalTexture>(

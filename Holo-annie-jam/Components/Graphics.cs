@@ -40,6 +40,9 @@ class Quad {
     float width;
     float height;
 
+    /// <summary>
+    /// Constructor, origin is the center of the quad 
+    /// </summary>
     public Quad(Vector3 origin, Vector3 normal, Vector3 up, float width, float height) {
         vertices = new VertexPositionNormalTexture[4];
         indices = new short[6];
@@ -92,5 +95,22 @@ class Quad {
         indices[3] = 2;
         indices[4] = 1;
         indices[5] = 3;
+    }
+
+    /// <summary>
+    /// Updates the texture coordinates drawn in this quad. 
+    /// In this method, origin is intepretted as the lower left corner 
+    /// </summary>
+    public void SetTextureCoords(Vector2 origin, float width, float height) {
+        // we flip the texture upside down, so upper <--> lower
+        Vector2 textureUpperLeft = origin;
+        Vector2 textureUpperRight = origin + (Vector2.UnitX * width);
+        Vector2 textureLowerLeft = origin + (Vector2.UnitY * height);
+        Vector2 textureLowerRight = origin + (Vector2.UnitX * width) + (Vector2.UnitY * height);
+
+        vertices[0].TextureCoordinate = textureLowerLeft;
+        vertices[1].TextureCoordinate = textureUpperLeft;
+        vertices[2].TextureCoordinate = textureLowerRight;
+        vertices[3].TextureCoordinate = textureUpperRight;
     }
 }
