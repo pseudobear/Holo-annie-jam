@@ -22,6 +22,8 @@ class GameplayBackgroundScreen : GameScreen {
     float groundScrollX;
     float groundScrollY;
     float groundWidth;
+    float wallWidth;
+    float wallHeight;
 
     Quad leftWall;
     Quad rightWall;
@@ -66,11 +68,15 @@ class GameplayBackgroundScreen : GameScreen {
         basicEffect.World = GameplayTransforms.GetWorldMatrix(viewport.Height);
         basicEffect.View = GameplayTransforms.GetViewMatrix();
         basicEffect.Projection = GameplayTransforms.GetProjectionMatrix();
+        basicEffect.FogEnabled = true;
+        basicEffect.FogColor = Color.CornflowerBlue.ToVector3();
+        basicEffect.FogStart = 0.1f;
+        basicEffect.FogEnd = GameConstants.NOTE_HORIZON_DISTANCE - 1000f;
 
         groundWidth = groundTexture.Width * 4;
 
-        float wallWidth = GameConstants.NOTE_HORIZON_DISTANCE;
-        float wallHeight = viewport.Height * 4;
+        wallWidth = GameConstants.NOTE_HORIZON_DISTANCE;
+        wallHeight = viewport.Height * 6;
 
         leftWall = new Quad(
             new Vector3(-(groundWidth / 2), wallWidth / 2, wallHeight / 2),
@@ -114,21 +120,21 @@ class GameplayBackgroundScreen : GameScreen {
                                                     bool coveredByOtherScreen) {
         base.Update(gameTime, otherScreenHasFocus, false);
 
-        // Scroll ground
+        // Scroll ground (and everything else)
         groundScrollY += 40f;
 
         // scroll walls
         // dont ask me why, I just lucked on this number and it's perfect for this texture for now
         // will need to actually do the math to figure out how to get this to correlate to whatever we choose
         leftWall.SetTextureCoords(
-            new Vector2(groundScrollY/10000, 0f),
-            1f,
-            1f
+            Vector2.UnitX * (groundScrollY / groundTexture.Width),
+            wallWidth / groundTexture.Width,
+            wallHeight / groundTexture.Height
         );
         rightWall.SetTextureCoords(
-            new Vector2(-groundScrollY/10000, 0f),
-            1f,
-            1f
+            Vector2.UnitX * (-groundScrollY / groundTexture.Width),
+            wallWidth / groundTexture.Width,
+            wallHeight / groundTexture.Height
         );
     }
 
@@ -137,6 +143,8 @@ class GameplayBackgroundScreen : GameScreen {
     /// Draws the background screen.
     /// </summary>
     public override void Draw(GameTime gameTime) {
+        ScreenManager.GraphicsDevice.Clear(ClearOptions.Target, Color.CornflowerBlue, 0, 0);
+
         SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
         Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
         Rectangle fullscreen = new Rectangle(0, 0, viewport.Width, viewport.Height);
