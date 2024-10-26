@@ -25,6 +25,7 @@ class MainGameScreen : GameScreen {
     ContentManager content;
     SpriteFont gameFont;
     Texture2D note;
+    Texture2D note_shadow;
     BeatmapPlayer beatmapPlayer;
     Beatmap beatmap;
     string beatmapFilename;
@@ -66,6 +67,7 @@ class MainGameScreen : GameScreen {
 
         gameFont = content.Load<SpriteFont>("gamefont");
         note = content.Load<Texture2D>("GameplayAssets/Beatmap Objects/note");
+        note_shadow = content.Load<Texture2D>("GameplayAssets/Beatmap Objects/note_shadows");
 
         this.beatmap = Beatmap.LoadFromFile(beatmapFilename);
         this.beatmapPlayer = new BeatmapPlayer(beatmap);
@@ -122,7 +124,7 @@ class MainGameScreen : GameScreen {
         shadowObjectEffect.View = GameplayTransforms.GetViewMatrix();
         shadowObjectEffect.Projection = GameplayTransforms.GetProjectionMatrix();
         shadowObjectEffect.TextureEnabled = true;
-        shadowObjectEffect.Texture = note; // this should be shadow texture sheet in the future
+        shadowObjectEffect.Texture = note_shadow;
 
         vertexDeclaration = new VertexDeclaration(new VertexElement[] {
                 new VertexElement(0, VertexElementFormat.Vector3, VertexElementUsage.Position, 0),
@@ -171,11 +173,11 @@ class MainGameScreen : GameScreen {
     private Quad MakeNewEnemyQuadShadow(uint lane, int distanceBetweenLanes) {
         int x = (int)(lane - 2) * (int)distanceBetweenLanes;
         return new Quad(
-            new Vector3(x, GameConstants.NOTE_HORIZON_DISTANCE + (GameConstants.NOTE_HEIGHT / 2), 0.001f),  // slightly above ground to avoid Z fighting with ground
+            new Vector3(x, GameConstants.NOTE_HORIZON_DISTANCE + (GameConstants.SHADOW_MAX_LEN / 2), 0.001f),  // slightly above ground to avoid Z fighting with ground
             new Vector3(0, 0, 1), 
             new Vector3(0, 1, 0), 
             GameConstants.NOTE_WIDTH, 
-            GameConstants.NOTE_HEIGHT
+            GameConstants.SHADOW_MAX_LEN
         );
     }
 
