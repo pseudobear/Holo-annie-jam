@@ -176,7 +176,7 @@ public class RhythmEvent : IComparable {
         if (otherRhythmEvent != null)
             return (int)otherRhythmEvent.Tick - (int)this.Tick;
         else
-            throw new ArgumentException("Object is not a Temperature");
+            throw new ArgumentException("Object is not a RhythmEvent");
     }
 
     /// <summary>
