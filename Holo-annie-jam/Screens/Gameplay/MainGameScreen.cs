@@ -32,12 +32,15 @@ class MainGameScreen : GameScreen {
 
     // rhythm events 
     VisibleBeatmapEvents visibleEvents;
-    Dictionary<RhythmEvent, Quad> rhythmQuadMap = new Dictionary<RhythmEvent, Quad>();
+    
+    // [0] is enemy sprite, [1] is shadow
+    Dictionary<RhythmEvent, List<Quad>> rhythmQuadMap = new Dictionary<RhythmEvent, List<Quad>>();
 
     float pauseAlpha;
 
     // 3d graphics processing
     BasicEffect uprightObjectEffect;
+    BasicEffect shadowObjectEffect;
 
     #endregion
 
@@ -113,6 +116,14 @@ class MainGameScreen : GameScreen {
         uprightObjectEffect.TextureEnabled = true;
         uprightObjectEffect.Texture = note;
 
+        // same as objectEffect, but shadow texture instead
+        shadowObjectEffect = new BasicEffect(ScreenManager.GraphicsDevice);
+        shadowObjectEffect.World = GameplayTransforms.GetWorldMatrix(viewport.Height);
+        shadowObjectEffect.View = GameplayTransforms.GetViewMatrix();
+        shadowObjectEffect.Projection = GameplayTransforms.GetProjectionMatrix();
+        shadowObjectEffect.TextureEnabled = true;
+        shadowObjectEffect.Texture = note; // this should be shadow texture sheet in the future
+
         vertexDeclaration = new VertexDeclaration(new VertexElement[] {
                 new VertexElement(0, VertexElementFormat.Vector3, VertexElementUsage.Position, 0),
                 new VertexElement(12, VertexElementFormat.Vector3, VertexElementUsage.Normal, 0),
@@ -146,9 +157,23 @@ class MainGameScreen : GameScreen {
     private Quad MakeNewEnemyQuad(uint lane, int distanceBetweenLanes) {
         int x = (int)(lane - 2) * (int)distanceBetweenLanes;
         return new Quad(
-            new Vector3(x, GameConstants.NOTE_HORIZON_DISTANCE, 0), 
+            new Vector3(x, GameConstants.NOTE_HORIZON_DISTANCE, (GameConstants.NOTE_HEIGHT / 2 ) + 0.001f),  // slightly above ground to avoid Z fighting with ground
             new Vector3(0, -1, 0), 
             new Vector3(0, 0, 1), 
+            GameConstants.NOTE_WIDTH, 
+            GameConstants.NOTE_HEIGHT
+        );
+    }
+
+    /// <summary>
+    /// Creates a Quad for holding an enemy sprite shadow based on starting position of MakeNewEnemyQuad (hardcoded)
+    /// </summary>
+    private Quad MakeNewEnemyQuadShadow(uint lane, int distanceBetweenLanes) {
+        int x = (int)(lane - 2) * (int)distanceBetweenLanes;
+        return new Quad(
+            new Vector3(x, GameConstants.NOTE_HORIZON_DISTANCE + (GameConstants.NOTE_HEIGHT / 2), 0.001f),  // slightly above ground to avoid Z fighting with ground
+            new Vector3(0, 0, 1), 
+            new Vector3(0, 1, 0), 
             GameConstants.NOTE_WIDTH, 
             GameConstants.NOTE_HEIGHT
         );
@@ -164,8 +189,7 @@ class MainGameScreen : GameScreen {
     /// property, so the game will stop updating when the pause menu is active,
     /// or if you tab away to a different application.
     /// </summary>
-    public override void Update(GameTime gameTime, bool otherScreenHasFocus,
-                                                    bool coveredByOtherScreen) {
+    public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen) {
         base.Update(gameTime, otherScreenHasFocus, false);
 
         // Gradually fade in or out depending on whether we are covered by the pause screen.
@@ -183,13 +207,32 @@ class MainGameScreen : GameScreen {
             double relativeY = 1 - (double) (rhythmEvent.Tick - startingTickVisible) / totalTicksVisible;
 
             if (rhythmQuadMap.ContainsKey(rhythmEvent)) {
-                rhythmQuadMap[rhythmEvent].Origin = new Vector3(
-                    rhythmQuadMap[rhythmEvent].Origin.X,
-                    (float)(GameConstants.NOTE_HORIZON_DISTANCE - Math.Round(relativeY * GameConstants.NOTE_HORIZON_DISTANCE)),
-                    rhythmQuadMap[rhythmEvent].Origin.Z
+                List<Quad> enemyElements = rhythmQuadMap[rhythmEvent];
+
+                // update enemy sprite position
+                enemyElements[0].Origin = new Vector3(
+                    enemyElements[0].Origin.X,
+                    (float)(
+                        GameConstants.NOTE_HORIZON_DISTANCE - 
+                        Math.Round(relativeY * GameConstants.NOTE_HORIZON_DISTANCE)
+                    ),
+                    enemyElements[0].Origin.Z
+                );
+
+                // update enemy shadow position
+                enemyElements[1].Origin = new Vector3(
+                    enemyElements[1].Origin.X,
+                    (float)(
+                        GameConstants.NOTE_HORIZON_DISTANCE + (GameConstants.NOTE_HEIGHT / 2) - 
+                        Math.Round(relativeY * GameConstants.NOTE_HORIZON_DISTANCE)
+                    ),
+                    enemyElements[1].Origin.Z
                 );
             } else {
-                rhythmQuadMap.Add(rhythmEvent, MakeNewEnemyQuad(rhythmEvent.Lane, ScreenManager.GraphicsDevice.Viewport.Width));
+                List<Quad> enemyElements = new List<Quad>();
+                enemyElements.Add(MakeNewEnemyQuad(rhythmEvent.Lane, ScreenManager.GraphicsDevice.Viewport.Width));
+                enemyElements.Add(MakeNewEnemyQuadShadow(rhythmEvent.Lane, ScreenManager.GraphicsDevice.Viewport.Width));
+                rhythmQuadMap.Add(rhythmEvent, enemyElements);
             }
         }
 
@@ -241,23 +284,31 @@ class MainGameScreen : GameScreen {
         SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
         Vector2 screen = new(ScreenManager.GraphicsDevice.Viewport.Width, ScreenManager.GraphicsDevice.Viewport.Height);
 
+        // draw shadows on  objects
+        foreach (EffectPass pass in shadowObjectEffect.CurrentTechnique.Passes) {
+            pass.Apply();
+
+            // TODO: draw these in correct order, may need to use ordered dictionary or maintain a stack of rhythmevents
+            foreach (KeyValuePair<RhythmEvent, List<Quad>> entry in rhythmQuadMap) {
+                ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(
+                    PrimitiveType.TriangleList,
+                    entry.Value[1].Vertices, 0, 4,
+                    entry.Value[1].Indices, 0, 2
+                );
+            }
+        }
+
+        // draw upright objects
         foreach (EffectPass pass in uprightObjectEffect.CurrentTechnique.Passes) {
             pass.Apply();
 
             // TODO: draw these in correct order, may need to use ordered dictionary or maintain a stack of rhythmevents
-            foreach (KeyValuePair<RhythmEvent, Quad> entry in rhythmQuadMap) {
-                ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives
-                    <VertexPositionNormalTexture>(
+            foreach (KeyValuePair<RhythmEvent, List<Quad>> entry in rhythmQuadMap) {
+                ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(
                     PrimitiveType.TriangleList,
-                    entry.Value.Vertices, 0, 4,
-                    entry.Value.Indices, 0, 2);
-
-                /* list all of the coordinates in the quad
-                System.Diagnostics.Debug.WriteLine("-------------------------------------------");
-                foreach (var v in entry.Value.Vertices) {
-                    System.Diagnostics.Debug.WriteLine(v);
-                }
-                */ 
+                    entry.Value[0].Vertices, 0, 4,
+                    entry.Value[0].Indices, 0, 2
+                );
             }
         }
 
