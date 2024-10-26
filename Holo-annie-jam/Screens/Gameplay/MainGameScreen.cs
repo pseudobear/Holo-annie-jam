@@ -72,44 +72,12 @@ class MainGameScreen : GameScreen {
         this.beatmap = Beatmap.LoadFromFile(beatmapFilename);
         this.beatmapPlayer = new BeatmapPlayer(beatmap);
 
-        // generate sample beatmap
-        //Beatmap.Builder builder = new("Sample Song", "Content/Beatmaps/Sample Beatmap/sample_song.ogg");
-        //builder.RhythmEvents.Add(new RhythmEvent() {
-        //    Tick = 0,
-        //    Type = RhythmEventType.BpmChange,
-        //    Value = 144
-        //});
-        //builder.RhythmEvents.Add(new RhythmEvent() {
-        //    Tick = 3840,
-        //    Type = RhythmEventType.Normal,
-        //    Lane = 1
-        //});
-        //builder.RhythmEvents.Add(new RhythmEvent() {
-        //    Tick = 3840,
-        //    Type = RhythmEventType.Normal,
-        //    Lane = 3
-        //});
-        //builder.RhythmEvents.Add(new RhythmEvent() {
-        //    Tick = 4800,
-        //    Type = RhythmEventType.Normal,
-        //    Lane = 1
-        //});
-        //builder.RhythmEvents.Add(new RhythmEvent() {
-        //    Tick = 5760,
-        //    Type = RhythmEventType.Normal,
-        //    Lane = 1
-        //});
-        //builder.RhythmEvents.Add(new RhythmEvent() {
-        //    Tick = 6240,
-        //    Type = RhythmEventType.Normal,
-        //    Lane = 3
-        //});
-        //builder.WriteToFile("sample_beatmap_builder.json");
-        //builder.Build().WriteToFile("sample_beatmap.bin");
-
         // transform setups
 
         Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
+
+        float enemyFogStart = GameConstants.NOTE_HORIZON_DISTANCE / 5;
+        float enemyFogEnd = GameConstants.NOTE_HORIZON_DISTANCE - 1000f;
 
         uprightObjectEffect = new BasicEffect(ScreenManager.GraphicsDevice);
         uprightObjectEffect.World = GameplayTransforms.GetWorldMatrix(viewport.Height);
@@ -117,6 +85,10 @@ class MainGameScreen : GameScreen {
         uprightObjectEffect.Projection = GameplayTransforms.GetProjectionMatrix();
         uprightObjectEffect.TextureEnabled = true;
         uprightObjectEffect.Texture = note;
+        uprightObjectEffect.FogEnabled = true;
+        uprightObjectEffect.FogColor = Color.CornflowerBlue.ToVector3();
+        uprightObjectEffect.FogStart = 0.1f;
+        uprightObjectEffect.FogEnd = GameConstants.NOTE_HORIZON_DISTANCE - 1000f;
 
         // same as objectEffect, but shadow texture instead
         shadowObjectEffect = new BasicEffect(ScreenManager.GraphicsDevice);
@@ -125,6 +97,10 @@ class MainGameScreen : GameScreen {
         shadowObjectEffect.Projection = GameplayTransforms.GetProjectionMatrix();
         shadowObjectEffect.TextureEnabled = true;
         shadowObjectEffect.Texture = note_shadow;
+        shadowObjectEffect.FogEnabled = true;
+        shadowObjectEffect.FogColor = Color.CornflowerBlue.ToVector3();
+        shadowObjectEffect.FogStart = enemyFogStart;
+        shadowObjectEffect.FogEnd = enemyFogEnd;
 
         vertexDeclaration = new VertexDeclaration(new VertexElement[] {
                 new VertexElement(0, VertexElementFormat.Vector3, VertexElementUsage.Position, 0),
