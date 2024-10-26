@@ -66,6 +66,10 @@ class GameplayBackgroundScreen : GameScreen {
         basicEffect.World = GameplayTransforms.GetWorldMatrix(viewport.Height);
         basicEffect.View = GameplayTransforms.GetViewMatrix();
         basicEffect.Projection = GameplayTransforms.GetProjectionMatrix();
+        basicEffect.FogEnabled = true;
+        basicEffect.FogColor = Color.CornflowerBlue.ToVector3();
+        basicEffect.FogStart = 0.1f;
+        basicEffect.FogEnd = GameConstants.NOTE_HORIZON_DISTANCE - 1000f;
 
         groundWidth = groundTexture.Width * 4;
 
@@ -137,6 +141,8 @@ class GameplayBackgroundScreen : GameScreen {
     /// Draws the background screen.
     /// </summary>
     public override void Draw(GameTime gameTime) {
+        ScreenManager.GraphicsDevice.Clear(ClearOptions.Target, Color.CornflowerBlue, 0, 0);
+
         SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
         Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
         Rectangle fullscreen = new Rectangle(0, 0, viewport.Width, viewport.Height);
