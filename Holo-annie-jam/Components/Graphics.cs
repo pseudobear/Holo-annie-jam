@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 /// </summary>
 class Quad {
 
+    #region properties
     public VertexPositionNormalTexture[] Vertices {
         get { return vertices; }
         protected set { vertices = value; }
@@ -45,6 +46,28 @@ class Quad {
             FillVertices();
         }
     }
+
+    public float Width {
+        get { return width; }
+        set {
+            width = value;
+            FillVertices();
+        }
+    }
+    float width;
+
+    public float Height {
+        get { return height; }
+        set {
+            height = value;
+            FillVertices();
+        }
+    }
+    float height;
+
+    #endregion
+
+    #region fields
     Vector3 up;
     Vector3 left;
     Vector3 upperCenter;
@@ -52,8 +75,7 @@ class Quad {
     Vector3 upperRight;
     Vector3 lowerLeft;
     Vector3 lowerRight;
-    float width;
-    float height;
+    #endregion
 
     /// <summary>
     /// Constructor, origin is the center of the quad 

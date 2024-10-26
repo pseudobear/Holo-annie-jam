@@ -219,11 +219,15 @@ class MainGameScreen : GameScreen {
                     enemyElements[0].Origin.Z
                 );
 
-                // update enemy shadow position
+                // update enemy shadow position and size 
+                enemyElements[1].Height = (
+                    (float)(relativeY * GameConstants.SHADOW_MIN_LEN) + 
+                    (float)((1 - relativeY) * GameConstants.SHADOW_MAX_LEN)
+                );
                 enemyElements[1].Origin = new Vector3(
                     enemyElements[1].Origin.X,
                     (float)(
-                        GameConstants.NOTE_HORIZON_DISTANCE + (GameConstants.NOTE_HEIGHT / 2) - 
+                        GameConstants.NOTE_HORIZON_DISTANCE + (enemyElements[1].Height / 2) - 
                         Math.Round(relativeY * GameConstants.NOTE_HORIZON_DISTANCE)
                     ),
                     enemyElements[1].Origin.Z
