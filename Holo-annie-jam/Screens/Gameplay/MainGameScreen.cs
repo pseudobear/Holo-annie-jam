@@ -35,7 +35,7 @@ class MainGameScreen : GameScreen {
     VisibleBeatmapEvents visibleEvents;
     
     // [0] is enemy sprite, [1] is shadow
-    Dictionary<RhythmEvent, List<Quad>> rhythmQuadMap = new Dictionary<RhythmEvent, List<Quad>>();
+    SortedDictionary<RhythmEvent, List<Quad>> rhythmQuadMap = new SortedDictionary<RhythmEvent, List<Quad>>();
 
     float pauseAlpha;
 
