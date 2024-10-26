@@ -29,7 +29,22 @@ class Quad {
     }
     Vector3 origin;
 
+    public Vector3 Normal {
+        get { return normal; }
+        set {
+            normal = value;
+            FillVertices();
+        }
+    }
     Vector3 normal;
+
+    public Vector3 Up {
+        get { return up; }
+        set {
+            up = value;
+            FillVertices();
+        }
+    }
     Vector3 up;
     Vector3 left;
     Vector3 upperCenter;
@@ -99,7 +114,10 @@ class Quad {
 
     /// <summary>
     /// Updates the texture coordinates drawn in this quad. 
-    /// In this method, origin is intepretted as the lower left corner 
+    /// In this method, origin is intepretted as the lower left corner.
+    /// coordinates are given as multiples of the texture. ie. origin=(0.5f,0.5f) is the midpoint of the texture
+    /// and width=(3f,3f) is 3x the texture width-wise and 3x the texture height-wise
+    /// therefore, to calculate for pixels, target_pixels / texture_pixel_dimension
     /// </summary>
     public void SetTextureCoords(Vector2 origin, float width, float height) {
         // we flip the texture upside down, so upper <--> lower
