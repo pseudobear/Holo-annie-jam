@@ -146,12 +146,23 @@ class DialogueScreen : GameScreen {
         ScreenManager.GraphicsDevice.Clear(ClearOptions.Target, Color.CornflowerBlue, 0, 0);
 
         SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
+        SpriteFont font = ScreenManager.Font;
         Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
         Rectangle fullscreen = new Rectangle(0, 0, viewport.Width, viewport.Height);
 
+        Panel activePanel = Panels.Peek();
+
         spriteBatch.Begin();
+
         spriteBatch.Draw(backgroundTexture, fullscreen,
                             new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha));
+        for (int i = 0; i < activePanel.Sprites.Count; i++) {
+            spriteBatch.Draw(
+                activePanel.Sprites[i],
+                activePanel.GetSpriteOrigin(i),
+                new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha)
+            );
+        }
         spriteBatch.Draw(
             blank, 
             new Rectangle(
@@ -162,6 +173,19 @@ class DialogueScreen : GameScreen {
             ), 
             Color.Black * 0.6f
         );
+        spriteBatch.DrawString(
+            font, 
+            activePanel.Name, 
+            PanelConstants.GetTextPanelOrigin(),
+            Color.White
+        );
+        spriteBatch.DrawString(
+            font, 
+            activePanel.Text, 
+            PanelConstants.GetTextPanelOrigin() + Vector2.UnitY * 100,
+            Color.White
+        );
+
         spriteBatch.End();
 
         // If the game is transitioning on or off, fade it out to black.

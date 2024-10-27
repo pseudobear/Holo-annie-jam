@@ -27,11 +27,15 @@ class PreStageOneDialogueScreen : DialogueScreen {
         base.LoadContent();
 
         BackgroundTexture = Content.Load<Texture2D>("background");
+        Texture2D gradient = Content.Load<Texture2D>("GWAR_GURA_1");
+
+        List<Texture2D> singleCharacterList = new List<Texture2D>();
+        singleCharacterList.Add(gradient);
 
         Panels.Push(new Panel(
             "test name",
             "hello world!",
-            new List<Texture2D>()
+            singleCharacterList
         ));
     }
 
