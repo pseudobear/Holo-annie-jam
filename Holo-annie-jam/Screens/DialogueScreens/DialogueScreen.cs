@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 #endregion
@@ -77,10 +78,10 @@ class DialogueScreen : GameScreen {
     }
     Texture2D backgroundTexture;
 
-    public Stack<Panel> Panels {
+    public Queue<Panel> Panels {
         get { return panels; }
     }
-    Stack<Panel> panels = new Stack<Panel>();
+    Queue<Panel> panels = new Queue<Panel>();
 
     #endregion
 
@@ -138,6 +139,44 @@ class DialogueScreen : GameScreen {
             pauseAlpha = Math.Max(pauseAlpha - 1f / 32, 0);
     }
 
+    /// <summary>
+    /// Lets the game respond to player input. Unlike the Update method,
+    /// this will only be called when the gameplay screen is active.
+    /// </summary>
+    public override void HandleInput(InputManager input) {
+        if (input == null)
+            throw new ArgumentNullException("input");
+
+        KeyboardState keyboardState = input.CurrentKeyboardStates[(int)ControllingPlayer.Value];
+        GamePadState gamePadState = input.CurrentGamePadStates[(int)ControllingPlayer.Value];
+
+        // The game pauses either if the user presses the pause button, or if
+        // they unplug the active gamepad. This requires us to keep track of
+        // whether a gamepad was ever plugged in, because we don't want to pause
+        // on PC if they are playing with a keyboard and have no gamepad at all!
+        bool gamePadDisconnected = !gamePadState.IsConnected &&
+                                    input.GamePadWasConnected[(int)ControllingPlayer.Value];
+
+        PlayerIndex playerIndex;
+
+        if (input.IsMenuSelect(ControllingPlayer, out playerIndex)) {
+            if (Panels.Count > 1) {
+                Panels.Dequeue();
+            }
+            else {
+                OnCompletePanels(ControllingPlayer);
+            }
+        }
+
+        if (input.IsPauseGame(ControllingPlayer) || gamePadDisconnected) {
+            ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
+        }
+        else {
+            // Otherwise do game stuff:
+        }
+    }
+
+    public virtual void OnCompletePanels(PlayerIndex? playerIndex) { }
 
     /// <summary>
     /// Draws the dialogue screen. Text, sprites and background

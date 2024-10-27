@@ -32,9 +32,14 @@ class PreStageOneDialogueScreen : DialogueScreen {
         List<Texture2D> singleCharacterList = new List<Texture2D>();
         singleCharacterList.Add(gradient);
 
-        Panels.Push(new Panel(
+        Panels.Enqueue(new Panel(
             "test name",
             "hello world!",
+            singleCharacterList
+        ));
+        Panels.Enqueue(new Panel(
+            "test name",
+            "hello world! AGAIN! Screen should load next after hitting next",
             singleCharacterList
         ));
     }
@@ -50,6 +55,12 @@ class PreStageOneDialogueScreen : DialogueScreen {
                                                     bool coveredByOtherScreen) {
         base.Update(gameTime, otherScreenHasFocus, false);
     }
+
+    public override void OnCompletePanels(PlayerIndex? playerIndex) {
+        LoadingScreen.Load(ScreenManager, true, playerIndex,
+                     new GameplayBackgroundScreen(),
+                     new MainGameScreen("Content/Beatmaps/Sample Beatmap/sample_beatmap.bin"));
+    } 
 
 
     /// <summary>
