@@ -8,6 +8,12 @@ using System.Collections.Generic;
 
 class Panel {
 
+    public string Name {
+        get { return name; }
+        set { name = value; }
+    }
+    string name;
+
     public string Text {
         get { return text; }
         set { text = value; }
@@ -20,7 +26,8 @@ class Panel {
     }
     List<Texture2D> sprites;
 
-    public Panel(string text, List<Texture2D> sprites) {
+    public Panel(string name, string text, List<Texture2D> sprites) {
+        this.name = name;
         this.text = text;
         this.sprites = sprites;
     }
@@ -40,15 +47,34 @@ class Panel {
 }
 
 /// <summary>
-/// The background screen sits behind all the other menu screens.
-/// It draws a background image that remains fixed in place regardless
-/// of whatever transitions the screens on top of it may be doing.
+/// A screen that contains all of the functions needed for dialogue. Draws a text panel with
+/// the contents specified by the panels stack, user inputs pop the panels out of the stack until
+/// the last one, which triggers a load onto the next screen
 /// </summary>
 class DialogueScreen : GameScreen {
     #region Fields
 
+    Texture2D blank;
+    float pauseAlpha;
+
+    #endregion
+
+    #region Properties
+
+    public ContentManager Content {
+        get { return content; }
+    }
     ContentManager content;
+
+    public Texture2D BackgroundTexture { 
+        get { return backgroundTexture; } 
+        set { backgroundTexture = value; }
+    }
     Texture2D backgroundTexture;
+
+    public Stack<Panel> Panels {
+        get { return panels; }
+    }
     Stack<Panel> panels;
 
     #endregion
@@ -76,7 +102,7 @@ class DialogueScreen : GameScreen {
         if (content == null)
             content = new ContentManager(ScreenManager.Game.Services, "Content");
 
-        backgroundTexture = content.Load<Texture2D>("background");
+        blank = content.Load<Texture2D>("blank");
     }
 
 
@@ -94,20 +120,22 @@ class DialogueScreen : GameScreen {
 
 
     /// <summary>
-    /// Updates the background screen. Unlike most screens, this should not
-    /// transition off even if it has been covered by another screen: it is
-    /// supposed to be covered, after all! This overload forces the
-    /// coveredByOtherScreen parameter to false in order to stop the base
-    /// Update method wanting to transition off.
+    /// Updates the dialogue screen.
     /// </summary>
     public override void Update(GameTime gameTime, bool otherScreenHasFocus,
                                                     bool coveredByOtherScreen) {
         base.Update(gameTime, otherScreenHasFocus, false);
+
+        // Gradually fade in or out depending on whether we are covered by the pause screen.
+        if (coveredByOtherScreen)
+            pauseAlpha = Math.Min(pauseAlpha + 1f / 32, 1);
+        else
+            pauseAlpha = Math.Max(pauseAlpha - 1f / 32, 0);
     }
 
 
     /// <summary>
-    /// Draws the background screen.
+    /// Draws the dialogue screen. Text, sprites and background
     /// </summary>
     public override void Draw(GameTime gameTime) {
         ScreenManager.GraphicsDevice.Clear(ClearOptions.Target, Color.CornflowerBlue, 0, 0);
@@ -119,7 +147,24 @@ class DialogueScreen : GameScreen {
         spriteBatch.Begin();
         spriteBatch.Draw(backgroundTexture, fullscreen,
                             new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha));
+        spriteBatch.Draw(
+            blank, 
+            new Rectangle(
+                (int)PanelConstants.GetTextPanelOrigin().X,
+                (int)PanelConstants.GetTextPanelOrigin().Y,
+                PanelConstants.TEXT_PANEL_WIDTH,
+                PanelConstants.TEXT_PANEL_HEIGHT
+            ), 
+            Color.Black * 0.6f
+        );
         spriteBatch.End();
+
+        // If the game is transitioning on or off, fade it out to black.
+        if (TransitionPosition > 0 || pauseAlpha > 0) {
+            float alpha = MathHelper.Lerp(1f - TransitionAlpha, 1f, pauseAlpha / 2);
+
+            ScreenManager.FadeBackBufferToBlack(alpha);
+        }
     }
     #endregion
 }
