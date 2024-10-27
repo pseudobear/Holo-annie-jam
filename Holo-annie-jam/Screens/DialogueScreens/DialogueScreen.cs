@@ -37,11 +37,16 @@ class Panel {
     /// This is calculated to properly space out the sprites depending on how many there are
     /// </summary>
     public Vector2 GetSpriteOrigin(int index) {
+        /*
         return (PanelConstants.GetTextPanelOrigin() + 
             Vector2.UnitX * (
                 (PanelConstants.TEXT_PANEL_WIDTH * (index + 1)) / (1 + sprites.Count) - 
                 sprites[index].Width / 2
             ) + Vector2.UnitY * PanelConstants.TEXT_PANEL_HEIGHT
+        );
+        */
+        return new Vector2(
+            (1280 * (index + 1) / (1 + sprites.Count)) - sprites[index].Width / 2, 0
         );
     }
 }
