@@ -75,7 +75,7 @@ class DialogueScreen : GameScreen {
     public Stack<Panel> Panels {
         get { return panels; }
     }
-    Stack<Panel> panels;
+    Stack<Panel> panels = new Stack<Panel>();
 
     #endregion
 

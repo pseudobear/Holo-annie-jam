@@ -50,6 +50,8 @@ class MainMenuScreen : MenuScreen {
     /// </summary>
     void OptionsMenuEntrySelected(object sender, PlayerIndexEventArgs e) {
         // ScreenManager.AddScreen(new OptionsMenuScreen(), e.PlayerIndex);
+        LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
+                             new PreStageOneDialogueScreen());
     }
 
 
