@@ -40,8 +40,7 @@ class MainMenuScreen : MenuScreen {
     /// </summary>
     void PlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e) {
         LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
-                             new GameplayBackgroundScreen(),
-                             new MainGameScreen("Content/Beatmaps/Sample Beatmap/sample_beatmap.bin"));
+                             new PreStageOneDialogueScreen());
     }
 
 
@@ -50,8 +49,6 @@ class MainMenuScreen : MenuScreen {
     /// </summary>
     void OptionsMenuEntrySelected(object sender, PlayerIndexEventArgs e) {
         // ScreenManager.AddScreen(new OptionsMenuScreen(), e.PlayerIndex);
-        LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
-                             new PreStageOneDialogueScreen());
     }
 
 
