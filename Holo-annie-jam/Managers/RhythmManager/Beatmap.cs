@@ -167,7 +167,17 @@ public class Beatmap {
 /// <summary>
 /// Represents a single event in a beatmap
 /// </summary>
-public class RhythmEvent {
+public class RhythmEvent : IComparable {
+
+    public int CompareTo(object obj) {
+        if (obj == null) return 1;
+
+        RhythmEvent otherRhythmEvent = obj as RhythmEvent;
+        if (otherRhythmEvent != null)
+            return (int)otherRhythmEvent.Tick - (int)this.Tick;
+        else
+            throw new ArgumentException("Object is not a RhythmEvent");
+    }
 
     /// <summary>
     /// The number of ticks (100 nanoseconds) after a specified point in time that the rhythm event occurs: this is

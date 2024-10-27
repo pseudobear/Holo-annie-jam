@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 /// </summary>
 class Quad {
 
+    #region properties
     public VertexPositionNormalTexture[] Vertices {
         get { return vertices; }
         protected set { vertices = value; }
@@ -29,7 +30,44 @@ class Quad {
     }
     Vector3 origin;
 
+    public Vector3 Normal {
+        get { return normal; }
+        set {
+            normal = value;
+            FillVertices();
+        }
+    }
     Vector3 normal;
+
+    public Vector3 Up {
+        get { return up; }
+        set {
+            up = value;
+            FillVertices();
+        }
+    }
+
+    public float Width {
+        get { return width; }
+        set {
+            width = value;
+            FillVertices();
+        }
+    }
+    float width;
+
+    public float Height {
+        get { return height; }
+        set {
+            height = value;
+            FillVertices();
+        }
+    }
+    float height;
+
+    #endregion
+
+    #region fields
     Vector3 up;
     Vector3 left;
     Vector3 upperCenter;
@@ -37,8 +75,7 @@ class Quad {
     Vector3 upperRight;
     Vector3 lowerLeft;
     Vector3 lowerRight;
-    float width;
-    float height;
+    #endregion
 
     /// <summary>
     /// Constructor, origin is the center of the quad 
@@ -99,7 +136,10 @@ class Quad {
 
     /// <summary>
     /// Updates the texture coordinates drawn in this quad. 
-    /// In this method, origin is intepretted as the lower left corner 
+    /// In this method, origin is intepretted as the lower left corner.
+    /// coordinates are given as multiples of the texture. ie. origin=(0.5f,0.5f) is the midpoint of the texture
+    /// and width=(3f,3f) is 3x the texture width-wise and 3x the texture height-wise
+    /// therefore, to calculate for pixels, target_pixels / texture_pixel_dimension
     /// </summary>
     public void SetTextureCoords(Vector2 origin, float width, float height) {
         // we flip the texture upside down, so upper <--> lower
