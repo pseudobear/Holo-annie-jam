@@ -69,7 +69,7 @@ class MainGameScreen : GameScreen {
         note = content.Load<Texture2D>("GameplayAssets/Beatmap Objects/note");
         note_shadow = content.Load<Texture2D>("GameplayAssets/Beatmap Objects/note_shadows");
 
-        this.beatmap = Beatmap.LoadFromFile(beatmapFilename);
+        this.beatmap = Beatmap.Builder.LoadFromFile(beatmapFilename)!.Build();
         this.beatmapPlayer = new BeatmapPlayer(beatmap);
 
         // transform setups
@@ -121,6 +121,7 @@ class MainGameScreen : GameScreen {
     /// </summary>
     public override void UnloadContent() {
         content.Unload();
+        this.beatmapPlayer.Reset();
     }
 
 
@@ -249,7 +250,8 @@ class MainGameScreen : GameScreen {
                                     input.GamePadWasConnected[playerIndex];
 
         if (input.IsPauseGame(ControllingPlayer) || gamePadDisconnected) {
-            ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
+            ScreenManager.AddScreen(new PauseMenuScreen(() => this.beatmapPlayer.Resume()), ControllingPlayer);
+            this.beatmapPlayer.Pause();
         } else {
             // Otherwise do game stuff:
         }

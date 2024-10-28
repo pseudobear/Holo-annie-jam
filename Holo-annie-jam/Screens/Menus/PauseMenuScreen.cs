@@ -1,5 +1,7 @@
 #region Using Statements
+using System;
 #endregion
+
 /// <summary>
 /// The pause menu comes up over the top of the game,
 /// giving the player options to resume or quit.
@@ -11,14 +13,17 @@ class PauseMenuScreen : MenuScreen {
     /// <summary>
     /// Constructor.
     /// </summary>
-    public PauseMenuScreen()
+    public PauseMenuScreen(Action onResume)
         : base("Paused") {
         // Create our menu entries.
         MenuEntry resumeGameMenuEntry = new MenuEntry("Resume Game");
         MenuEntry quitGameMenuEntry = new MenuEntry("Quit Game");
 
         // Hook up menu event handlers.
-        resumeGameMenuEntry.Selected += OnCancel;
+        resumeGameMenuEntry.Selected += (e, args) => {
+            OnCancel(e, args);
+            onResume();
+        };
         quitGameMenuEntry.Selected += QuitGameMenuEntrySelected;
 
         // Add entries to the menu.

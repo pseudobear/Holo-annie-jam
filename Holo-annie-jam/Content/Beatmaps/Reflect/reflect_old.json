@@ -1,0 +1,246 @@
+{
+  "RhythmEvents": [
+    {
+      "Tick": 0,
+      "Type": 1,
+      "Value": 125
+    },
+
+    {
+      "Tick": 11520,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 13440,
+      "Lane": 3,
+      "Type": 0
+    },
+
+    {
+      "Tick": 15360,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 17280,
+      "Lane": 3,
+      "Type": 0
+    },
+
+    {
+      "Tick": 19200,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 21120,
+      "Lane": 3,
+      "Type": 0
+    },
+
+    {
+      "Tick": 23040,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 24000,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 24960,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 25920,
+      "Lane": 3,
+      "Type": 0
+    },
+
+    {
+      "Tick": 26880,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 27360,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 27840,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 28320,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 28560,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 29760,
+      "Lane": 3,
+      "Type": 0
+    },
+
+    {
+      "Tick": 30720,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 31200,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 31680,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 32160,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 32400,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 33600,
+      "Lane": 1,
+      "Type": 0
+    },
+
+    {
+      "Tick": 34560,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 35040,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 35520,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 36000,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 36240,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 37440,
+      "Lane": 3,
+      "Type": 0
+    },
+
+    {
+      "Tick": 38400,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 39120,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 39840,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 40560,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 41280,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 41760,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 42000,
+      "Lane": 2,
+      "Type": 0
+    },
+
+    {
+      "Tick": 42240,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 42720,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 43200,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 43680,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 43920,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 44640,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 44880,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 45120,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 45600,
+      "Lane": 3,
+      "Type": 0
+    },
+
+    {
+      "Tick": 46080,
+      "Lane": 1,
+      "Type": 0
+    }
+  ],
+  "SongName": "Reflect",
+  "AudioLocation": "Content/Beatmaps/Reflect/Reflect.ogg"
+}
