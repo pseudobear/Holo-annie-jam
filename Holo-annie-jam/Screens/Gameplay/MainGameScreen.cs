@@ -23,12 +23,16 @@ class MainGameScreen : GameScreen {
     static readonly Vector2 BOTTOM_RIGHT = new(1, 1);
 
     ContentManager content;
-    SpriteFont gameFont;
-    Texture2D note;
-    Texture2D note_shadow;
+
     BeatmapPlayer beatmapPlayer;
     Beatmap beatmap;
     string beatmapFilename;
+
+    SpriteFont gameFont;
+    Texture2D note;
+    Texture2D noteShadow;
+    Texture2D targetLineTexture;
+    Quad targetLine;
     VertexDeclaration vertexDeclaration;
 
     // rhythm events 
@@ -67,15 +71,24 @@ class MainGameScreen : GameScreen {
 
         gameFont = content.Load<SpriteFont>("gamefont");
         note = content.Load<Texture2D>("GameplayAssets/Beatmap Objects/note");
-        note_shadow = content.Load<Texture2D>("GameplayAssets/Beatmap Objects/note_shadows");
+        noteShadow = content.Load<Texture2D>("GameplayAssets/Beatmap Objects/note_shadows");
+        targetLineTexture = content.Load<Texture2D>("gradient");
 
         this.beatmap = Beatmap.Builder.LoadFromFile(beatmapFilename)!.Build();
         this.beatmapPlayer = new BeatmapPlayer(beatmap);
 
-        // transform setups
-
         Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
 
+        // static quads
+        targetLine = new Quad(
+            new Vector3(0, 200, 0),
+            new Vector3(0, 0, 1),
+            new Vector3(0, 1, 0),
+            viewport.Width * 3,
+            20
+        );
+
+        // transform setups
         float enemyFogStart = GameConstants.NOTE_HORIZON_DISTANCE / 5;
         float enemyFogEnd = GameConstants.NOTE_HORIZON_DISTANCE - 1000f;
 
@@ -96,7 +109,7 @@ class MainGameScreen : GameScreen {
         shadowObjectEffect.View = GameplayTransforms.GetViewMatrix();
         shadowObjectEffect.Projection = GameplayTransforms.GetProjectionMatrix();
         shadowObjectEffect.TextureEnabled = true;
-        shadowObjectEffect.Texture = note_shadow;
+        shadowObjectEffect.Texture = noteShadow;
         shadowObjectEffect.FogEnabled = true;
         shadowObjectEffect.FogColor = Color.CornflowerBlue.ToVector3();
         shadowObjectEffect.FogStart = enemyFogStart;
@@ -268,9 +281,17 @@ class MainGameScreen : GameScreen {
         SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
         Vector2 screen = new(ScreenManager.GraphicsDevice.Viewport.Width, ScreenManager.GraphicsDevice.Viewport.Height);
 
+        // draw target line
+
         // draw shadows on  objects
         foreach (EffectPass pass in shadowObjectEffect.CurrentTechnique.Passes) {
             pass.Apply();
+
+            ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(
+                PrimitiveType.TriangleList,
+                targetLine.Vertices, 0, 4,
+                targetLine.Indices, 0, 2
+            );
 
             // TODO: draw these in correct order, may need to use ordered dictionary or maintain a stack of rhythmevents
             foreach (KeyValuePair<RhythmEvent, List<Quad>> entry in rhythmQuadMap) {
@@ -286,7 +307,6 @@ class MainGameScreen : GameScreen {
         foreach (EffectPass pass in uprightObjectEffect.CurrentTechnique.Passes) {
             pass.Apply();
 
-            // TODO: draw these in correct order, may need to use ordered dictionary or maintain a stack of rhythmevents
             foreach (KeyValuePair<RhythmEvent, List<Quad>> entry in rhythmQuadMap) {
                 ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(
                     PrimitiveType.TriangleList,
