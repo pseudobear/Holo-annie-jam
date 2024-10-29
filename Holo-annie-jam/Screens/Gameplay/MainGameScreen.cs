@@ -94,8 +94,8 @@ class MainGameScreen : GameScreen {
 
         // transform setups
         #region shader init
-        float enemyFogStart = GameConstants.NOTE_HORIZON_DISTANCE / 5;
-        float enemyFogEnd = GameConstants.NOTE_HORIZON_DISTANCE - 1000f;
+        float enemyFogStart = 800f;
+        float enemyFogEnd = GameConstants.NOTE_HORIZON_DISTANCE;
 
         uprightObjectEffect = new BasicEffect(ScreenManager.GraphicsDevice);
         uprightObjectEffect.World = GameplayTransforms.GetWorldMatrix(viewport.Height);
@@ -105,8 +105,8 @@ class MainGameScreen : GameScreen {
         uprightObjectEffect.Texture = note;
         uprightObjectEffect.FogEnabled = true;
         uprightObjectEffect.FogColor = Color.CornflowerBlue.ToVector3();
-        uprightObjectEffect.FogStart = 0.1f;
-        uprightObjectEffect.FogEnd = GameConstants.NOTE_HORIZON_DISTANCE - 1000f;
+        uprightObjectEffect.FogStart = enemyFogStart;
+        uprightObjectEffect.FogEnd = enemyFogEnd;
 
         // same as objectEffect, but shadow texture instead
         shadowObjectEffect = new BasicEffect(ScreenManager.GraphicsDevice);
