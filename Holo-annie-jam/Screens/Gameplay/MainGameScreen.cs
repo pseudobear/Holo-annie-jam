@@ -73,6 +73,7 @@ class MainGameScreen : GameScreen {
         gameFont = content.Load<SpriteFont>("gamefont");
         note = content.Load<Texture2D>("GameplayAssets/Beatmap Objects/Bloop");
         noteShadow = content.Load<Texture2D>("GameplayAssets/Beatmap Objects/Bloop_shadow");
+        gura = content.Load<Texture2D>("GameplayAssets/Stage Objects/GAWR_GURA_1");
         UITextureSheet = content.Load<Texture2D>("gradient");
 
         this.beatmap = Beatmap.Builder.LoadFromFile(beatmapFilename)!.Build();
@@ -299,7 +300,7 @@ class MainGameScreen : GameScreen {
         SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
         Vector2 screen = new(ScreenManager.GraphicsDevice.Viewport.Width, ScreenManager.GraphicsDevice.Viewport.Height);
 
-        // draw UI elements
+        // draw 3D UI elements
         foreach (EffectPass pass in UIEffect.CurrentTechnique.Passes) {
             pass.Apply();
 
@@ -345,6 +346,25 @@ class MainGameScreen : GameScreen {
 
             ScreenManager.FadeBackBufferToBlack(alpha);
         }
+
+        // draw 2d UI items
+        spriteBatch.Begin(
+            sortMode: SpriteSortMode.Deferred,
+            blendState: null,
+            samplerState: SamplerState.LinearWrap,
+            depthStencilState: null
+        );
+        spriteBatch.Draw(
+            gura,
+            new Rectangle(
+                (int)(screen.X - GameConstants.PLAYER_WIDTH) / 2, 
+                (int)(screen.Y - GameConstants.PLAYER_HEIGHT), 
+                GameConstants.PLAYER_WIDTH, 
+                GameConstants.PLAYER_HEIGHT
+            ),
+            new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha)
+        );
+        spriteBatch.End();
     }
 
 
