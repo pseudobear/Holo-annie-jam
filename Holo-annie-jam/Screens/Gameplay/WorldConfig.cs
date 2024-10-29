@@ -10,6 +10,11 @@ static class GameConstants {
 
     public const int SHADOW_MAX_LEN = 2200;
     public const int SHADOW_MIN_LEN = 200;
+
+    public const int TARGET_LINE_Y = 200;
+
+    // update position -1,600,000 ticks early compared to actual tick
+    public const long DEFAULT_VISUAL_OFFSET_TICKS = -1600000; 
 }
 
 static class GameplayTransforms {

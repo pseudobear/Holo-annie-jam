@@ -81,7 +81,7 @@ class MainGameScreen : GameScreen {
 
         // static quads
         targetLine = new Quad(
-            new Vector3(0, 200, 0),
+            new Vector3(0, GameConstants.TARGET_LINE_Y, 0),
             new Vector3(0, 0, 1),
             new Vector3(0, 1, 0),
             viewport.Width * 3,
@@ -196,7 +196,7 @@ class MainGameScreen : GameScreen {
         long startingTickVisible = visibleEvents.Tick - beatmapPlayer.TrailingTimespanTicks;
 
         foreach (RhythmEvent rhythmEvent in visibleEvents.RhythmEvents ?? Array.Empty<RhythmEvent>()) { 
-            double relativeY = 1 - (double) (rhythmEvent.Tick - startingTickVisible) / totalTicksVisible;
+            double relativeY = 1 - (double) (rhythmEvent.Tick + GameConstants.DEFAULT_VISUAL_OFFSET_TICKS - startingTickVisible) / totalTicksVisible;
 
             if (rhythmQuadMap.ContainsKey(rhythmEvent)) {
                 List<Quad> enemyElements = rhythmQuadMap[rhythmEvent];
@@ -207,7 +207,7 @@ class MainGameScreen : GameScreen {
                     (float)(
                         GameConstants.NOTE_HORIZON_DISTANCE - 
                         Math.Round(relativeY * GameConstants.NOTE_HORIZON_DISTANCE)
-                    ),
+                    ) + (float)GameConstants.TARGET_LINE_Y,
                     enemyElements[0].Origin.Z
                 );
 
@@ -221,7 +221,7 @@ class MainGameScreen : GameScreen {
                     (float)(
                         GameConstants.NOTE_HORIZON_DISTANCE + (enemyElements[1].Height / 2) - 
                         Math.Round(relativeY * GameConstants.NOTE_HORIZON_DISTANCE)
-                    ),
+                    ) + (float)GameConstants.TARGET_LINE_Y,
                     enemyElements[1].Origin.Z
                 );
             } else {
@@ -238,6 +238,8 @@ class MainGameScreen : GameScreen {
                 rhythmQuadMap.Remove(rhythmEvent);
             }
         }
+
+        System.Diagnostics.Debug.WriteLine(" -- update @ tick: " + visibleEvents.Tick);
     }
 
 
@@ -315,6 +317,9 @@ class MainGameScreen : GameScreen {
                 );
             }
         }
+
+        visibleEvents = beatmapPlayer.GetVisibleEvents();
+        System.Diagnostics.Debug.WriteLine(" -- draw @ tick: " + visibleEvents.Tick);
 
         // If the game is transitioning on or off, fade it out to black.
         if (TransitionPosition > 0 || pauseAlpha > 0) {
