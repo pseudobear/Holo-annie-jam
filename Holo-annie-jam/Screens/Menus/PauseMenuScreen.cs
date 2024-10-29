@@ -1,4 +1,5 @@
 #region Using Statements
+using Microsoft.Xna.Framework;
 using System;
 #endregion
 
@@ -9,21 +10,21 @@ using System;
 class PauseMenuScreen : MenuScreen {
     #region Initialization
 
+    private readonly Action _onResume;
 
     /// <summary>
     /// Constructor.
     /// </summary>
     public PauseMenuScreen(Action onResume)
         : base("Paused") {
+        this._onResume = onResume;
+
         // Create our menu entries.
         MenuEntry resumeGameMenuEntry = new MenuEntry("Resume Game");
         MenuEntry quitGameMenuEntry = new MenuEntry("Quit Game");
 
         // Hook up menu event handlers.
-        resumeGameMenuEntry.Selected += (e, args) => {
-            OnCancel(e, args);
-            onResume();
-        };
+        resumeGameMenuEntry.Selected += OnCancel;
         quitGameMenuEntry.Selected += QuitGameMenuEntrySelected;
 
         // Add entries to the menu.
@@ -58,6 +59,11 @@ class PauseMenuScreen : MenuScreen {
     /// </summary>
     void ConfirmQuitMessageBoxAccepted(object sender, PlayerIndexEventArgs e) {
         LoadingScreen.Load(ScreenManager, false, null, new MainMenuScreen());
+    }
+
+    protected override void OnCancel(PlayerIndex playerIndex) {
+        this._onResume();
+        base.OnCancel(playerIndex);
     }
 
 

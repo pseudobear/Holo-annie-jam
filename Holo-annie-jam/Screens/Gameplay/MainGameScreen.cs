@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 #endregion
@@ -37,7 +36,7 @@ class MainGameScreen : GameScreen {
 
     // rhythm events 
     VisibleBeatmapEvents visibleEvents;
-    
+
     // [0] is enemy sprite, [1] is shadow
     SortedDictionary<RhythmEvent, List<Quad>> rhythmQuadMap = new SortedDictionary<RhythmEvent, List<Quad>>();
 
@@ -163,12 +162,12 @@ class MainGameScreen : GameScreen {
     /// Note that we want to draw our enemnies upright, so normal is y-, up is z+, which contradicts vector3's stuff
     /// </summary>
     private Quad MakeNewEnemyQuad(uint lane, int distanceBetweenLanes) {
-        int x = (int)(lane - 2) * (int)distanceBetweenLanes;
+        int x = (int) (lane - 2) * (int) distanceBetweenLanes;
         return new Quad(
-            new Vector3(x, GameConstants.NOTE_HORIZON_DISTANCE, (GameConstants.NOTE_HEIGHT / 2 ) + 0.001f),  // slightly above ground to avoid Z fighting with ground
-            new Vector3(0, -1, 0), 
-            new Vector3(0, 0, 1), 
-            GameConstants.NOTE_WIDTH, 
+            new Vector3(x, GameConstants.NOTE_HORIZON_DISTANCE, (GameConstants.NOTE_HEIGHT / 2) + 0.001f),  // slightly above ground to avoid Z fighting with ground
+            new Vector3(0, -1, 0),
+            new Vector3(0, 0, 1),
+            GameConstants.NOTE_WIDTH,
             GameConstants.NOTE_HEIGHT
         );
     }
@@ -177,12 +176,12 @@ class MainGameScreen : GameScreen {
     /// Creates a Quad for holding an enemy sprite shadow based on starting position of MakeNewEnemyQuad (hardcoded)
     /// </summary>
     private Quad MakeNewEnemyQuadShadow(uint lane, int distanceBetweenLanes) {
-        int x = (int)(lane - 2) * (int)distanceBetweenLanes;
+        int x = (int) (lane - 2) * (int) distanceBetweenLanes;
         return new Quad(
             new Vector3(x, GameConstants.NOTE_HORIZON_DISTANCE + (GameConstants.SHADOW_MAX_LEN / 2), 0.001f),  // slightly above ground to avoid Z fighting with ground
-            new Vector3(0, 0, 1), 
-            new Vector3(0, 1, 0), 
-            GameConstants.NOTE_WIDTH, 
+            new Vector3(0, 0, 1),
+            new Vector3(0, 1, 0),
+            GameConstants.NOTE_WIDTH,
             GameConstants.SHADOW_MAX_LEN
         );
     }
@@ -220,8 +219,8 @@ class MainGameScreen : GameScreen {
                 // update enemy sprite position
                 enemyElements[0].Origin = new Vector3(
                     enemyElements[0].Origin.X,
-                    (float)(
-                        GameConstants.NOTE_HORIZON_DISTANCE - 
+                    (float) (
+                        GameConstants.NOTE_HORIZON_DISTANCE -
                         Math.Round(relativeY * GameConstants.NOTE_HORIZON_DISTANCE)
                     ) + (float)GameConstants.TARGET_LINE_Y,
                     enemyElements[0].Origin.Z
@@ -229,13 +228,13 @@ class MainGameScreen : GameScreen {
 
                 // update enemy shadow position and size 
                 enemyElements[1].Height = (
-                    (float)(relativeY * GameConstants.SHADOW_MIN_LEN) + 
-                    (float)((1 - relativeY) * GameConstants.SHADOW_MAX_LEN)
+                    (float) (relativeY * GameConstants.SHADOW_MIN_LEN) +
+                    (float) ((1 - relativeY) * GameConstants.SHADOW_MAX_LEN)
                 );
                 enemyElements[1].Origin = new Vector3(
                     enemyElements[1].Origin.X,
-                    (float)(
-                        GameConstants.NOTE_HORIZON_DISTANCE + (enemyElements[1].Height / 2) - 
+                    (float) (
+                        GameConstants.NOTE_HORIZON_DISTANCE + (enemyElements[1].Height / 2) -
                         Math.Round(relativeY * GameConstants.NOTE_HORIZON_DISTANCE)
                     ) + (float)GameConstants.TARGET_LINE_Y,
                     enemyElements[1].Origin.Z

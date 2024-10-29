@@ -180,7 +180,7 @@ class GameplayBackgroundScreen : GameScreen {
         spriteBatch.Draw(
             groundTexture,
             new Vector2(-(groundWidth / 2), 0),
-            new Rectangle((int) this.groundScrollX, (int) this.groundScrollY, (int)groundWidth, GameConstants.NOTE_HORIZON_DISTANCE),
+            new Rectangle((int) this.groundScrollX, (int) this.groundScrollY, (int) groundWidth, GameConstants.NOTE_HORIZON_DISTANCE),
             Color.White
         );
         spriteBatch.End();
