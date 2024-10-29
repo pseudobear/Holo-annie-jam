@@ -170,11 +170,12 @@ public class Beatmap {
 public class RhythmEvent : IComparable {
 
     public int CompareTo(object obj) {
-        if (obj == null) return 1;
+        if (obj == null)
+            return 1;
 
         RhythmEvent otherRhythmEvent = obj as RhythmEvent;
         if (otherRhythmEvent != null)
-            return (int)otherRhythmEvent.Tick - (int)this.Tick;
+            return (int) otherRhythmEvent.Tick - (int) this.Tick;
         else
             throw new ArgumentException("Object is not a RhythmEvent");
     }
