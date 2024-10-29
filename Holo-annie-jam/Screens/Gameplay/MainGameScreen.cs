@@ -31,6 +31,7 @@ class MainGameScreen : GameScreen {
     Texture2D note;
     Texture2D noteShadow;
     Texture2D UITextureSheet;
+    Texture2D gura;
     Quad targetLine;
     VertexDeclaration vertexDeclaration;
 
@@ -70,8 +71,8 @@ class MainGameScreen : GameScreen {
             content = new ContentManager(ScreenManager.Game.Services, "Content");
 
         gameFont = content.Load<SpriteFont>("gamefont");
-        note = content.Load<Texture2D>("GameplayAssets/Beatmap Objects/note");
-        noteShadow = content.Load<Texture2D>("GameplayAssets/Beatmap Objects/note_shadows");
+        note = content.Load<Texture2D>("GameplayAssets/Beatmap Objects/Bloop");
+        noteShadow = content.Load<Texture2D>("GameplayAssets/Beatmap Objects/Bloop_shadow");
         UITextureSheet = content.Load<Texture2D>("gradient");
 
         this.beatmap = Beatmap.Builder.LoadFromFile(beatmapFilename)!.Build();
