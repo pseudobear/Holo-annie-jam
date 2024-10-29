@@ -31,8 +31,8 @@ class MainGameScreen : GameScreen {
     Texture2D note;
     Texture2D noteShadow;
     Texture2D UITextureSheet;
-    Texture2D gura;
     Quad targetLine;
+    Quad gura;
     VertexDeclaration vertexDeclaration;
 
     // rhythm events 
@@ -71,9 +71,8 @@ class MainGameScreen : GameScreen {
             content = new ContentManager(ScreenManager.Game.Services, "Content");
 
         gameFont = content.Load<SpriteFont>("gamefont");
-        note = content.Load<Texture2D>("GameplayAssets/Beatmap Objects/Bloop");
+        note = content.Load<Texture2D>("GameplayAssets/Beatmap Objects/upright_object_sheet");
         noteShadow = content.Load<Texture2D>("GameplayAssets/Beatmap Objects/Bloop_shadow");
-        gura = content.Load<Texture2D>("GameplayAssets/Stage Objects/GAWR_GURA_1");
         UITextureSheet = content.Load<Texture2D>("gradient");
 
         this.beatmap = Beatmap.Builder.LoadFromFile(beatmapFilename)!.Build();
@@ -88,6 +87,16 @@ class MainGameScreen : GameScreen {
             new Vector3(0, 1, 0),
             viewport.Width * 3,
             20
+        );
+        gura = new Quad(
+            new Vector3(0, 0, (GameConstants.PLAYER_HEIGHT / 2) + 0.001f),
+            new Vector3(0, -1, 0),
+            new Vector3(0, 0, 1),
+            GameConstants.PLAYER_WIDTH,
+            GameConstants.PLAYER_HEIGHT,
+            new Vector2(0.5f, 0),
+            0.5f,
+            1f
         );
 
         // kids look away, I'm lazy so we're copy pasting everything to create new basic effects
@@ -170,7 +179,10 @@ class MainGameScreen : GameScreen {
             new Vector3(0, -1, 0),
             new Vector3(0, 0, 1),
             GameConstants.NOTE_WIDTH,
-            GameConstants.NOTE_HEIGHT
+            GameConstants.NOTE_HEIGHT,
+            new Vector2(0, 0),
+            0.5f,
+            1f
         );
     }
 
@@ -335,6 +347,12 @@ class MainGameScreen : GameScreen {
                     entry.Value[0].Indices, 0, 2
                 );
             }
+
+            ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(
+                PrimitiveType.TriangleList,
+                gura.Vertices, 0, 4,
+                gura.Indices, 0, 2
+            );
         }
 
         visibleEvents = beatmapPlayer.GetVisibleEvents();
@@ -346,25 +364,6 @@ class MainGameScreen : GameScreen {
 
             ScreenManager.FadeBackBufferToBlack(alpha);
         }
-
-        // draw 2d UI items
-        spriteBatch.Begin(
-            sortMode: SpriteSortMode.Deferred,
-            blendState: null,
-            samplerState: SamplerState.LinearWrap,
-            depthStencilState: null
-        );
-        spriteBatch.Draw(
-            gura,
-            new Rectangle(
-                (int)(screen.X - GameConstants.PLAYER_WIDTH) / 2, 
-                (int)(screen.Y - GameConstants.PLAYER_HEIGHT), 
-                GameConstants.PLAYER_WIDTH, 
-                GameConstants.PLAYER_HEIGHT
-            ),
-            new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha)
-        );
-        spriteBatch.End();
     }
 
 

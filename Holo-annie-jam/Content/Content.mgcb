@@ -170,6 +170,30 @@
 /processorParam:TextureFormat=Color
 /build:GameplayAssets/Beatmap Objects/note.png
 
+#begin GameplayAssets/Beatmap Objects/upright_object_sheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:GameplayAssets/Beatmap Objects/upright_object_sheet.png
+
+#begin GameplayAssets/Stage Objects/GAWR_GURA_1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:GameplayAssets/Stage Objects/GAWR_GURA_1.png
+
 #begin GameplayAssets/Stage Objects/GAWR_GURA_1.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -7,8 +7,8 @@ static class GameConstants {
     public const int NOTE_HEIGHT = 1000;
     public const int NOTE_HORIZON_DISTANCE = 8000;
 
-    public const int PLAYER_WIDTH = 300;
-    public const int PLAYER_HEIGHT = 300;
+    public const int PLAYER_WIDTH = 500;
+    public const int PLAYER_HEIGHT = 1000;
 
     public const int SHADOW_MAX_LEN = 2200;
     public const int SHADOW_MIN_LEN = 200;
