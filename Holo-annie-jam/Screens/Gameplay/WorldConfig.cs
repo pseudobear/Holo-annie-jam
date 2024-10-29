@@ -13,7 +13,7 @@ static class GameConstants {
 }
 
 static class GameplayTransforms {
-    static Vector3 cameraPosition = new Vector3(0f, -3000f, 1000f);
+    static Vector3 cameraPosition = new Vector3(0f, -3000f, 1700f);
     static Vector3 cameraTarget = new Vector3(0.0f, 0.0f, 0.0f); // Look back at the origin
 
     static float fovAngle = MathHelper.ToRadians(75);
