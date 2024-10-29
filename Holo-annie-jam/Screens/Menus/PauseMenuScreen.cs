@@ -1,5 +1,8 @@
 #region Using Statements
+using Microsoft.Xna.Framework;
+using System;
 #endregion
+
 /// <summary>
 /// The pause menu comes up over the top of the game,
 /// giving the player options to resume or quit.
@@ -7,12 +10,15 @@
 class PauseMenuScreen : MenuScreen {
     #region Initialization
 
+    private readonly Action _onResume;
 
     /// <summary>
     /// Constructor.
     /// </summary>
-    public PauseMenuScreen()
+    public PauseMenuScreen(Action onResume)
         : base("Paused") {
+        this._onResume = onResume;
+
         // Create our menu entries.
         MenuEntry resumeGameMenuEntry = new MenuEntry("Resume Game");
         MenuEntry quitGameMenuEntry = new MenuEntry("Quit Game");
@@ -53,6 +59,11 @@ class PauseMenuScreen : MenuScreen {
     /// </summary>
     void ConfirmQuitMessageBoxAccepted(object sender, PlayerIndexEventArgs e) {
         LoadingScreen.Load(ScreenManager, false, null, new MainMenuScreen());
+    }
+
+    protected override void OnCancel(PlayerIndex playerIndex) {
+        this._onResume();
+        base.OnCancel(playerIndex);
     }
 
 

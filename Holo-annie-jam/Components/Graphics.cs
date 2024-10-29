@@ -16,13 +16,13 @@ class Quad {
     VertexPositionNormalTexture[] vertices;
 
     public short[] Indices {
-        get { return indices;  }
+        get { return indices; }
     }
-    short[] indices; 
+    short[] indices;
 
 
     public Vector3 Origin {
-        get { return origin; } 
+        get { return origin; }
         set {
             origin = value;
             FillVertices();
