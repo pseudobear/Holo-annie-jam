@@ -280,6 +280,9 @@ class MainGameScreen : GameScreen {
     private void HandleLaneInput(InputManager input, Keys key, uint lane) {
         // TODO do something with result? score, display, etc
         if (input.IsNewKeyPress(key, ControllingPlayer.Value, out _)) {
+            // TODO move gura to lane where last input was
+            this.previousHitLane = lane;
+
             BeatmapHitResult result = beatmapPlayer.ConsumePlayerInput(InputType.Normal, lane);
             switch (result) {
                 case BeatmapHitResult.Perfect:
@@ -299,7 +302,6 @@ class MainGameScreen : GameScreen {
                     return;
             }
             this.previousHitResult = result;
-            this.previousHitLane = lane;
         }
     }
 
