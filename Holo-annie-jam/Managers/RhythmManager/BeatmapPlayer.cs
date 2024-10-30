@@ -1,4 +1,4 @@
-﻿using ManagedBass;
+using ManagedBass;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,7 +13,7 @@ public class BeatmapPlayer {
     /// <summary>
     /// The default timespan that is visible on the screen when playing a beatmap, in ticks (100 nanoseconds).
     /// </summary>
-    public const long DEFAULT_VISIBLE_TIMESPAN_TICKS = 2 * TimeSpan.TicksPerSecond;
+    public const long DEFAULT_VISIBLE_TIMESPAN_TICKS = (long)(1100 * TimeSpan.TicksPerMillisecond);
 
     /// <summary>
     /// The default timespan that is still visible on the screen after the rhythm event has passed

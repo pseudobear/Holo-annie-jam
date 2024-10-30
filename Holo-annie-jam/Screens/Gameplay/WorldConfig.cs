@@ -5,15 +5,23 @@ using Microsoft.Xna.Framework;
 static class GameConstants {
     public const int NOTE_WIDTH = 500;
     public const int NOTE_HEIGHT = 1000;
-    public const int NOTE_HORIZON_DISTANCE = 10000;
+    public const int NOTE_HORIZON_DISTANCE = 8000;
+
+    public const int PLAYER_WIDTH = 500;
+    public const int PLAYER_HEIGHT = 1000;
 
     public const int SHADOW_MAX_LEN = 2200;
     public const int SHADOW_MIN_LEN = 200;
+
+    public const int TARGET_LINE_Y = 400;
+
+    // update position -1,600,000 ticks early compared to actual tick
+    public const long DEFAULT_VISUAL_OFFSET_TICKS = -1600000; 
 }
 
 static class GameplayTransforms {
-    static Vector3 cameraPosition = new Vector3(0f, -3000f, 1700f);
-    static Vector3 cameraTarget = new Vector3(0.0f, 0.0f, 0.0f); // Look back at the origin
+    static Vector3 cameraPosition = new Vector3(0f, -3000f, 1400f);
+    static Vector3 cameraTarget = new Vector3(0.0f, 0.0f, 900f); // Look back at the origin
 
     static float fovAngle = MathHelper.ToRadians(75);
     static float aspectRatio = 4 / 3;
@@ -23,7 +31,7 @@ static class GameplayTransforms {
     // y+ is forward, x+ is right, z+ is up, try to get y=0 at bottom of screen
 
     public static Matrix GetWorldMatrix(int viewportHeight) {
-        return Matrix.CreateTranslation(0.0f, -(viewportHeight) - 1600, 0.0f);
+        return Matrix.CreateTranslation(0.0f, -(viewportHeight) - 1100, 0.0f);
     }
 
     public static Matrix GetViewMatrix() {
@@ -34,3 +42,4 @@ static class GameplayTransforms {
         return Matrix.CreatePerspectiveFieldOfView(fovAngle, aspectRatio, near, far);
     }
 }
+
