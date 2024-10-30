@@ -25,12 +25,6 @@
 /processorParam:TextureFormat=Color
 /build:background.png
 
-#begin Beatmaps/Sample Beatmap/sample_song.ogg
-/importer:OggImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Beatmaps/Sample Beatmap/sample_song.ogg
-
 #begin blank.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -62,30 +56,6 @@
 /processorParam:TextureFormat=Color
 /build:GameplayAssets/Background/cobblestone_3.png
 
-#begin GameplayAssets/Background/cobblestone_3.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:GameplayAssets/Background/cobblestone_3.png
-
-#begin GameplayAssets/Beatmap Objects/Bloop_shadow.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:GameplayAssets/Beatmap Objects/Bloop_shadow.png
-
 #begin GameplayAssets/Beatmap Objects/Bloop_shadow.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -110,18 +80,6 @@
 /processorParam:TextureFormat=Color
 /build:GameplayAssets/Beatmap Objects/Bloop.png
 
-#begin GameplayAssets/Beatmap Objects/Bloop.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:GameplayAssets/Beatmap Objects/Bloop.png
-
 #begin GameplayAssets/Beatmap Objects/note_shadows.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -133,30 +91,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:GameplayAssets/Beatmap Objects/note_shadows.png
-
-#begin GameplayAssets/Beatmap Objects/note_shadows.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:GameplayAssets/Beatmap Objects/note_shadows.png
-
-#begin GameplayAssets/Beatmap Objects/note.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:GameplayAssets/Beatmap Objects/note.png
 
 #begin GameplayAssets/Beatmap Objects/note.png
 /importer:TextureImporter
@@ -181,18 +115,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:GameplayAssets/Beatmap Objects/upright_object_sheet.png
-
-#begin GameplayAssets/Stage Objects/GAWR_GURA_1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:GameplayAssets/Stage Objects/GAWR_GURA_1.png
 
 #begin GameplayAssets/Stage Objects/GAWR_GURA_1.png
 /importer:TextureImporter

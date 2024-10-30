@@ -25,6 +25,8 @@ class MainGameScreen : GameScreen {
 
     BeatmapPlayer beatmapPlayer;
     Beatmap beatmap;
+    BeatmapHitResult previousHitResult = BeatmapHitResult.NoHit;
+    uint previousHitLane = 2;
     string beatmapFilename;
 
     SpriteFont gameFont;
@@ -264,6 +266,10 @@ class MainGameScreen : GameScreen {
         // deload invisible events
         foreach (RhythmEvent rhythmEvent in rhythmQuadMap.Keys.ToList()) {
             if (!(visibleEvents.RhythmEvents ?? Array.Empty<RhythmEvent>()).Contains(rhythmEvent)) {
+                if (rhythmEvent.HitResult == BeatmapHitResult.NoHit) {
+                    // TODO handle miss
+                    previousHitResult = BeatmapHitResult.NoHit;
+                }
                 rhythmQuadMap.Remove(rhythmEvent);
             }
         }
@@ -271,6 +277,33 @@ class MainGameScreen : GameScreen {
         System.Diagnostics.Debug.WriteLine(" -- update @ tick: " + visibleEvents.Tick);
     }
 
+    private void HandleLaneInput(InputManager input, Keys key, uint lane) {
+        // TODO do something with result? score, display, etc
+        if (input.IsNewKeyPress(key, ControllingPlayer.Value, out _)) {
+            // TODO move gura to lane where last input was
+            this.previousHitLane = lane;
+
+            BeatmapHitResult result = beatmapPlayer.ConsumePlayerInput(InputType.Normal, lane);
+            switch (result) {
+                case BeatmapHitResult.Perfect:
+                    // do something
+                    break;
+                case BeatmapHitResult.Great:
+                    // do something
+                    break;
+                case BeatmapHitResult.Good:
+                    // do something
+                    break;
+                case BeatmapHitResult.Bad:
+                    // do something
+                    break;
+                default:
+                    // no matching event found, exit function early
+                    return;
+            }
+            this.previousHitResult = result;
+        }
+    }
 
     /// <summary>
     /// Lets the game respond to player input. Unlike the Update method,
@@ -297,7 +330,10 @@ class MainGameScreen : GameScreen {
             ScreenManager.AddScreen(new PauseMenuScreen(() => this.beatmapPlayer.Resume()), ControllingPlayer);
             this.beatmapPlayer.Pause();
         } else {
-            // Otherwise do game stuff:
+            // default to A, S, D for now
+            HandleLaneInput(input, Keys.A, 1);
+            HandleLaneInput(input, Keys.S, 2);
+            HandleLaneInput(input, Keys.D, 3);
         }
     }
 
@@ -357,6 +393,11 @@ class MainGameScreen : GameScreen {
 
         visibleEvents = beatmapPlayer.GetVisibleEvents();
         System.Diagnostics.Debug.WriteLine(" -- draw @ tick: " + visibleEvents.Tick);
+
+        // draw previous hit result - TODO make this look prettier?
+        spriteBatch.Begin();
+        spriteBatch.DrawString(gameFont, previousHitResult.ToString(), new(100, 100), Color.Black);
+        spriteBatch.End();
 
         // If the game is transitioning on or off, fade it out to black.
         if (TransitionPosition > 0 || pauseAlpha > 0) {
