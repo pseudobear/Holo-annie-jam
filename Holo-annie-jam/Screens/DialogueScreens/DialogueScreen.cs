@@ -47,7 +47,8 @@ class Panel {
         );
         */
         return new Vector2(
-            (1280 * (index + 1) / (1 + sprites.Count)) - sprites[index].Width / 2, 0
+            (1280 * (index + 1) / (1 + sprites.Count)) - PanelConstants.SPRITE_WIDTH / 2, 
+            720 - PanelConstants.SPRITE_HEIGHT
         );
     }
 }
@@ -198,7 +199,12 @@ class DialogueScreen : GameScreen {
         for (int i = 0; i < activePanel.Sprites.Count; i++) {
             spriteBatch.Draw(
                 activePanel.Sprites[i],
-                activePanel.GetSpriteOrigin(i),
+                new Rectangle(
+                    (int)activePanel.GetSpriteOrigin(i).X,
+                    (int)activePanel.GetSpriteOrigin(i).Y,
+                    PanelConstants.SPRITE_WIDTH,
+                    PanelConstants.SPRITE_HEIGHT
+                ),
                 new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha)
             );
         }
