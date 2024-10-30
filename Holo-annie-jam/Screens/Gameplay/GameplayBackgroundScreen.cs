@@ -71,12 +71,12 @@ class GameplayBackgroundScreen : GameScreen {
         basicEffect.FogEnabled = true;
         basicEffect.FogColor = Color.CornflowerBlue.ToVector3();
         basicEffect.FogStart = 0.1f;
-        basicEffect.FogEnd = GameConstants.NOTE_HORIZON_DISTANCE - 1000f;
+        basicEffect.FogEnd = GameConstants.NOTE_HORIZON_DISTANCE - 800f;
 
-        groundWidth = groundTexture.Width * 4;
+        groundWidth = groundTexture.Width * 5;
 
         wallWidth = GameConstants.NOTE_HORIZON_DISTANCE;
-        wallHeight = viewport.Height * 6;
+        wallHeight = viewport.Height * 8;
 
         leftWall = new Quad(
             new Vector3(-(groundWidth / 2), wallWidth / 2, wallHeight / 2),
@@ -180,7 +180,7 @@ class GameplayBackgroundScreen : GameScreen {
         spriteBatch.Draw(
             groundTexture,
             new Vector2(-(groundWidth / 2), 0),
-            new Rectangle((int) this.groundScrollX, (int) this.groundScrollY, (int)groundWidth, GameConstants.NOTE_HORIZON_DISTANCE),
+            new Rectangle((int) this.groundScrollX, (int) this.groundScrollY, (int) groundWidth, GameConstants.NOTE_HORIZON_DISTANCE),
             Color.White
         );
         spriteBatch.End();

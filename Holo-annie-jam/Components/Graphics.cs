@@ -16,16 +16,16 @@ class Quad {
     VertexPositionNormalTexture[] vertices;
 
     public short[] Indices {
-        get { return indices;  }
+        get { return indices; }
     }
-    short[] indices; 
+    short[] indices;
 
 
     public Vector3 Origin {
-        get { return origin; } 
+        get { return origin; }
         set {
             origin = value;
-            FillVertices();
+            FillVertices(false);
         }
     }
     Vector3 origin;
@@ -34,7 +34,7 @@ class Quad {
         get { return normal; }
         set {
             normal = value;
-            FillVertices();
+            FillVertices(false);
         }
     }
     Vector3 normal;
@@ -43,7 +43,7 @@ class Quad {
         get { return up; }
         set {
             up = value;
-            FillVertices();
+            FillVertices(false);
         }
     }
 
@@ -51,7 +51,7 @@ class Quad {
         get { return width; }
         set {
             width = value;
-            FillVertices();
+            FillVertices(false);
         }
     }
     float width;
@@ -60,7 +60,7 @@ class Quad {
         get { return height; }
         set {
             height = value;
-            FillVertices();
+            FillVertices(false);
         }
     }
     float height;
@@ -89,10 +89,18 @@ class Quad {
         this.width = width;
         this.height = height;
 
-        FillVertices();
+        FillVertices(true);
     }
 
-    private void FillVertices() {
+    /// <summary>
+    /// Constructor with texture coords
+    /// </summary>
+    public Quad(Vector3 origin, Vector3 normal, Vector3 up, float width, float height, 
+        Vector2 texOrigin, float texWidth, float texHeight) : this(origin, normal, up, width, height) {
+        this.SetTextureCoords(texOrigin, texWidth, texHeight);
+    }
+
+    private void FillVertices(bool fillTextureCoords=false) {
         // Calculate the quad corners
         left = Vector3.Cross(normal, up);
         upperCenter = (up * height / 2) + origin;
@@ -113,16 +121,19 @@ class Quad {
         Vector2 textureLowerLeft = new Vector2(0.0f, 1.0f);
         Vector2 textureLowerRight = new Vector2(1.0f, 1.0f);
 
-        // Set the position and texture coordinate for each
-        // vertex
+
+        // Set the position and texture coordinates
         vertices[0].Position = lowerLeft;
-        vertices[0].TextureCoordinate = textureLowerLeft;
         vertices[1].Position = upperLeft;
-        vertices[1].TextureCoordinate = textureUpperLeft;
         vertices[2].Position = lowerRight;
-        vertices[2].TextureCoordinate = textureLowerRight;
         vertices[3].Position = upperRight;
-        vertices[3].TextureCoordinate = textureUpperRight;
+
+        if (fillTextureCoords) {
+            vertices[0].TextureCoordinate = textureLowerLeft;
+            vertices[1].TextureCoordinate = textureUpperLeft;
+            vertices[2].TextureCoordinate = textureLowerRight;
+            vertices[3].TextureCoordinate = textureUpperRight;
+        }
 
         // Set the index buffer for each vertex, using
         // clockwise winding

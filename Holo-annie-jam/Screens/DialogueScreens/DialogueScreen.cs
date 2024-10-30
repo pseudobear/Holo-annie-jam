@@ -169,7 +169,7 @@ class DialogueScreen : GameScreen {
         }
 
         if (input.IsPauseGame(ControllingPlayer) || gamePadDisconnected) {
-            ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
+            ScreenManager.AddScreen(new PauseMenuScreen(() => {}), ControllingPlayer);
         }
         else {
             // Otherwise do game stuff:

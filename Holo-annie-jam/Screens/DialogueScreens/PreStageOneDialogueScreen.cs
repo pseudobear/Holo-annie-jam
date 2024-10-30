@@ -59,7 +59,7 @@ class PreStageOneDialogueScreen : DialogueScreen {
     public override void OnCompletePanels(PlayerIndex? playerIndex) {
         LoadingScreen.Load(ScreenManager, true, playerIndex,
                      new GameplayBackgroundScreen(),
-                     new MainGameScreen("Content/Beatmaps/Sample Beatmap/sample_beatmap.bin"));
+                     new MainGameScreen("Content/Beatmaps/Reflect/Reflect.json"));
     } 
 
 
