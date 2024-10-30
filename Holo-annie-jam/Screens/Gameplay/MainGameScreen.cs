@@ -222,6 +222,7 @@ class MainGameScreen : GameScreen {
         foreach (RhythmEvent rhythmEvent in rhythmQuadMap.Keys.ToList()) {
             if (!(visibleEvents.RhythmEvents ?? Array.Empty<RhythmEvent>()).Contains(rhythmEvent)) {
                 rhythmQuadMap.Remove(rhythmEvent);
+                // TODO do something when missed events are removed
             }
         }
     }
@@ -252,7 +253,18 @@ class MainGameScreen : GameScreen {
             ScreenManager.AddScreen(new PauseMenuScreen(() => this.beatmapPlayer.Resume()), ControllingPlayer);
             this.beatmapPlayer.Pause();
         } else {
-            // Otherwise do game stuff:
+            // default to A, S, D for now
+            PlayerIndex actingPlayerIndex;
+            // TODO do something with result? score, display, etc
+            if (input.IsNewKeyPress(Keys.A, (PlayerIndex) playerIndex, out actingPlayerIndex)) {
+                BeatmapHitResult result = beatmapPlayer.ConsumePlayerInput(InputType.Normal, 1);
+            }
+            if (input.IsNewKeyPress(Keys.S, (PlayerIndex) playerIndex, out actingPlayerIndex)) {
+                BeatmapHitResult result = beatmapPlayer.ConsumePlayerInput(InputType.Normal, 2);
+            }
+            if (input.IsNewKeyPress(Keys.D, (PlayerIndex) playerIndex, out actingPlayerIndex)) {
+                BeatmapHitResult result = beatmapPlayer.ConsumePlayerInput(InputType.Normal, 3);
+            }
         }
     }
 

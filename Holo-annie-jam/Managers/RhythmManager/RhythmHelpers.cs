@@ -33,7 +33,7 @@ public static class RhythmHelpers {
                 } else if (unsignedOffset <= INPUT_NORMAL_BAD_THRESHOLD) {
                     return BeatmapHitResult.Bad;
                 } else {
-                    return BeatmapHitResult.Miss;
+                    return BeatmapHitResult.NoHit;
                 }
             default:
                 // something went wrong

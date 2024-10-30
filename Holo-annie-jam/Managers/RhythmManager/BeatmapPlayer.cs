@@ -136,19 +136,20 @@ public class BeatmapPlayer {
             RhythmEvents = this._beatmap.RhythmEvents
                 .Skip(this.firstVisibleEventIdx)
                 .Take(this.nextVisibleEventIdx - this.firstVisibleEventIdx)
+                .Where(e => e.HitResult == BeatmapHitResult.NoHit)
         };
     }
 
     /// <summary>
     /// Takes player input, assuming input was at current time, and matches it to a rhythm event in the beatmap to
-    /// consume it. If no match was found, one of NoHit or Miss will be returned.
+    /// consume it. If no match was found, NoHit will be returned.
     /// </summary>
     public BeatmapHitResult ConsumePlayerInput(InputType inputType, uint lane) {
         long tick = this.GetCurrentPosition();
-        BeatmapHitResult result = BeatmapHitResult.Miss;
+        BeatmapHitResult result = BeatmapHitResult.NoHit;
         int eventIdx = this.nextConsumableEventIdx;
         while (eventIdx < this._beatmap.RhythmEvents.Length &&
-                (result == BeatmapHitResult.NoHit || result == BeatmapHitResult.Miss) &&
+                result == BeatmapHitResult.NoHit &&
                 this._beatmap.RhythmEvents[eventIdx].Tick < tick + RhythmHelpers.INPUT_MAX_THRESHOLD) {
             // require lane to be strictly equal for now
             // later, it may be possible that we can introduce more lanes and input lenience (e.g. BanG Dream allows 1 lane difference)
@@ -157,7 +158,7 @@ public class BeatmapPlayer {
             }
             eventIdx++;
         }
-        if (result != BeatmapHitResult.NoHit && result != BeatmapHitResult.Miss) {
+        if (result != BeatmapHitResult.NoHit) {
             this._beatmap.RhythmEvents[eventIdx - 1].HitResult = result;
             this.nextConsumableEventIdx = eventIdx;
         } else {
