@@ -27,6 +27,8 @@ class MainGameScreen : GameScreen {
     Texture2D note_shadow;
     BeatmapPlayer beatmapPlayer;
     Beatmap beatmap;
+    BeatmapHitResult previousHitResult = BeatmapHitResult.NoHit;
+    uint previousHitLane = 2;
     string beatmapFilename;
     VertexDeclaration vertexDeclaration;
 
@@ -221,12 +223,40 @@ class MainGameScreen : GameScreen {
         // deload invisible events
         foreach (RhythmEvent rhythmEvent in rhythmQuadMap.Keys.ToList()) {
             if (!(visibleEvents.RhythmEvents ?? Array.Empty<RhythmEvent>()).Contains(rhythmEvent)) {
+                if (rhythmEvent.HitResult == BeatmapHitResult.NoHit) {
+                    // TODO handle miss
+                    previousHitResult = BeatmapHitResult.NoHit;
+                }
                 rhythmQuadMap.Remove(rhythmEvent);
-                // TODO do something when missed events are removed
             }
         }
     }
 
+    private void HandleLaneInput(InputManager input, Keys key, uint lane) {
+        // TODO do something with result? score, display, etc
+        if (input.IsNewKeyPress(key, ControllingPlayer.Value, out _)) {
+            BeatmapHitResult result = beatmapPlayer.ConsumePlayerInput(InputType.Normal, lane);
+            switch (result) {
+                case BeatmapHitResult.Perfect:
+                    // do something
+                    break;
+                case BeatmapHitResult.Great:
+                    // do something
+                    break;
+                case BeatmapHitResult.Good:
+                    // do something
+                    break;
+                case BeatmapHitResult.Bad:
+                    // do something
+                    break;
+                default:
+                    // no matching event found, exit function early
+                    return;
+            }
+            this.previousHitResult = result;
+            this.previousHitLane = lane;
+        }
+    }
 
     /// <summary>
     /// Lets the game respond to player input. Unlike the Update method,
@@ -254,17 +284,9 @@ class MainGameScreen : GameScreen {
             this.beatmapPlayer.Pause();
         } else {
             // default to A, S, D for now
-            PlayerIndex actingPlayerIndex;
-            // TODO do something with result? score, display, etc
-            if (input.IsNewKeyPress(Keys.A, (PlayerIndex) playerIndex, out actingPlayerIndex)) {
-                BeatmapHitResult result = beatmapPlayer.ConsumePlayerInput(InputType.Normal, 1);
-            }
-            if (input.IsNewKeyPress(Keys.S, (PlayerIndex) playerIndex, out actingPlayerIndex)) {
-                BeatmapHitResult result = beatmapPlayer.ConsumePlayerInput(InputType.Normal, 2);
-            }
-            if (input.IsNewKeyPress(Keys.D, (PlayerIndex) playerIndex, out actingPlayerIndex)) {
-                BeatmapHitResult result = beatmapPlayer.ConsumePlayerInput(InputType.Normal, 3);
-            }
+            HandleLaneInput(input, Keys.A, 1);
+            HandleLaneInput(input, Keys.S, 2);
+            HandleLaneInput(input, Keys.D, 3);
         }
     }
 
@@ -306,6 +328,11 @@ class MainGameScreen : GameScreen {
                 );
             }
         }
+
+        // draw previous hit result - TODO make this look prettier?
+        spriteBatch.Begin();
+        spriteBatch.DrawString(gameFont, previousHitResult.ToString(), new(100, 100), Color.Black);
+        spriteBatch.End();
 
         // If the game is transitioning on or off, fade it out to black.
         if (TransitionPosition > 0 || pauseAlpha > 0) {
