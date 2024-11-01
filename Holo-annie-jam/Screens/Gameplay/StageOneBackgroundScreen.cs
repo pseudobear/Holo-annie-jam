@@ -27,6 +27,7 @@ class StageOneBackgroundScreen : GameScreen {
 
     List<Quad> leftWall = new List<Quad>();
     List<Quad> rightWall = new List<Quad>();
+    Quad background;
 
     #endregion
 
@@ -59,7 +60,7 @@ class StageOneBackgroundScreen : GameScreen {
         Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
 
         groundTexture = content.Load<Texture2D>("GameplayAssets/Background/cobblestone_3");
-        wallSheet = new TextureSheet(content.Load<Texture2D>("Beatmaps/Chikutaku/Assets/ChikuTaku_Wall_Background"), StageOne.NUM_WALLS, 1);
+        wallSheet = new TextureSheet(content.Load<Texture2D>("Beatmaps/Chikutaku/Assets/ChikuTaku_Wall_Background"), StageOne.NUM_WALLS + 1, 1);
 
         basicEffect = new BasicEffect(ScreenManager.GraphicsDevice);
         basicEffect.TextureEnabled = true;
@@ -70,12 +71,23 @@ class StageOneBackgroundScreen : GameScreen {
         basicEffect.FogEnabled = true;
         basicEffect.FogColor = StageOne.BackgroundColor.ToVector3();
         basicEffect.FogStart = 0.1f;
-        basicEffect.FogEnd = GameConstants.NOTE_HORIZON_DISTANCE - 800f;
+        basicEffect.FogEnd = GameConstants.NOTE_HORIZON_DISTANCE;
 
         groundWidth = groundTexture.Width * 5;
 
         wallWidth = GameConstants.NOTE_HORIZON_DISTANCE;
         wallHeight = viewport.Height * 9;
+
+        background = new Quad(
+            new Vector3(0, GameConstants.NOTE_HORIZON_DISTANCE - 1200f, (wallHeight / 2) + 500f),
+            new Vector3(0, -1, 0),
+            new Vector3(0, 0, 1),
+            groundWidth,
+            wallHeight,
+            new Vector2(0, (float) wallSheet[StageOne.NUM_WALLS].Y / (float) wallSheet.Height),
+            (float) wallSheet[StageOne.NUM_WALLS].Width / (float) wallSheet.Width,
+            (float) wallSheet[StageOne.NUM_WALLS].Height / (float) wallSheet.Height
+        );
 
         for (int i = 0; i < StageOne.NUM_WALLS; i++) {
             leftWall.Add(new Quad(
@@ -178,6 +190,13 @@ class StageOneBackgroundScreen : GameScreen {
         ScreenManager.GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
         foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes) {
             pass.Apply();
+
+            // draw background
+            ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(
+                PrimitiveType.TriangleList,
+                background.Vertices, 0, 4,
+                background.Indices, 0, 2
+            );
 
             // draw walls
             for (int i = 0; i < StageOne.NUM_WALLS; i++) {
