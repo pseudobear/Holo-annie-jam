@@ -43,7 +43,7 @@ class MainMenuScreen : MenuScreen {
     /// </summary>
     void PlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e) {
         LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
-                             new GameplayBackgroundScreen(),
+                             new StageOneBackgroundScreen(),
                              new StageOneGameScreen("Content/Beatmaps/Chikutaku/Chikutaku.json"));
     }
 
