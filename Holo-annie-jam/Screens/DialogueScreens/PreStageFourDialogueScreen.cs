@@ -152,7 +152,7 @@ class PreStageFourDialogueScreen : DialogueScreen {
     public override void OnCompletePanels(PlayerIndex? playerIndex) {
         LoadingScreen.Load(ScreenManager, true, playerIndex,
                      new StageFourBackgroundScreen(),
-                     new StageFourGameScreen("Content/Beatmaps/Reflect/Reflect.json"));
+                     new StageFourGameScreen("Content/Beatmaps/NonFiction/NonFiction.json"));
     } 
 
 
