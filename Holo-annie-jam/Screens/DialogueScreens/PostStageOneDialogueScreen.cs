@@ -56,7 +56,7 @@ class PostStageOneDialogueScreen : DialogueScreen {
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "And it wasn’t supposed to!",
+            "And it wasn't supposed to!",
             AmeGura
         ));
         Panels.Enqueue(new Panel(
@@ -81,7 +81,7 @@ class PostStageOneDialogueScreen : DialogueScreen {
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "OK byeeeeeee…",
+            "OK byeeeeeee...",
             AmeGura
         ));
         Panels.Enqueue(new Panel(

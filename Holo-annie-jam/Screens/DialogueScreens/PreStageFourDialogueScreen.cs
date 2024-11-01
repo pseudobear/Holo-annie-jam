@@ -102,7 +102,7 @@ class PreStageFourDialogueScreen : DialogueScreen {
         ));
         Panels.Enqueue(new Panel(
             "Ina",
-            "Hey, you shouldn’t say that out loud Ame.",
+            "Hey, you shouldn't say that out loud Ame.",
             InaAme
         ));
         Panels.Enqueue(new Panel(
@@ -112,7 +112,7 @@ class PreStageFourDialogueScreen : DialogueScreen {
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Also, weren’t Calli and Kiara supposed to be here too? Why didn’t they come with me like Ina did?",
+            "Also, weren't Calli and Kiara supposed to be here too? Why didn't they come with me like Ina did?",
             GuraAme
         ));
         Panels.Enqueue(new Panel(
@@ -127,7 +127,7 @@ class PreStageFourDialogueScreen : DialogueScreen {
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Look, a suspiciously evil corporation that’s trying to take our subscribers! After them!",
+            "Look, a suspiciously evil corporation that's trying to take our subscribers! After them!",
             AmeGura
         ));
         Panels.Enqueue(new Panel(
