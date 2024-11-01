@@ -79,6 +79,7 @@ class MainGameScreen : GameScreen {
 
         this.beatmap = Beatmap.Builder.LoadFromFile(beatmapFilename)!.Build();
         this.beatmapPlayer = new BeatmapPlayer(beatmap);
+        this.beatmapPlayer.BeatmapEnd += this.OnBeatmapEnd;
 
         Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
 
@@ -155,6 +156,7 @@ class MainGameScreen : GameScreen {
 
     public override void OnLoad() {
         this.beatmapPlayer.Start();
+        // this.beatmapPlayer.JumpTo(1616667574);
     }
 
     /// <summary>
@@ -163,8 +165,14 @@ class MainGameScreen : GameScreen {
     public override void UnloadContent() {
         content.Unload();
         this.beatmapPlayer.Reset();
+
     }
 
+    void OnBeatmapEnd(object sender, PlayerIndexEventArgs e) {
+        LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
+            new PostStageOneDialogueScreen()
+        );
+    }
 
     #endregion
 

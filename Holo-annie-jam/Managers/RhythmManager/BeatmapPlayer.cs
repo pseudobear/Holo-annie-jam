@@ -3,11 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.Xna.Framework;
 
 /// <summary>
 /// Class representing beatmap player. Note that Bass.Init() MUST be called prior to using any of the play functions.
 /// </summary>
-public class BeatmapPlayer {
+class BeatmapPlayer {
 
     // TODO: make this a more reasonable number
     /// <summary>
@@ -44,6 +45,8 @@ public class BeatmapPlayer {
     private int nextVisibleEventIdx;
     private int nextConsumableEventIdx;
 
+    public event EventHandler<PlayerIndexEventArgs> BeatmapEnd;
+
     /// <summary>
     /// Creates a new beatmap player with the default visible timespan and given beatmap and song. 
     /// </summary>
@@ -60,6 +63,14 @@ public class BeatmapPlayer {
 
         this.VisibleTimespanTicks = visibleTimespanTicks;
         this.TrailingTimespanTicks = trailingTimespanTicks;
+
+        // hook up OnEndBeatmap as a sync on BASS_SYNC_END
+        Bass.ChannelSetSync(
+            this._songId, 
+            SyncFlags.End, 
+            0, 
+            (int Handle, int Channel, int Data, IntPtr User) => this.OnBeatmapEnd(PlayerIndex.One)
+        );
     }
 
     ~BeatmapPlayer() {
@@ -95,6 +106,12 @@ public class BeatmapPlayer {
             Bass.ChannelPlay(this._songId);
         }
         return this.GetVisibleEvents();
+    }
+
+    protected internal void OnBeatmapEnd(PlayerIndex playerIndex) {
+        if (BeatmapEnd != null) {
+            BeatmapEnd(this, new PlayerIndexEventArgs(playerIndex));
+        }
     }
 
     /// <summary>
