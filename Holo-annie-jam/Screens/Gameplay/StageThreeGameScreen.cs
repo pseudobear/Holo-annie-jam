@@ -50,6 +50,9 @@ class StageThreeGameScreen : GameScreen {
     BasicEffect shadowObjectEffect;
     BasicEffect UIEffect;
 
+    int lastGuraBob = 0;
+    bool GuraBobUp = false;
+
     #endregion
 
     #region Initialization
@@ -284,6 +287,8 @@ class StageThreeGameScreen : GameScreen {
             }
         }
 
+        // Gura Bob
+
         System.Diagnostics.Debug.WriteLine(" -- update @ tick: " + visibleEvents.Tick);
     }
 
@@ -408,10 +413,6 @@ class StageThreeGameScreen : GameScreen {
         // draw previous hit result - TODO make this look prettier?
         spriteBatch.Begin();
         spriteBatch.DrawString(gameFont, previousHitResult.ToString(), new(100, 100), Color.Black);
-        spriteBatch.End();
-
-        // draw total score - TODO make this look prettier?
-        spriteBatch.Begin();
         spriteBatch.DrawString(gameFont, $"Total Score: {Game1.Score}", new(500, 100), Color.Black);
         spriteBatch.End();
 

@@ -15,6 +15,15 @@ static class GameConstants {
 
     public const int TARGET_LINE_Y = 400;
 
+    public const int TRIDENT_Y = -450;
+    public const int TRIDENT_WIDTH = 400;
+    public const int TRIDENT_HEIGHT = 1000;
+
+    public const int SMOKE_WIDTH = 800;
+    public const int SMOKE_HEIGHT = 600;
+    public const int SMOKE_Y = 900;
+    public const int SMOKE_Z = 600;
+
     // update position -1,600,000 ticks early compared to actual tick
     public const long DEFAULT_VISUAL_OFFSET_TICKS = -1600000; 
 }
@@ -47,4 +56,6 @@ static class StageOne {
     public const float WALL_OFFSET = 50f;
     public const int NUM_WALLS = 5;
     public static Color BackgroundColor = new Color(195, 205, 191);
+
+    public const long BOB_RATE = 3000000;   // bob rate in ticks
 }
