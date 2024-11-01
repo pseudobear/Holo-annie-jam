@@ -44,7 +44,7 @@ class MainMenuScreen : MenuScreen {
     void PlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e) {
         LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
                              new GameplayBackgroundScreen(),
-                             new MainGameScreen("Content/Beatmaps/Reflect/Reflect.json"));
+                             new StageOneGameScreen("Content/Beatmaps/Reflect/Reflect.json"));
     }
 
     void StageSelectMenuEntrySelected(object sender, PlayerIndexEventArgs e) {
