@@ -183,8 +183,6 @@ class DialogueScreen : GameScreen {
     /// Draws the dialogue screen. Text, sprites and background
     /// </summary>
     public override void Draw(GameTime gameTime) {
-        ScreenManager.GraphicsDevice.Clear(ClearOptions.Target, Color.CornflowerBlue, 0, 0);
-
         SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
         SpriteFont font = ScreenManager.Font;
         Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
@@ -194,8 +192,6 @@ class DialogueScreen : GameScreen {
 
         spriteBatch.Begin();
 
-        spriteBatch.Draw(backgroundTexture, fullscreen,
-                            new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha));
         for (int i = 0; i < activePanel.Sprites.Count; i++) {
             spriteBatch.Draw(
                 activePanel.Sprites[i],
