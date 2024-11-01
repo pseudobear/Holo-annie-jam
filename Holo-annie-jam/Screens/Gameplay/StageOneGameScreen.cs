@@ -78,7 +78,7 @@ class StageOneGameScreen : GameScreen {
         gameFont = content.Load<SpriteFont>("gamefont");
         note = content.Load<Texture2D>("GameplayAssets/Beatmap Objects/upright_object_sheet");
         noteShadow = content.Load<Texture2D>("GameplayAssets/Beatmap Objects/Bloop_shadow");
-        UITextureSheet = content.Load<Texture2D>("gradient");
+        UITextureSheet = content.Load<Texture2D>("glow_pixel");
 
         this.beatmap = Beatmap.Builder.LoadFromFile(beatmapFilename)!.Build();
         this.beatmapPlayer = new BeatmapPlayer(beatmap);
@@ -91,8 +91,8 @@ class StageOneGameScreen : GameScreen {
             new Vector3(0, GameConstants.TARGET_LINE_Y, 0),
             new Vector3(0, 0, 1),
             new Vector3(0, 1, 0),
-            viewport.Width * 3,
-            20
+            viewport.Width * 4,
+            200
         );
         gura = new Quad(
             new Vector3(0, 0, (GameConstants.PLAYER_HEIGHT / 2) + 0.001f),
