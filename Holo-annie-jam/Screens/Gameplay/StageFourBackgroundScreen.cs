@@ -60,7 +60,7 @@ class StageFourBackgroundScreen : GameScreen {
         Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
 
         groundTexture = content.Load<Texture2D>("GameplayAssets/Background/cobblestone_3");
-        wallSheet = new TextureSheet(content.Load<Texture2D>("Beatmaps/Chikutaku/Assets/ChikuTaku_Wall_Background"), StageFour.NUM_WALLS + 1, 1);
+        wallSheet = new TextureSheet(content.Load<Texture2D>("Beatmaps/NonFiction/Assets/Non_Fiction_Wall_Background"), StageFour.NUM_WALLS, 1);
 
         basicEffect = new BasicEffect(ScreenManager.GraphicsDevice);
         basicEffect.TextureEnabled = true;
@@ -84,9 +84,9 @@ class StageFourBackgroundScreen : GameScreen {
             new Vector3(0, 0, 1),
             groundWidth,
             wallHeight,
-            new Vector2(0, (float) wallSheet[StageFour.NUM_WALLS].Y / (float) wallSheet.Height),
-            (float) wallSheet[StageFour.NUM_WALLS].Width / (float) wallSheet.Width,
-            (float) wallSheet[StageFour.NUM_WALLS].Height / (float) wallSheet.Height
+            new Vector2(0, (float) wallSheet[2].Y / (float) wallSheet.Height),
+            (float) wallSheet[2].Width / (float) wallSheet.Width,
+            (float) wallSheet[2].Height / (float) wallSheet.Height
         );
 
         for (int i = 0; i < StageFour.NUM_WALLS; i++) {
@@ -140,7 +140,7 @@ class StageFourBackgroundScreen : GameScreen {
         for (int i = 0; i < StageFour.NUM_WALLS; i++) {
             leftWall[i].SetTextureCoords(
                 new Vector2(
-                    (groundScrollY / (15 + 15 * (StageFour.NUM_WALLS - i - 1)) + wallSheet[i].Width) / wallSheet.Width,
+                    (groundScrollY / (15 + 5 * (StageFour.NUM_WALLS - i - 1)) + wallSheet[i].Width) / wallSheet.Width,
                     ((float)wallSheet[i].Y / (float)wallSheet.Height)
                 ),
                 (float)wallSheet[i].Width / (float)wallSheet.Width,
@@ -149,7 +149,7 @@ class StageFourBackgroundScreen : GameScreen {
 
             rightWall[i].SetTextureCoords(
                 new Vector2(
-                    -(groundScrollY / (15 + 15 * (StageFour.NUM_WALLS - i - 1)) + wallSheet[i].Width) / wallSheet.Width,
+                    -(groundScrollY / (15 + 5 * (StageFour.NUM_WALLS - i - 1)) + wallSheet[i].Width) / wallSheet.Width,
                     ((float)wallSheet[i].Y / (float)wallSheet.Height)
                 ),
                 (float)wallSheet[i].Width / (float)wallSheet.Width,
@@ -199,7 +199,7 @@ class StageFourBackgroundScreen : GameScreen {
             );
 
             // draw walls
-            for (int i = 0; i < StageFour.NUM_WALLS; i++) {
+            for (int i = 1; i < StageFour.NUM_WALLS; i++) {
                 // if (i != 1) continue;
                 ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(
                     PrimitiveType.TriangleList,
