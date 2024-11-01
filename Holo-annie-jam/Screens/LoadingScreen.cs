@@ -115,6 +115,7 @@ class LoadingScreen : GameScreen {
         // tells us how long the loading is going to take, so we know whether
         // to bother drawing the message.
         if (loadingIsSlow) {
+            ScreenManager.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 0, 0);
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
             SpriteFont font = ScreenManager.Font;
 

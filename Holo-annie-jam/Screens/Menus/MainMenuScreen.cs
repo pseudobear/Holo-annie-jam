@@ -15,19 +15,19 @@ class MainMenuScreen : MenuScreen {
     public MainMenuScreen() : base("Main Menu") {
         // Create our menu entries.
         MenuEntry playGameMenuEntry = new MenuEntry("Play Game");
-        MenuEntry dialogueGameMenuEntry = new MenuEntry("Start with dialogue");
+        MenuEntry stageSelectMenuEntry = new MenuEntry("Stage Select");
         MenuEntry optionsMenuEntry = new MenuEntry("Options");
         MenuEntry exitMenuEntry = new MenuEntry("Exit");
 
         // Hook up menu event handlers.
         playGameMenuEntry.Selected += PlayGameMenuEntrySelected;
-        dialogueGameMenuEntry.Selected += DialogueGameMenuEntrySelected;
+        stageSelectMenuEntry.Selected += StageSelectMenuEntrySelected;
         optionsMenuEntry.Selected += OptionsMenuEntrySelected;
         exitMenuEntry.Selected += OnCancel;
 
         // Add entries to the menu.
         MenuEntries.Add(playGameMenuEntry);
-        MenuEntries.Add(dialogueGameMenuEntry);
+        MenuEntries.Add(stageSelectMenuEntry);
         MenuEntries.Add(optionsMenuEntry);
         MenuEntries.Add(exitMenuEntry);
     }
@@ -43,13 +43,13 @@ class MainMenuScreen : MenuScreen {
     /// </summary>
     void PlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e) {
         LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
-                             new GameplayBackgroundScreen(),
-                             new MainGameScreen("Content/Beatmaps/Reflect/Reflect.json"));
+                             new StageOneBackgroundScreen(),
+                             new StageOneGameScreen("Content/Beatmaps/Chikutaku/Chikutaku.json"));
     }
 
-    void DialogueGameMenuEntrySelected(object sender, PlayerIndexEventArgs e) {
+    void StageSelectMenuEntrySelected(object sender, PlayerIndexEventArgs e) {
         LoadingScreen.Load(ScreenManager, false, e.PlayerIndex,
-            new PreStageOneDialogueScreen()
+            new StageSelectScreen()
         );
     }
 

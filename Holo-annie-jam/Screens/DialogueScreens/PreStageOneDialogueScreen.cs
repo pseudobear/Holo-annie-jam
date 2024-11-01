@@ -27,20 +27,25 @@ class PreStageOneDialogueScreen : DialogueScreen {
         base.LoadContent();
 
         BackgroundTexture = Content.Load<Texture2D>("background");
-        Texture2D gradient = Content.Load<Texture2D>("GWAR_GURA_1");
+        Texture2D GuraFace = Content.Load<Texture2D>("GameplayAssets/Dialogue Assets/gawr_face2");
+        Texture2D AmeFace = Content.Load<Texture2D>("GameplayAssets/Dialogue Assets/amelia_face");
 
-        List<Texture2D> singleCharacterList = new List<Texture2D>();
-        singleCharacterList.Add(gradient);
+        List<Texture2D> JustGura = new List<Texture2D>();
+        List<Texture2D> GuraAme = new List<Texture2D>();
+        List<Texture2D> AmeGura = new List<Texture2D>();
+        JustGura.Add(GuraFace);
+        GuraAme.Add(GuraFace);
+        GuraAme.Add(AmeFace);
 
         Panels.Enqueue(new Panel(
             "test name",
             "hello world!",
-            singleCharacterList
+            JustGura
         ));
         Panels.Enqueue(new Panel(
             "test name",
             "hello world! AGAIN! Screen should load next after hitting next",
-            singleCharacterList
+            GuraAme
         ));
     }
 
@@ -58,8 +63,8 @@ class PreStageOneDialogueScreen : DialogueScreen {
 
     public override void OnCompletePanels(PlayerIndex? playerIndex) {
         LoadingScreen.Load(ScreenManager, true, playerIndex,
-                     new GameplayBackgroundScreen(),
-                     new MainGameScreen("Content/Beatmaps/Reflect/Reflect.json"));
+                     new StageOneBackgroundScreen(),
+                     new StageOneGameScreen("Content/Beatmaps/Chikutaku/Chikutaku.json"));
     } 
 
 

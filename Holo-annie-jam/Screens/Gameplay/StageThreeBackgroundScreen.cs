@@ -10,7 +10,7 @@ using System;
 /// It draws a background image that remains fixed in place regardless
 /// of whatever transitions the screens on top of it may be doing.
 /// </summary>
-class GameplayBackgroundScreen : GameScreen {
+class StageThreeBackgroundScreen : GameScreen {
     #region Fields
 
     ContentManager content;
@@ -36,7 +36,7 @@ class GameplayBackgroundScreen : GameScreen {
     /// <summary>
     /// Constructor.
     /// </summary>
-    public GameplayBackgroundScreen() : base() {
+    public StageThreeBackgroundScreen() : base() {
         TransitionOnTime = TimeSpan.FromSeconds(0.5);
         TransitionOffTime = TimeSpan.FromSeconds(0.5);
     }

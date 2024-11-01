@@ -13,7 +13,7 @@ using System.Linq;
 /// placeholder to get the idea across: you'll probably want to
 /// put some more interesting gameplay in here!
 /// </summary>
-class MainGameScreen : GameScreen {
+class StageOneGameScreen : GameScreen {
     #region Fields
 
     static readonly Vector2 TOP_LEFT = new(0, 0);
@@ -58,7 +58,7 @@ class MainGameScreen : GameScreen {
     /// <summary>
     /// Constructor.
     /// </summary>
-    public MainGameScreen(string beatmapFilename) : base() {
+    public StageOneGameScreen(string beatmapFilename) : base() {
         TransitionOnTime = TimeSpan.FromSeconds(1.5);
         TransitionOffTime = TimeSpan.FromSeconds(0.5);
         this.beatmapFilename = beatmapFilename;
@@ -116,7 +116,7 @@ class MainGameScreen : GameScreen {
         uprightObjectEffect.TextureEnabled = true;
         uprightObjectEffect.Texture = note;
         uprightObjectEffect.FogEnabled = true;
-        uprightObjectEffect.FogColor = Color.CornflowerBlue.ToVector3();
+        uprightObjectEffect.FogColor = StageOne.BackgroundColor.ToVector3();
         uprightObjectEffect.FogStart = enemyFogStart;
         uprightObjectEffect.FogEnd = enemyFogEnd;
 
@@ -128,7 +128,7 @@ class MainGameScreen : GameScreen {
         shadowObjectEffect.TextureEnabled = true;
         shadowObjectEffect.Texture = noteShadow;
         shadowObjectEffect.FogEnabled = true;
-        shadowObjectEffect.FogColor = Color.CornflowerBlue.ToVector3();
+        shadowObjectEffect.FogColor = StageOne.BackgroundColor.ToVector3();
         shadowObjectEffect.FogStart = enemyFogStart;
         shadowObjectEffect.FogEnd = enemyFogEnd;
 
@@ -139,7 +139,7 @@ class MainGameScreen : GameScreen {
         UIEffect.TextureEnabled = true;
         UIEffect.Texture = UITextureSheet;
         UIEffect.FogEnabled = true;
-        UIEffect.FogColor = Color.CornflowerBlue.ToVector3();
+        UIEffect.FogColor = StageOne.BackgroundColor.ToVector3();
         UIEffect.FogStart = enemyFogStart;
         UIEffect.FogEnd = enemyFogEnd;
         #endregion
@@ -275,7 +275,7 @@ class MainGameScreen : GameScreen {
         foreach (RhythmEvent rhythmEvent in rhythmQuadMap.Keys.ToList()) {
             if (!(visibleEvents.RhythmEvents ?? Array.Empty<RhythmEvent>()).Contains(rhythmEvent)) {
                 if (rhythmEvent.HitResult == BeatmapHitResult.NoHit) {
-                    Game1.Corruption += 3;
+                    // TODO handle miss
                     previousHitResult = BeatmapHitResult.NoHit;
                 }
                 rhythmQuadMap.Remove(rhythmEvent);
@@ -294,17 +294,16 @@ class MainGameScreen : GameScreen {
             BeatmapHitResult result = beatmapPlayer.ConsumePlayerInput(InputType.Normal, lane);
             switch (result) {
                 case BeatmapHitResult.Perfect:
-                    Game1.Score += 100;
+                    // do something
                     break;
                 case BeatmapHitResult.Great:
-                    Game1.Score += 90;
+                    // do something
                     break;
                 case BeatmapHitResult.Good:
-                    Game1.Score += 70;
+                    // do something
                     break;
                 case BeatmapHitResult.Bad:
-                    Game1.Score += 40;
-                    Game1.Corruption += 1;
+                    // do something
                     break;
                 default:
                     // no matching event found, exit function early
@@ -406,11 +405,6 @@ class MainGameScreen : GameScreen {
         // draw previous hit result - TODO make this look prettier?
         spriteBatch.Begin();
         spriteBatch.DrawString(gameFont, previousHitResult.ToString(), new(100, 100), Color.Black);
-        spriteBatch.End();
-
-        // draw total score - TODO make this look prettier?
-        spriteBatch.Begin();
-        spriteBatch.DrawString(gameFont, $"Total Score: {Game1.Score}", new(500, 100), Color.Black);
         spriteBatch.End();
 
         // If the game is transitioning on or off, fade it out to black.
