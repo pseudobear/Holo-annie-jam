@@ -50,6 +50,9 @@ class StageThreeGameScreen : GameScreen {
     BasicEffect shadowObjectEffect;
     BasicEffect UIEffect;
 
+    int lastGuraBob = 0;
+    bool GuraBobUp = false;
+
     #endregion
 
     #region Initialization
@@ -283,6 +286,8 @@ class StageThreeGameScreen : GameScreen {
                 rhythmQuadMap.Remove(rhythmEvent);
             }
         }
+
+        // Gura Bob
 
         System.Diagnostics.Debug.WriteLine(" -- update @ tick: " + visibleEvents.Tick);
     }

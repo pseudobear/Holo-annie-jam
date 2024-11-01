@@ -50,6 +50,9 @@ class StageOneGameScreen : GameScreen {
     BasicEffect shadowObjectEffect;
     BasicEffect UIEffect;
 
+    long lastGuraBob = 0;
+    bool guraBobUp = false;
+
     #endregion
 
     #region Initialization
@@ -279,6 +282,18 @@ class StageOneGameScreen : GameScreen {
                     previousHitResult = BeatmapHitResult.NoHit;
                 }
                 rhythmQuadMap.Remove(rhythmEvent);
+            }
+        }
+
+        // Gura bob
+        if (visibleEvents.Tick >= lastGuraBob + StageOne.BOB_RATE) {
+            lastGuraBob = visibleEvents.Tick;
+            if (guraBobUp) {
+                gura.Origin = new Vector3(0, 0, (GameConstants.PLAYER_HEIGHT / 2) + 0.001f);
+                guraBobUp = false;
+            } else {
+                gura.Origin = new Vector3(0, 0, (GameConstants.PLAYER_HEIGHT / 2) - 20f);
+                guraBobUp = true;
             }
         }
 
