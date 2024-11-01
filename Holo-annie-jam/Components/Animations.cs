@@ -1,6 +1,7 @@
 #region Using Statements
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 #endregion
 
 /// <summary>
@@ -80,12 +81,68 @@ class TextureSheet {
     /// </summary>
     public Rectangle GetZone(int zone) {
         int x = (zone + 1) % numCols;
-        int y = (zone + 1) / numCols;
+        int y = zone / numCols;
         return new Rectangle(
             (int) ((x - 1) * zoneWidth),
-            (int) ((y - 1) * zoneHeight),
+            (int) (y * zoneHeight),
             (int) zoneWidth,
             (int) zoneHeight
+        );
+    }
+}
+
+class Animation {
+
+    long tickDelay;
+    long lastFrameTick;
+
+    public bool Active;
+
+    public int CurrentFrameIdx {
+        get { return currentFrameIdx; }
+        set { currentFrameIdx = value; }
+    }
+    int currentFrameIdx;
+
+    public List<int> Frames {
+        get { return frames; }
+    }
+    List<int> frames = new List<int>();
+
+    public Animation(long tickDelay) {
+        this.tickDelay = tickDelay;
+        currentFrameIdx = 0;
+        Active = false;
+        lastFrameTick = 0;
+    }
+
+    public void Update(long tick) {
+        if (!Active) return;
+        if (tick >= lastFrameTick + tickDelay) {
+            lastFrameTick = tick;
+            currentFrameIdx++;
+            if (currentFrameIdx == frames.Count) {
+                currentFrameIdx = 0;
+                Active = false;
+            }
+        }
+    }
+
+    public void Start() {
+        Active = true;
+        currentFrameIdx = 0;
+        lastFrameTick = 0;
+    }
+
+    public void SetTextureCoords(ref Quad quad, TextureSheet sheet) {
+        System.Diagnostics.Debug.WriteLine(sheet[currentFrameIdx]);
+        quad.SetTextureCoords(
+            new Vector2(
+                (float)sheet[currentFrameIdx].X / (float)sheet.Width,
+                (float)sheet[currentFrameIdx].Y / (float)sheet.Height
+            ),
+            (float)sheet[currentFrameIdx].Width / (float)sheet.Width,
+            (float)sheet[currentFrameIdx].Height / (float)sheet.Height
         );
     }
 }
