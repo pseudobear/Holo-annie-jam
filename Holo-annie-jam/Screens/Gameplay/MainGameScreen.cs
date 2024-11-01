@@ -156,6 +156,7 @@ class MainGameScreen : GameScreen {
 
     public override void OnLoad() {
         this.beatmapPlayer.Start();
+        // this.beatmapPlayer.JumpTo(1616667574);
     }
 
     /// <summary>
@@ -164,11 +165,13 @@ class MainGameScreen : GameScreen {
     public override void UnloadContent() {
         content.Unload();
         this.beatmapPlayer.Reset();
+
     }
 
     void OnBeatmapEnd(object sender, PlayerIndexEventArgs e) {
-        // TODO: Load post beatmap dialogue
-        throw new NullReferenceException("end of beatmap reached!");
+        LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
+            new PostStageOneDialogueScreen()
+        );
     }
 
     #endregion
