@@ -32,9 +32,18 @@ class StageThreeGameScreen : GameScreen {
     SpriteFont gameFont;
     Texture2D note;
     Texture2D noteShadow;
-    Texture2D UITextureSheet;
+    TextureSheet UITextureSheet;
+    TextureSheet smoke;
+    Animation attackAnimationMid;
+    Animation attackAnimationLeft;
+    Animation attackAnimationRight;
     Quad targetLine;
     Quad gura;
+    Quad trident;
+    Quad attackMid;
+    Quad attackLeft;
+    Quad attackRight;
+
     VertexDeclaration vertexDeclaration;
 
     // rhythm events 
@@ -49,9 +58,10 @@ class StageThreeGameScreen : GameScreen {
     BasicEffect uprightObjectEffect;
     BasicEffect shadowObjectEffect;
     BasicEffect UIEffect;
+    BasicEffect animateEffect;
 
-    int lastGuraBob = 0;
-    bool GuraBobUp = false;
+    long lastGuraBob = 0;
+    bool guraBobUp = false;
 
     #endregion
 
@@ -78,7 +88,8 @@ class StageThreeGameScreen : GameScreen {
         gameFont = content.Load<SpriteFont>("gamefont");
         note = content.Load<Texture2D>("GameplayAssets/Beatmap Objects/upright_object_sheet");
         noteShadow = content.Load<Texture2D>("GameplayAssets/Beatmap Objects/Bloop_shadow");
-        UITextureSheet = content.Load<Texture2D>("gradient");
+        UITextureSheet = new TextureSheet(content.Load<Texture2D>("ui_texture_sheet"), 1, 2);
+        smoke = new TextureSheet(content.Load<Texture2D>("Smoke N Dust 03/hit10"), 2, 5);
 
         this.beatmap = Beatmap.Builder.LoadFromFile(beatmapFilename)!.Build();
         this.beatmapPlayer = new BeatmapPlayer(beatmap);
@@ -91,8 +102,51 @@ class StageThreeGameScreen : GameScreen {
             new Vector3(0, GameConstants.TARGET_LINE_Y, 0),
             new Vector3(0, 0, 1),
             new Vector3(0, 1, 0),
-            viewport.Width * 3,
-            20
+            viewport.Width * 4,
+            200,
+            new Vector2((float)UITextureSheet[0].X / (float)UITextureSheet.Width, (float)UITextureSheet[0].Y / (float)UITextureSheet.Height),
+            (float)UITextureSheet[0].Width / (float)UITextureSheet.Width,
+            (float)UITextureSheet[0].Height / (float)UITextureSheet.Height
+        );
+        trident = new Quad(
+            new Vector3(GameConstants.PLAYER_WIDTH / 6, GameConstants.TRIDENT_Y, GameConstants.PLAYER_HEIGHT / 2),
+            new Vector3(0, -2, 1),
+            new Vector3(0.2f, 1, 0.7f),
+            GameConstants.TRIDENT_WIDTH,
+            GameConstants.TRIDENT_HEIGHT,
+            new Vector2((float)UITextureSheet[1].X / (float)UITextureSheet.Width, (float)UITextureSheet[1].Y / (float)UITextureSheet.Height),
+            (float)UITextureSheet[1].Width / (float)UITextureSheet.Width,
+            (float)UITextureSheet[1].Height / (float)UITextureSheet.Height
+        );
+        attackMid = new Quad(
+            new Vector3(GameConstants.PLAYER_WIDTH / 6, GameConstants.SMOKE_Y, GameConstants.SMOKE_Z),
+            new Vector3(0, -0.3f, 1),
+            new Vector3(1, 1, 0.2f),
+            GameConstants.SMOKE_WIDTH,
+            GameConstants.SMOKE_HEIGHT,
+            new Vector2((float)UITextureSheet[1].X / (float)UITextureSheet.Width, (float)UITextureSheet[1].Y / (float)UITextureSheet.Height),
+            (float)UITextureSheet[1].Width / (float)UITextureSheet.Width,
+            (float)UITextureSheet[1].Height / (float)UITextureSheet.Height
+        );
+        attackLeft = new Quad(
+            new Vector3(-GameConstants.PLAYER_WIDTH / 2, 0, GameConstants.SMOKE_Z),
+            new Vector3(0, -0.3f, 1),
+            new Vector3(-1, 0.5f, 0.2f),
+            GameConstants.SMOKE_WIDTH,
+            GameConstants.SMOKE_HEIGHT,
+            new Vector2((float)UITextureSheet[1].X / (float)UITextureSheet.Width, (float)UITextureSheet[1].Y / (float)UITextureSheet.Height),
+            (float)UITextureSheet[1].Width / (float)UITextureSheet.Width,
+            (float)UITextureSheet[1].Height / (float)UITextureSheet.Height
+        );
+        attackRight = new Quad(
+            new Vector3(GameConstants.PLAYER_WIDTH - 100, 0, GameConstants.SMOKE_Z),
+            new Vector3(0, -0.3f, 1),
+            new Vector3(1, -0.8f, 0.2f),
+            GameConstants.SMOKE_HEIGHT,
+            GameConstants.SMOKE_WIDTH,
+            new Vector2((float)UITextureSheet[1].X / (float)UITextureSheet.Width, (float)UITextureSheet[1].Y / (float)UITextureSheet.Height),
+            (float)UITextureSheet[1].Width / (float)UITextureSheet.Width,
+            (float)UITextureSheet[1].Height / (float)UITextureSheet.Height
         );
         gura = new Quad(
             new Vector3(0, 0, (GameConstants.PLAYER_HEIGHT / 2) + 0.001f),
@@ -104,6 +158,15 @@ class StageThreeGameScreen : GameScreen {
             0.5f,
             1f
         );
+
+        attackAnimationMid = new Animation(12 * TimeSpan.TicksPerMillisecond);
+        attackAnimationLeft = new Animation(12 * TimeSpan.TicksPerMillisecond);
+        attackAnimationRight = new Animation(12 * TimeSpan.TicksPerMillisecond);
+        for (int i = 0; i < 8; i++) {
+            attackAnimationMid.Frames.Add(i);
+            attackAnimationLeft.Frames.Add(i);
+            attackAnimationRight.Frames.Add(i);
+        }
 
         // kids look away, I'm lazy so we're copy pasting everything to create new basic effects
 
@@ -140,11 +203,18 @@ class StageThreeGameScreen : GameScreen {
         UIEffect.View = GameplayTransforms.GetViewMatrix();
         UIEffect.Projection = GameplayTransforms.GetProjectionMatrix();
         UIEffect.TextureEnabled = true;
-        UIEffect.Texture = UITextureSheet;
+        UIEffect.Texture = UITextureSheet.Texture;
         UIEffect.FogEnabled = true;
         UIEffect.FogColor = Color.CornflowerBlue.ToVector3();
         UIEffect.FogStart = enemyFogStart;
         UIEffect.FogEnd = enemyFogEnd;
+
+        animateEffect = new BasicEffect(ScreenManager.GraphicsDevice);
+        animateEffect.World = GameplayTransforms.GetWorldMatrix(viewport.Height);
+        animateEffect.View = GameplayTransforms.GetViewMatrix();
+        animateEffect.Projection = GameplayTransforms.GetProjectionMatrix();
+        animateEffect.TextureEnabled = true;
+        animateEffect.Texture = smoke.Texture;
         #endregion
 
         vertexDeclaration = new VertexDeclaration(new VertexElement[] {
@@ -172,11 +242,9 @@ class StageThreeGameScreen : GameScreen {
     }
 
     void OnBeatmapEnd(object sender, PlayerIndexEventArgs e) {
-        /*
         LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
             new PostStageThreeDialogueScreen()
         );
-        */
     }
 
     #endregion
@@ -288,6 +356,32 @@ class StageThreeGameScreen : GameScreen {
         }
 
         // Gura Bob
+        if (visibleEvents.Tick >= lastGuraBob + StageOne.BOB_RATE) {
+            lastGuraBob = visibleEvents.Tick;
+            if (guraBobUp) {
+                gura.Origin = new Vector3(0, 0, (GameConstants.PLAYER_HEIGHT / 2) + 0.001f);
+                trident.Origin = new Vector3(GameConstants.PLAYER_WIDTH / 6, GameConstants.TRIDENT_Y, GameConstants.PLAYER_HEIGHT / 2);
+                trident.Normal = new Vector3(0, -2, 1);
+                trident.Up = new Vector3(0.2f, 1, 0.7f);
+                guraBobUp = false;
+            }
+            else {
+                gura.Origin = new Vector3(0, 0, (GameConstants.PLAYER_HEIGHT / 2) - 20f);
+                trident.Origin = new Vector3(GameConstants.PLAYER_WIDTH / 6, GameConstants.TRIDENT_Y, (GameConstants.PLAYER_HEIGHT / 2) - 6f);
+                trident.Normal = new Vector3(0, -1.9f, 1.3f);
+                trident.Up = new Vector3(0.22f, 1, 0.6f);
+                guraBobUp = true;
+            }
+        }
+
+        attackAnimationMid.Update(visibleEvents.Tick);
+        attackAnimationMid.SetTextureCoords(ref attackMid, smoke);
+
+        attackAnimationLeft.Update(visibleEvents.Tick);
+        attackAnimationLeft.SetTextureCoords(ref attackLeft, smoke);
+
+        attackAnimationRight.Update(visibleEvents.Tick);
+        attackAnimationRight.SetTextureCoords(ref attackRight, smoke);
 
         System.Diagnostics.Debug.WriteLine(" -- update @ tick: " + visibleEvents.Tick);
     }
@@ -297,6 +391,10 @@ class StageThreeGameScreen : GameScreen {
         if (input.IsNewKeyPress(key, ControllingPlayer.Value, out _)) {
             // TODO move gura to lane where last input was
             this.previousHitLane = lane;
+
+            if (lane == 1) attackAnimationLeft.Start();
+            if (lane == 2) attackAnimationMid.Start();
+            if (lane == 3) attackAnimationRight.Start();
 
             BeatmapHitResult result = beatmapPlayer.ConsumePlayerInput(InputType.Normal, lane);
             switch (result) {
@@ -373,6 +471,12 @@ class StageThreeGameScreen : GameScreen {
                 targetLine.Vertices, 0, 4,
                 targetLine.Indices, 0, 2
             );
+
+            ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(
+                PrimitiveType.TriangleList,
+                trident.Vertices, 0, 4,
+                trident.Indices, 0, 2
+            );
         }
 
         // draw shadows on  objects
@@ -405,6 +509,33 @@ class StageThreeGameScreen : GameScreen {
                 gura.Vertices, 0, 4,
                 gura.Indices, 0, 2
             );
+        }
+
+        // draw animation
+        foreach (EffectPass pass in animateEffect.CurrentTechnique.Passes) {
+            pass.Apply();
+
+            if (attackAnimationMid.Active) {
+                ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(
+                    PrimitiveType.TriangleList,
+                    attackMid.Vertices, 0, 4,
+                    attackMid.Indices, 0, 2
+                );
+            }
+            if (attackAnimationLeft.Active) {
+                ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(
+                    PrimitiveType.TriangleList,
+                    attackLeft.Vertices, 0, 4,
+                    attackLeft.Indices, 0, 2
+                );
+            }
+            if (attackAnimationRight.Active) {
+                ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(
+                    PrimitiveType.TriangleList,
+                    attackRight.Vertices, 0, 4,
+                    attackRight.Indices, 0, 2
+                );
+            }
         }
 
         visibleEvents = beatmapPlayer.GetVisibleEvents();
