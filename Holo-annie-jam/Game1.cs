@@ -40,9 +40,6 @@ public class Game1 : Game {
     }
 
     protected override void Draw(GameTime gameTime) {
-        GraphicsDevice.Clear(Color.CornflowerBlue);
-
-        // this is just refresh, ScreenManager does all the drawing
         base.Draw(gameTime);
     }
 }
