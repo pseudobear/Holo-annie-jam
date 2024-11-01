@@ -47,7 +47,7 @@ class Panel {
         );
         */
         return new Vector2(
-            (1280 * (index + 1) / (1 + sprites.Count)) - PanelConstants.SPRITE_WIDTH / 2, 
+            ((2000 * (index + 1) / (1 + sprites.Count)) - PanelConstants.SPRITE_WIDTH / 2) - 360, 
             720 - PanelConstants.SPRITE_HEIGHT
         );
     }
