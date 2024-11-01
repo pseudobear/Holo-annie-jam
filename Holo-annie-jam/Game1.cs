@@ -4,6 +4,10 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 public class Game1 : Game {
+    // hacky way to ensure we get these working for now - persists while game is open
+    public static int Score = 0;
+    public static int Corruption = 0;
+
     private GraphicsDeviceManager _graphics;
     private ScreenManager _screenManager;
     private SpriteBatch _spriteBatch;
