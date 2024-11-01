@@ -236,5 +236,5 @@ public enum InputType {
 }
 
 public enum BeatmapHitResult {
-    NoHit, Miss, Bad, Good, Great, Perfect
+    NoHit, Bad, Good, Great, Perfect
 }
