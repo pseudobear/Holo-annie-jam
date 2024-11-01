@@ -165,6 +165,9 @@ class MainGameScreen : GameScreen {
         this.beatmapPlayer.Reset();
     }
 
+    public void OnBeatmapCompletion() {
+        // TODO: Load post beatmap dialogue
+    }
 
     #endregion
 
