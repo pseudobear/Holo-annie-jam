@@ -60,7 +60,6 @@ class StageThreeBackgroundScreen : GameScreen {
 
         backgroundTexture = content.Load<Texture2D>("background");
         groundTexture = content.Load<Texture2D>("GameplayAssets/Background/cobblestone_3");
-        gradientTexture = content.Load<Texture2D>("gradient");
 
         basicEffect = new BasicEffect(ScreenManager.GraphicsDevice);
         basicEffect.TextureEnabled = true;

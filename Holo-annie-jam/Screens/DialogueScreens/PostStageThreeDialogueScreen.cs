@@ -27,20 +27,38 @@ class PostStageThreeDialogueScreen : DialogueScreen {
         base.LoadContent();
 
         BackgroundTexture = Content.Load<Texture2D>("background");
-        Texture2D gradient = Content.Load<Texture2D>("GWAR_GURA_1");
+        Texture2D GuraFace = Content.Load<Texture2D>("GameplayAssets/Dialogue Assets/gawr_face2");
+        Texture2D AmeFace = Content.Load<Texture2D>("GameplayAssets/Dialogue Assets/amelia_face");
 
-        List<Texture2D> singleCharacterList = new List<Texture2D>();
-        singleCharacterList.Add(gradient);
+        List<Texture2D> JustGura = new List<Texture2D>();
+        List<Texture2D> JustAme = new List<Texture2D>();
+        JustGura.Add(GuraFace);
+        JustAme.Add(AmeFace);
 
         Panels.Enqueue(new Panel(
-            "test name",
-            "hello world!",
-            singleCharacterList
+            "Gura",
+            "Wahahahah, I'm free!! Watson you jerk, you thought you could pull one over good ol' Gura huh?",
+            JustGura
         ));
         Panels.Enqueue(new Panel(
-            "test name",
-            "hello world! AGAIN! Screen should load next after hitting next",
-            singleCharacterList
+            "Gura",
+            "Well, I'm out to play now and nothing you do will be able to stop me!",
+            JustGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Gura",
+            "Wahahahaha!",
+            JustGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Ame",
+            "Oh, oops, guess she wasn't as good at rhythm games as I thought she was. Darn, now she's getting canceled.",
+            JustAme
+        ));
+        Panels.Enqueue(new Panel(
+            "Gura",
+            "Guess I'll try again in a different timeline.",
+            JustAme
         ));
     }
 

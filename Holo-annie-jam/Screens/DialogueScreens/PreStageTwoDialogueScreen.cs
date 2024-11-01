@@ -28,24 +28,91 @@ class PreStageTwoDialogueScreen : DialogueScreen {
 
         BackgroundTexture = Content.Load<Texture2D>("background");
         Texture2D GuraFace = Content.Load<Texture2D>("GameplayAssets/Dialogue Assets/gawr_face2");
-        Texture2D AmeFace = Content.Load<Texture2D>("GameplayAssets/Dialogue Assets/amelia_face");
+        Texture2D InaFace = Content.Load<Texture2D>("GameplayAssets/Dialogue Assets/ina'nis_face");
 
         List<Texture2D> JustGura = new List<Texture2D>();
-        List<Texture2D> GuraAme = new List<Texture2D>();
-        List<Texture2D> AmeGura = new List<Texture2D>();
+        List<Texture2D> GuraIna = new List<Texture2D>();
+        List<Texture2D> InaGura = new List<Texture2D>();
         JustGura.Add(GuraFace);
-        GuraAme.Add(GuraFace);
-        GuraAme.Add(AmeFace);
+        GuraIna.Add(GuraFace);
+        GuraIna.Add(InaFace);
+        InaGura.Add(InaFace);
+        InaGura.Add(GuraFace);
 
         Panels.Enqueue(new Panel(
-            "test name",
-            "hello world!",
+            "Gura",
+            "Wow, this cave is pretty spooky.",
             JustGura
         ));
         Panels.Enqueue(new Panel(
-            "test name",
-            "hello world! AGAIN! Screen should load next after hitting next",
-            GuraAme
+            "Gura",
+            "Seems like the kinda place people do weird rituals.",
+            JustGura
+        )); 
+        Panels.Enqueue(new Panel(
+            "Ina",
+            "Hey, my rituals aren't weird.",
+            InaGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Gura",
+            "Ahh, not again!",
+            GuraIna
+        ));
+        Panels.Enqueue(new Panel(
+            "Ina",
+            "Oh Gura! Long time no see!",
+            InaGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Gura",
+            "Am I supposed to know you?",
+            GuraIna
+        ));
+        Panels.Enqueue(new Panel(
+            "Ina",
+            "Uhm, nope, I don't think so.",
+            InaGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Gura",
+            "Ok then. What are you doing in this cave?",
+            GuraIna
+        ));
+        Panels.Enqueue(new Panel(
+            "Ina",
+            "I have a quest for you!",
+            InaGura
+        )); 
+        Panels.Enqueue(new Panel(
+            "Ina",
+            "My friend AO-chan went missing somewhere in this cave, and I need your help to find them.",
+            InaGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Gura",
+            "Ooh, I can help you find them! What does AO-chan look like?",
+            GuraIna
+        ));
+        Panels.Enqueue(new Panel(
+            "Ina",
+            "AO-chan is the only thing in the cave that isn't a Takodachi.",
+            InaGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Gura",
+            "A what now?",
+            GuraIna
+        ));
+        Panels.Enqueue(new Panel(
+            "Ina",
+            "A takodachi. It looks like a purple slime. Now shoo, I need to keep drawing.",
+            InaGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Gura",
+            "Got it! I'll be right back!",
+            GuraIna
         ));
     }
 
