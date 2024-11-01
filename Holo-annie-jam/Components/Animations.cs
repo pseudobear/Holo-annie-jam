@@ -19,8 +19,15 @@ using Microsoft.Xna.Framework.Graphics;
 /// </summary>
 class TextureSheet {
 
-    #region fields
+    #region Properties
+    public Texture2D Texture {
+        get { return texture;  }
+        set { texture = value;  }
+    }
     Texture2D texture;
+    #endregion
+
+    #region fields
     int numRows;
     int numCols;
     float zoneWidth;
