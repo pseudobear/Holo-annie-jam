@@ -46,11 +46,9 @@ class StageSelectScreen : MenuScreen {
         );
     }
     void StageTwoMenuEntrySelected(object sender, PlayerIndexEventArgs e) {
-        /*
         LoadingScreen.Load(ScreenManager, false, e.PlayerIndex,
             new PreStageTwoDialogueScreen()
         );
-        */
     }
     void StageThreeMenuEntrySelected(object sender, PlayerIndexEventArgs e) {
         LoadingScreen.Load(ScreenManager, false, e.PlayerIndex,
@@ -58,11 +56,9 @@ class StageSelectScreen : MenuScreen {
         );
     }
     void StageFourMenuEntrySelected(object sender, PlayerIndexEventArgs e) {
-        /*
         LoadingScreen.Load(ScreenManager, false, e.PlayerIndex,
             new PreStageFourDialogueScreen()
         );
-        */
     }
 
     protected override void OnCancel(PlayerIndex playerIndex) {
