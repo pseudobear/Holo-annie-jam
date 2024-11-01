@@ -36,16 +36,78 @@ class PreStageOneDialogueScreen : DialogueScreen {
         JustGura.Add(GuraFace);
         GuraAme.Add(GuraFace);
         GuraAme.Add(AmeFace);
+        AmeGura.Add(AmeFace);
+        AmeGura.Add(GuraFace);
 
         Panels.Enqueue(new Panel(
-            "test name",
-            "hello world!",
+            "Gura",
+            "Man, did anyone get the number of the whale that hit me?",
             JustGura
         ));
         Panels.Enqueue(new Panel(
-            "test name",
-            "hello world! AGAIN! Screen should load next after hitting next",
+            "Gura",
+            "Huh? Why am I in a forest? Where am I?",
+            JustGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Gura",
+            "I swear this is Watson’s fault somehow.",
+            JustGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Gura",
+            "Watson? Do I know a Watson?",
+            JustGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Ame",
+            "Did someone sayyyy Watson?",
+            AmeGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Gura",
+            "*Shrieks Incoherently*",
             GuraAme
+        ));
+        Panels.Enqueue(new Panel(
+            "Ame",
+            "Ehehehe, gotcha! It’s been a while since I got to do that.",
+            AmeGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Gura",
+            "Who are you?!?",
+            GuraAme
+        ));
+        Panels.Enqueue(new Panel(
+            "Ame",
+            "Don’t worry about it Goomba, the important thing is that you lost your memories, so you need to go on an adventure!",
+            AmeGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Gura",
+            "Huh? What?",
+            GuraAme
+        ));
+        Panels.Enqueue(new Panel(
+            "Ame",
+            "Don’t worry about it! Oh yeah, it’s dangerous to go alone, take this!",
+            AmeGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Gura",
+            "a",
+            GuraAme
+        ));
+        Panels.Enqueue(new Panel(
+            "Ame",
+            "Oh, I broke her. Oh well, she’ll figure it out, won’t she chat.",
+            AmeGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Ame",
+            "Get ready, here they come!",
+            AmeGura
         ));
     }
 

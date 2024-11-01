@@ -26,21 +26,88 @@ class PostStageTwoDialogueScreen : DialogueScreen {
     public override void LoadContent() {
         base.LoadContent();
 
-        BackgroundTexture = Content.Load<Texture2D>("background");
-        Texture2D gradient = Content.Load<Texture2D>("GWAR_GURA_1");
+        BackgroundTexture = Content.Load<Texture2D>("background"); 
+        Texture2D GuraFace = Content.Load<Texture2D>("GameplayAssets/Dialogue Assets/gawr_face2");
+        Texture2D InaFace = Content.Load<Texture2D>("GameplayAssets/Dialogue Assets/ina'nis_face");
 
-        List<Texture2D> singleCharacterList = new List<Texture2D>();
-        singleCharacterList.Add(gradient);
+        List<Texture2D> JustGura = new List<Texture2D>();
+        List<Texture2D> GuraIna = new List<Texture2D>();
+        List<Texture2D> InaGura = new List<Texture2D>();
+        JustGura.Add(GuraFace);
+        GuraIna.Add(GuraFace);
+        GuraIna.Add(InaFace);
+        InaGura.Add(InaFace);
+        InaGura.Add(GuraFace);
 
         Panels.Enqueue(new Panel(
-            "test name",
-            "hello world!",
-            singleCharacterList
+            "Ina",
+            "Oh, are you “right back” now?",
+            InaGura
         ));
         Panels.Enqueue(new Panel(
-            "test name",
-            "hello world! AGAIN! Screen should load next after hitting next",
-            singleCharacterList
+            "Gura",
+            "Huh?",
+            GuraIna
+        ));
+        Panels.Enqueue(new Panel(
+            "Ina",
+            "Oh don’t worry about it. I see you found AO-chan!",
+            InaGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Gura",
+            "You could’ve mentioned AO-chan was a book.",
+            GuraIna
+        ));
+        Panels.Enqueue(new Panel(
+            "Ina",
+            "AO-chan is a tablet sometimes too!",
+            InaGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Gura",
+            "I see. Is there anything else you lost in this here cave?",
+            GuraIna
+        ));
+        Panels.Enqueue(new Panel(
+            "Ina",
+            "No, AO-chan wandered off, but everything else is here.",
+            InaGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Gura",
+            "Alright then, I’m gonna go then.",
+            GuraIna
+        ));
+        Panels.Enqueue(new Panel(
+            "Ina",
+            "Wait, I’ll come with you. I’ve been stuck in this cave for a long time.",
+            InaGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Ina",
+            " I guess you could say I’m excited to leave my house for the first time “Ina” while.",
+            InaGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Gura",
+            "...",
+            GuraIna
+        ));
+        Panels.Enqueue(new Panel(
+            "Ina",
+            "Hehehe…",
+            InaGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Gura",
+            "I'm leaving.",
+            GuraIna
+        ));
+        Panels.Enqueue(new Panel(
+            "Ina",
+            "Wait for me.",
+            InaGura
         ));
     }
 

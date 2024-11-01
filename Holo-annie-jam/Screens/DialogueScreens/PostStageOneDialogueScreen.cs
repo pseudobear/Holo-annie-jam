@@ -27,20 +27,72 @@ class PostStageOneDialogueScreen : DialogueScreen {
         base.LoadContent();
 
         BackgroundTexture = Content.Load<Texture2D>("background");
-        Texture2D gradient = Content.Load<Texture2D>("GWAR_GURA_1");
+        Texture2D GuraFace = Content.Load<Texture2D>("GameplayAssets/Dialogue Assets/gawr_face2");
+        Texture2D AmeFace = Content.Load<Texture2D>("GameplayAssets/Dialogue Assets/amelia_face");
 
-        List<Texture2D> singleCharacterList = new List<Texture2D>();
-        singleCharacterList.Add(gradient);
+        List<Texture2D> JustGura = new List<Texture2D>();
+        List<Texture2D> GuraAme = new List<Texture2D>();
+        List<Texture2D> AmeGura = new List<Texture2D>();
+        JustGura.Add(GuraFace);
+        GuraAme.Add(GuraFace);
+        GuraAme.Add(AmeFace);
+        AmeGura.Add(AmeFace);
+        AmeGura.Add(GuraFace);
 
         Panels.Enqueue(new Panel(
-            "test name",
-            "hello world!",
-            singleCharacterList
+            "Gura",
+            "What the heck was that! Why were clocks running at me???",
+            GuraAme
         ));
         Panels.Enqueue(new Panel(
-            "test name",
-            "hello world! AGAIN! Screen should load next after hitting next",
-            singleCharacterList
+            "Ame",
+            "That’s just my thing, you did pretty good though.",
+            AmeGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Gura",
+            "That doesn’t answer my question.",
+            GuraAme
+        ));
+        Panels.Enqueue(new Panel(
+            "Ame",
+            "And it wasn’t supposed to!",
+            AmeGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Gura",
+            "Oh, ok.",
+            GuraAme
+        ));
+        Panels.Enqueue(new Panel(
+            "Ame",
+            "Anyway, you need to finish going on an adventure! I think you should go… That-a-way!",
+            AmeGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Gura",
+            "Are you gonna explain anything else?",
+            GuraAme
+        ));
+        Panels.Enqueue(new Panel(
+            "Ame",
+            "Don’t reset too many times or you might regret it. Hehehe.",
+            AmeGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Ame",
+            "OK byeeeeeee…",
+            AmeGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Gura",
+            "That’s not helpful at all!",
+            GuraAme
+        ));
+        Panels.Enqueue(new Panel(
+            "Gura",
+            "Well, Guess I have nothing better to do. Adventure time for Goomba!",
+            GuraAme
         ));
     }
 
