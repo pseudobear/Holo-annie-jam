@@ -44,7 +44,7 @@ class MainMenuScreen : MenuScreen {
     void PlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e) {
         LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
                              new GameplayBackgroundScreen(),
-                             new StageOneGameScreen("Content/Beatmaps/Reflect/Reflect.json"));
+                             new StageOneGameScreen("Content/Beatmaps/Chikutaku/Chikutaku.json"));
     }
 
     void StageSelectMenuEntrySelected(object sender, PlayerIndexEventArgs e) {
