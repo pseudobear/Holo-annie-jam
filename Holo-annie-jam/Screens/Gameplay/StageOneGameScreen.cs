@@ -32,9 +32,11 @@ class StageOneGameScreen : GameScreen {
     SpriteFont gameFont;
     Texture2D note;
     Texture2D noteShadow;
-    Texture2D UITextureSheet;
+    TextureSheet UITextureSheet;
     Quad targetLine;
     Quad gura;
+    Quad trident;
+    Quad attack;
     VertexDeclaration vertexDeclaration;
 
     // rhythm events 
@@ -78,7 +80,7 @@ class StageOneGameScreen : GameScreen {
         gameFont = content.Load<SpriteFont>("gamefont");
         note = content.Load<Texture2D>("GameplayAssets/Beatmap Objects/upright_object_sheet");
         noteShadow = content.Load<Texture2D>("GameplayAssets/Beatmap Objects/Bloop_shadow");
-        UITextureSheet = content.Load<Texture2D>("glow_pixel");
+        UITextureSheet = new TextureSheet(content.Load<Texture2D>("ui_texture_sheet"), 1, 2);
 
         this.beatmap = Beatmap.Builder.LoadFromFile(beatmapFilename)!.Build();
         this.beatmapPlayer = new BeatmapPlayer(beatmap);
@@ -92,7 +94,20 @@ class StageOneGameScreen : GameScreen {
             new Vector3(0, 0, 1),
             new Vector3(0, 1, 0),
             viewport.Width * 4,
-            200
+            200,
+            new Vector2((float)UITextureSheet[0].X / (float)UITextureSheet.Width, (float)UITextureSheet[0].Y / (float)UITextureSheet.Height),
+            (float)UITextureSheet[0].Width / (float)UITextureSheet.Width,
+            (float)UITextureSheet[0].Height / (float)UITextureSheet.Height
+        );
+        trident = new Quad(
+            new Vector3(GameConstants.PLAYER_WIDTH / 6, GameConstants.TRIDENT_Y, GameConstants.PLAYER_HEIGHT / 2),
+            new Vector3(0, -2, 1),
+            new Vector3(0.2f, 1, 0.7f),
+            GameConstants.TRIDENT_WIDTH,
+            GameConstants.TRIDENT_HEIGHT,
+            new Vector2((float)UITextureSheet[1].X / (float)UITextureSheet.Width, (float)UITextureSheet[1].Y / (float)UITextureSheet.Height),
+            (float)UITextureSheet[1].Width / (float)UITextureSheet.Width,
+            (float)UITextureSheet[1].Height / (float)UITextureSheet.Height
         );
         gura = new Quad(
             new Vector3(0, 0, (GameConstants.PLAYER_HEIGHT / 2) + 0.001f),
@@ -140,7 +155,7 @@ class StageOneGameScreen : GameScreen {
         UIEffect.View = GameplayTransforms.GetViewMatrix();
         UIEffect.Projection = GameplayTransforms.GetProjectionMatrix();
         UIEffect.TextureEnabled = true;
-        UIEffect.Texture = UITextureSheet;
+        UIEffect.Texture = UITextureSheet.Texture;
         UIEffect.FogEnabled = true;
         UIEffect.FogColor = StageOne.BackgroundColor.ToVector3();
         UIEffect.FogStart = enemyFogStart;
@@ -290,9 +305,15 @@ class StageOneGameScreen : GameScreen {
             lastGuraBob = visibleEvents.Tick;
             if (guraBobUp) {
                 gura.Origin = new Vector3(0, 0, (GameConstants.PLAYER_HEIGHT / 2) + 0.001f);
+                trident.Origin = new Vector3(GameConstants.PLAYER_WIDTH / 6, GameConstants.TRIDENT_Y, GameConstants.PLAYER_HEIGHT / 2);
+                trident.Normal = new Vector3(0, -2, 1);
+                trident.Up = new Vector3(0.2f, 1, 0.7f);
                 guraBobUp = false;
             } else {
                 gura.Origin = new Vector3(0, 0, (GameConstants.PLAYER_HEIGHT / 2) - 20f);
+                trident.Origin = new Vector3(GameConstants.PLAYER_WIDTH / 6, GameConstants.TRIDENT_Y, (GameConstants.PLAYER_HEIGHT / 2) - 6f);
+                trident.Normal = new Vector3(0, -1.9f, 1.3f);
+                trident.Up = new Vector3(0.22f, 1, 0.6f);
                 guraBobUp = true;
             }
         }
@@ -380,6 +401,12 @@ class StageOneGameScreen : GameScreen {
                 PrimitiveType.TriangleList,
                 targetLine.Vertices, 0, 4,
                 targetLine.Indices, 0, 2
+            );
+
+            ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(
+                PrimitiveType.TriangleList,
+                trident.Vertices, 0, 4,
+                trident.Indices, 0, 2
             );
         }
 

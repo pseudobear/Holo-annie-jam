@@ -15,6 +15,10 @@ static class GameConstants {
 
     public const int TARGET_LINE_Y = 400;
 
+    public const int TRIDENT_Y = -450;
+    public const int TRIDENT_WIDTH = 400;
+    public const int TRIDENT_HEIGHT = 1000;
+
     // update position -1,600,000 ticks early compared to actual tick
     public const long DEFAULT_VISUAL_OFFSET_TICKS = -1600000; 
 }
