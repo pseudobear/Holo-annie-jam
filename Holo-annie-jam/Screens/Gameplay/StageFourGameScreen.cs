@@ -13,7 +13,7 @@ using System.Linq;
 /// placeholder to get the idea across: you'll probably want to
 /// put some more interesting gameplay in here!
 /// </summary>
-class StageOneGameScreen : GameScreen {
+class StageFourGameScreen : GameScreen {
     #region Fields
 
     static readonly Vector2 TOP_LEFT = new(0, 0);
@@ -70,7 +70,7 @@ class StageOneGameScreen : GameScreen {
     /// <summary>
     /// Constructor.
     /// </summary>
-    public StageOneGameScreen(string beatmapFilename) : base() {
+    public StageFourGameScreen(string beatmapFilename) : base() {
         TransitionOnTime = TimeSpan.FromSeconds(1.5);
         TransitionOffTime = TimeSpan.FromSeconds(0.5);
         this.beatmapFilename = beatmapFilename;
@@ -181,7 +181,7 @@ class StageOneGameScreen : GameScreen {
         uprightObjectEffect.TextureEnabled = true;
         uprightObjectEffect.Texture = note;
         uprightObjectEffect.FogEnabled = true;
-        uprightObjectEffect.FogColor = StageOne.BackgroundColor.ToVector3();
+        uprightObjectEffect.FogColor = StageFour.BackgroundColor.ToVector3();
         uprightObjectEffect.FogStart = enemyFogStart;
         uprightObjectEffect.FogEnd = enemyFogEnd;
 
@@ -193,7 +193,7 @@ class StageOneGameScreen : GameScreen {
         shadowObjectEffect.TextureEnabled = true;
         shadowObjectEffect.Texture = noteShadow;
         shadowObjectEffect.FogEnabled = true;
-        shadowObjectEffect.FogColor = StageOne.BackgroundColor.ToVector3();
+        shadowObjectEffect.FogColor = StageFour.BackgroundColor.ToVector3();
         shadowObjectEffect.FogStart = enemyFogStart;
         shadowObjectEffect.FogEnd = enemyFogEnd;
 
@@ -204,7 +204,7 @@ class StageOneGameScreen : GameScreen {
         UIEffect.TextureEnabled = true;
         UIEffect.Texture = UITextureSheet.Texture;
         UIEffect.FogEnabled = true;
-        UIEffect.FogColor = StageOne.BackgroundColor.ToVector3();
+        UIEffect.FogColor = StageFour.BackgroundColor.ToVector3();
         UIEffect.FogStart = enemyFogStart;
         UIEffect.FogEnd = enemyFogEnd;
         
@@ -242,7 +242,7 @@ class StageOneGameScreen : GameScreen {
 
     void OnBeatmapEnd(object sender, PlayerIndexEventArgs e) {
         LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
-            new PostStageOneDialogueScreen()
+            new PostStageFourDialogueScreen()
         );
     }
 
@@ -355,7 +355,7 @@ class StageOneGameScreen : GameScreen {
         }
 
         // Gura bob
-        if (visibleEvents.Tick >= lastGuraBob + StageOne.BOB_RATE) {
+        if (visibleEvents.Tick >= lastGuraBob + StageFour.BOB_RATE) {
             lastGuraBob = visibleEvents.Tick;
             if (guraBobUp) {
                 gura.Origin = new Vector3(0, 0, (GameConstants.PLAYER_HEIGHT / 2) + 0.001f);

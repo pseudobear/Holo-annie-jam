@@ -14,7 +14,7 @@ class MainMenuScreen : MenuScreen {
     /// </summary>
     public MainMenuScreen() : base("Main Menu") {
         // Create our menu entries.
-        MenuEntry playGameMenuEntry = new MenuEntry("Play Game");
+        MenuEntry playGameMenuEntry = new MenuEntry("Play Game (Stage One)");
         MenuEntry stageSelectMenuEntry = new MenuEntry("Stage Select");
         MenuEntry optionsMenuEntry = new MenuEntry("Options");
         MenuEntry exitMenuEntry = new MenuEntry("Exit");

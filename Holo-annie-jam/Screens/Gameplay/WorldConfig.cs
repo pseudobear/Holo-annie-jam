@@ -25,7 +25,7 @@ static class GameConstants {
     public const int SMOKE_Z = 600;
 
     // update position -1,600,000 ticks early compared to actual tick
-    public const long DEFAULT_VISUAL_OFFSET_TICKS = -1600000; 
+    public const long DEFAULT_VISUAL_OFFSET_TICKS = -1800000; 
 }
 
 static class GameplayTransforms {
@@ -56,6 +56,30 @@ static class StageOne {
     public const float WALL_OFFSET = 50f;
     public const int NUM_WALLS = 5;
     public static Color BackgroundColor = new Color(195, 205, 191);
+
+    public const long BOB_RATE = 3000000;   // bob rate in ticks
+}
+
+static class StageTwo {
+    public const float WALL_OFFSET = 50f;
+    public const int NUM_WALLS = 5;
+    public static Color BackgroundColor = new Color(195, 205, 191);
+
+    public const long BOB_RATE = 3000000;   // bob rate in ticks
+}
+
+static class StageThree {
+    public const float WALL_OFFSET = 50f;
+    public const int NUM_WALLS = 5;
+    public static Color BackgroundColor = new Color(195, 205, 191);
+
+    public const long BOB_RATE = 3000000;   // bob rate in ticks
+}
+
+static class StageFour {
+    public const float WALL_OFFSET = 10f;
+    public const int NUM_WALLS = 5;
+    public static Color BackgroundColor = new Color(31, 82, 183);
 
     public const long BOB_RATE = 3000000;   // bob rate in ticks
 }
