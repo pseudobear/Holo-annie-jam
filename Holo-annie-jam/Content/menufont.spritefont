@@ -3,13 +3,15 @@
 	<Asset Type="Graphics:FontDescription">
 		<FontName>Arial</FontName>
 		<Size>23</Size>
-		<Spacing>2</Spacing>
-		<Style>Regular</Style>
-		<CharacterRegions>
-			<CharacterRegion>
-				<Start>&#32;</Start>
-				<End>&#126;</End>
-			</CharacterRegion>
-		</CharacterRegions>
-	</Asset>
+        <Spacing>0</Spacing>
+        <UseKerning>true</UseKerning>
+        <Style>Regular</Style>
+        <DefaultCharacter>*</DefaultCharacter>
+        <CharacterRegions>
+            <CharacterRegion>
+                <Start>&#32;</Start>
+                <End>&#126;</End>
+            </CharacterRegion>
+        </CharacterRegions>
+    </Asset>
 </XnaContent>
