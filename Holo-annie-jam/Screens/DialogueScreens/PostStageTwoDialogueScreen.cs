@@ -41,7 +41,7 @@ class PostStageTwoDialogueScreen : DialogueScreen {
 
         Panels.Enqueue(new Panel(
             "Ina",
-            "Oh, are you “right back” now?",
+            "Oh, are you 'right back' now?",
             InaGura
         ));
         Panels.Enqueue(new Panel(
@@ -51,12 +51,12 @@ class PostStageTwoDialogueScreen : DialogueScreen {
         ));
         Panels.Enqueue(new Panel(
             "Ina",
-            "Oh don’t worry about it. I see you found AO-chan!",
+            "Oh don't worry about it. I see you found AO-chan!",
             InaGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "You could’ve mentioned AO-chan was a book.",
+            "You could've mentioned AO-chan was a book.",
             GuraIna
         ));
         Panels.Enqueue(new Panel(
@@ -76,17 +76,17 @@ class PostStageTwoDialogueScreen : DialogueScreen {
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Alright then, I’m gonna go then.",
+            "Alright then, I'm gonna go then.",
             GuraIna
         ));
         Panels.Enqueue(new Panel(
             "Ina",
-            "Wait, I’ll come with you. I’ve been stuck in this cave for a long time.",
+            "Wait, I'll come with you. I've been stuck in this cave for a long time.",
             InaGura
         ));
         Panels.Enqueue(new Panel(
             "Ina",
-            " I guess you could say I’m excited to leave my house for the first time “Ina” while.",
+            "I guess you could say I'm excited to leave my house for the first time 'Ina' while.",
             InaGura
         ));
         Panels.Enqueue(new Panel(
@@ -96,7 +96,7 @@ class PostStageTwoDialogueScreen : DialogueScreen {
         ));
         Panels.Enqueue(new Panel(
             "Ina",
-            "Hehehe…",
+            "Hehehe...",
             InaGura
         ));
         Panels.Enqueue(new Panel(

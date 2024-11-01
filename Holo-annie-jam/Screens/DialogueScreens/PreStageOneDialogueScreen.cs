@@ -51,7 +51,7 @@ class PreStageOneDialogueScreen : DialogueScreen {
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "I swear this is Watson’s fault somehow.",
+            "I swear this is Watson's fault somehow.",
             JustGura
         ));
         Panels.Enqueue(new Panel(
@@ -81,7 +81,7 @@ class PreStageOneDialogueScreen : DialogueScreen {
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Don’t worry about it Goomba, the important thing is that you lost your memories, so you need to go on an adventure!",
+            "Don't worry about it Goomba, the important thing is that you lost your memories, so you need to go on an adventure!",
             AmeGura
         ));
         Panels.Enqueue(new Panel(
@@ -91,7 +91,7 @@ class PreStageOneDialogueScreen : DialogueScreen {
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Don’t worry about it! Oh yeah, it’s dangerous to go alone, take this!",
+            "Don't worry about it! Oh yeah, it’s dangerous to go alone, take this!",
             AmeGura
         ));
         Panels.Enqueue(new Panel(
@@ -101,7 +101,7 @@ class PreStageOneDialogueScreen : DialogueScreen {
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Oh, I broke her. Oh well, she’ll figure it out, won’t she chat.",
+            "Oh, I broke her. Oh well, she'll figure it out, won’t she chat.",
             AmeGura
         ));
         Panels.Enqueue(new Panel(

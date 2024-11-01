@@ -63,12 +63,12 @@ class PreStageThreeDialogueScreen : DialogueScreen {
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Nah, I figured she’d pop up at some point to tell me I was done or something.",
+            "Nah, I figured she'd pop up at some point to tell me I was done or something.",
             GuraIna
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "She still hasn’t shown up though, and I’ve helped you, Calli and Kiara already!",
+            "She still hasn’t shown up though, and I've helped you, Calli and Kiara already!",
             GuraIna
         ));
         Panels.Enqueue(new Panel(
@@ -78,7 +78,7 @@ class PreStageThreeDialogueScreen : DialogueScreen {
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "That’s because you’re too slow sharky. I’ve been waiting here for ages.",
+            "That's because you're too slow sharky. I've been waiting here for ages.",
             AmeGura
         ));
         Panels.Enqueue(new Panel(
@@ -143,17 +143,17 @@ class PreStageThreeDialogueScreen : DialogueScreen {
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Why am I feeling so… Sleepy…?",
+            "Why am I feeling so... Sleepy...?",
             JustGura
         ));
         Panels.Enqueue(new Panel(
             "Ina",
-            "Ame, didn’t Koyo-chan give you that a year ago.",
+            "Ame, didn’t Koyo-chan give you that like a year ago.",
             InaAme
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Don’t worry about it Ina, I went back and took it from the me that got it from her the day after. I’m not just a detective after all!",
+            "Don’t worry about it Ina, I went back and took it from the me that got it from her the day after. I'm not just a detective after all!",
             AmeIna
         ));
         Panels.Enqueue(new Panel(

@@ -87,7 +87,7 @@ class PreStageFourDialogueScreen : DialogueScreen {
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Huh? Oh right, that’s what we were doing, I forgot about that.",
+            "Huh? Oh right, that's what we were doing, I forgot about that.",
             GuraAme
         ));
         Panels.Enqueue(new Panel(
@@ -97,7 +97,7 @@ class PreStageFourDialogueScreen : DialogueScreen {
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Eh, it’s ok, the plot was kinda rushed anyway.",
+            "Eh, it's ok, the plot was kinda rushed anyway.",
             AmeGura
         ));
         Panels.Enqueue(new Panel(
@@ -117,7 +117,7 @@ class PreStageFourDialogueScreen : DialogueScreen {
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "And, wasn’t there supposed to be a final boss or something?",
+            "And, wasn't there supposed to be a final boss or something?",
             GuraAme
         ));
         Panels.Enqueue(new Panel(

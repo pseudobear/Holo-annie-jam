@@ -46,12 +46,12 @@ class PostStageOneDialogueScreen : DialogueScreen {
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "That’s just my thing, you did pretty good though.",
+            "That's just my thing, you did pretty good though.",
             AmeGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "That doesn’t answer my question.",
+            "That doesn't answer my question.",
             GuraAme
         ));
         Panels.Enqueue(new Panel(
@@ -66,7 +66,7 @@ class PostStageOneDialogueScreen : DialogueScreen {
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Anyway, you need to finish going on an adventure! I think you should go… That-a-way!",
+            "Anyway, you need to finish going on an adventure! I think you should go... That-a-way!",
             AmeGura
         ));
         Panels.Enqueue(new Panel(
@@ -76,7 +76,7 @@ class PostStageOneDialogueScreen : DialogueScreen {
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Don’t reset too many times or you might regret it. Hehehe.",
+            "Don't reset too many times or you might regret it. Hehehe.",
             AmeGura
         ));
         Panels.Enqueue(new Panel(
@@ -86,7 +86,7 @@ class PostStageOneDialogueScreen : DialogueScreen {
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "That’s not helpful at all!",
+            "That's not helpful at all!",
             GuraAme
         ));
         Panels.Enqueue(new Panel(

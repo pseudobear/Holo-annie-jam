@@ -51,7 +51,7 @@ class PreStageTwoDialogueScreen : DialogueScreen {
         )); 
         Panels.Enqueue(new Panel(
             "Ina",
-            "Hey, my rituals aren’t weird.",
+            "Hey, my rituals aren't weird.",
             InaGura
         ));
         Panels.Enqueue(new Panel(
@@ -71,7 +71,7 @@ class PreStageTwoDialogueScreen : DialogueScreen {
         ));
         Panels.Enqueue(new Panel(
             "Ina",
-            "Uhm, nope, I don’t think so.",
+            "Uhm, nope, I don't think so.",
             InaGura
         ));
         Panels.Enqueue(new Panel(
@@ -96,7 +96,7 @@ class PreStageTwoDialogueScreen : DialogueScreen {
         ));
         Panels.Enqueue(new Panel(
             "Ina",
-            "AO-chan is the only thing in the cave that isn’t a Takodachi.",
+            "AO-chan is the only thing in the cave that isn't a Takodachi.",
             InaGura
         ));
         Panels.Enqueue(new Panel(
@@ -111,7 +111,7 @@ class PreStageTwoDialogueScreen : DialogueScreen {
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Got it! I’ll be right back!",
+            "Got it! I'll be right back!",
             GuraIna
         ));
     }
