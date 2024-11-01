@@ -13,7 +13,7 @@ using System.Linq;
 /// placeholder to get the idea across: you'll probably want to
 /// put some more interesting gameplay in here!
 /// </summary>
-class MainGameScreen : GameScreen {
+class StageThreeGameScreen : GameScreen {
     #region Fields
 
     static readonly Vector2 TOP_LEFT = new(0, 0);
@@ -58,7 +58,7 @@ class MainGameScreen : GameScreen {
     /// <summary>
     /// Constructor.
     /// </summary>
-    public MainGameScreen(string beatmapFilename) : base() {
+    public StageThreeGameScreen(string beatmapFilename) : base() {
         TransitionOnTime = TimeSpan.FromSeconds(1.5);
         TransitionOffTime = TimeSpan.FromSeconds(0.5);
         this.beatmapFilename = beatmapFilename;
@@ -169,9 +169,11 @@ class MainGameScreen : GameScreen {
     }
 
     void OnBeatmapEnd(object sender, PlayerIndexEventArgs e) {
+        /*
         LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
-            new PostStageOneDialogueScreen()
+            new PostStageThreeDialogueScreen()
         );
+        */
     }
 
     #endregion

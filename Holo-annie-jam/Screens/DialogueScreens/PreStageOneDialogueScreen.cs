@@ -63,8 +63,8 @@ class PreStageOneDialogueScreen : DialogueScreen {
 
     public override void OnCompletePanels(PlayerIndex? playerIndex) {
         LoadingScreen.Load(ScreenManager, true, playerIndex,
-                     new GameplayBackgroundScreen(),
-                     new MainGameScreen("Content/Beatmaps/Reflect/Reflect.json"));
+                     new StageOneBackgroundScreen(),
+                     new StageOneGameScreen("Content/Beatmaps/Chikutaku/Chikutaku.json"));
     } 
 
 
