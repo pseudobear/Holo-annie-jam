@@ -43,3 +43,6 @@ static class GameplayTransforms {
     }
 }
 
+static class StageOne {
+    public static Color BackgroundColor = new Color(195, 205, 191);
+}

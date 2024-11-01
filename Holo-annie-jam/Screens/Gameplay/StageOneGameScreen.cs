@@ -116,7 +116,7 @@ class StageOneGameScreen : GameScreen {
         uprightObjectEffect.TextureEnabled = true;
         uprightObjectEffect.Texture = note;
         uprightObjectEffect.FogEnabled = true;
-        uprightObjectEffect.FogColor = Color.CornflowerBlue.ToVector3();
+        uprightObjectEffect.FogColor = StageOne.BackgroundColor.ToVector3();
         uprightObjectEffect.FogStart = enemyFogStart;
         uprightObjectEffect.FogEnd = enemyFogEnd;
 
@@ -128,7 +128,7 @@ class StageOneGameScreen : GameScreen {
         shadowObjectEffect.TextureEnabled = true;
         shadowObjectEffect.Texture = noteShadow;
         shadowObjectEffect.FogEnabled = true;
-        shadowObjectEffect.FogColor = Color.CornflowerBlue.ToVector3();
+        shadowObjectEffect.FogColor = StageOne.BackgroundColor.ToVector3();
         shadowObjectEffect.FogStart = enemyFogStart;
         shadowObjectEffect.FogEnd = enemyFogEnd;
 
@@ -139,7 +139,7 @@ class StageOneGameScreen : GameScreen {
         UIEffect.TextureEnabled = true;
         UIEffect.Texture = UITextureSheet;
         UIEffect.FogEnabled = true;
-        UIEffect.FogColor = Color.CornflowerBlue.ToVector3();
+        UIEffect.FogColor = StageOne.BackgroundColor.ToVector3();
         UIEffect.FogStart = enemyFogStart;
         UIEffect.FogEnd = enemyFogEnd;
         #endregion

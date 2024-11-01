@@ -67,7 +67,7 @@ class StageOneBackgroundScreen : GameScreen {
         basicEffect.View = GameplayTransforms.GetViewMatrix();
         basicEffect.Projection = GameplayTransforms.GetProjectionMatrix();
         basicEffect.FogEnabled = true;
-        basicEffect.FogColor = Color.CornflowerBlue.ToVector3();
+        basicEffect.FogColor = StageOne.BackgroundColor.ToVector3();
         basicEffect.FogStart = 0.1f;
         basicEffect.FogEnd = GameConstants.NOTE_HORIZON_DISTANCE - 800f;
 
@@ -141,7 +141,7 @@ class StageOneBackgroundScreen : GameScreen {
     /// Draws the background screen.
     /// </summary>
     public override void Draw(GameTime gameTime) {
-        ScreenManager.GraphicsDevice.Clear(ClearOptions.Target, Color.CornflowerBlue, 0, 0);
+        ScreenManager.GraphicsDevice.Clear(ClearOptions.Target, StageOne.BackgroundColor, 0, 0);
 
         SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
         Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
