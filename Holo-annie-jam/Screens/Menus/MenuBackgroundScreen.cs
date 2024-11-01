@@ -31,7 +31,7 @@ class MenuBackgroundScreen : GameScreen {
     /// Constructor.
     /// </summary>
     public MenuBackgroundScreen() : base() {
-        TransitionOnTime = TimeSpan.FromSeconds(1.5);
+        TransitionOnTime = TimeSpan.FromSeconds(0.5);
         TransitionOffTime = TimeSpan.FromSeconds(0.5);
     }
 

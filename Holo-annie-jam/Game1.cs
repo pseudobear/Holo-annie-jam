@@ -21,6 +21,7 @@ public class Game1 : Game {
         Components.Add(_screenManager);
 
         // start in main menu for now
+        _screenManager.AddScreen(new MenuBackgroundScreen(), null);
         _screenManager.AddScreen(new MainMenuScreen(), null);
     }
 
