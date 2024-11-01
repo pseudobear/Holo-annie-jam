@@ -71,8 +71,6 @@ class MessageBoxScreen : GameScreen {
     /// </summary>
     public override void LoadContent() {
         ContentManager content = ScreenManager.Game.Content;
-
-        gradientTexture = content.Load<Texture2D>("gradient");
     }
 
 

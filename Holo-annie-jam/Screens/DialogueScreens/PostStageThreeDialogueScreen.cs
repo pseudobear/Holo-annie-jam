@@ -75,9 +75,10 @@ class PostStageThreeDialogueScreen : DialogueScreen {
     }
 
     public override void OnCompletePanels(PlayerIndex? playerIndex) {
+        // to END
         LoadingScreen.Load(ScreenManager, false, playerIndex,
             new MenuBackgroundScreen(),
-            new StageSelectScreen()
+            new MainMenuScreen()
         );
     } 
 
