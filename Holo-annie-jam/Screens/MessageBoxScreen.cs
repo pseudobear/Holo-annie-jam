@@ -22,7 +22,7 @@ class MessageBoxScreen : GameScreen {
     #region Fields
 
     string message;
-    Texture2D gradientTexture;
+    Texture2D blankTexture;
 
     #endregion
 
@@ -71,6 +71,8 @@ class MessageBoxScreen : GameScreen {
     /// </summary>
     public override void LoadContent() {
         ContentManager content = ScreenManager.Game.Content;
+
+        blankTexture = content.Load<Texture2D>("blank");
     }
 
 
@@ -138,14 +140,15 @@ class MessageBoxScreen : GameScreen {
 
         // Fade the popup alpha during transitions.
         Color color = Color.White * TransitionAlpha;
+        Color textColor = Color.Black * TransitionAlpha;
 
         spriteBatch.Begin();
 
         // Draw the background rectangle.
-        spriteBatch.Draw(gradientTexture, backgroundRectangle, color);
+        spriteBatch.Draw(blankTexture, backgroundRectangle, color);
 
         // Draw the message box text.
-        spriteBatch.DrawString(font, message, textPosition, color);
+        spriteBatch.DrawString(font, message, textPosition, textColor);
 
         spriteBatch.End();
     }
