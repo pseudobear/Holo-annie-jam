@@ -20,18 +20,42 @@ using Microsoft.Xna.Framework.Graphics;
 class TextureSheet {
 
     #region Properties
+
     public Texture2D Texture {
         get { return texture;  }
-        set { texture = value;  }
     }
     Texture2D texture;
+
+    public float ZoneWidth {
+        get { return zoneWidth; }
+    }
+    float zoneWidth;
+
+    public float ZoneHeight {
+        get { return zoneHeight; }
+    }
+    float zoneHeight;
+
+    public int NumRows {
+        get { return numRows; }
+    }
+    int numRows;
+
+    public int NumCols {
+        get { return numCols; }
+    }
+    int numCols;
+
+    public int Width {
+        get { return texture.Width; }
+    }
+
+    public int Height {
+        get { return texture.Height; }
+    }
     #endregion
 
     #region fields
-    int numRows;
-    int numCols;
-    float zoneWidth;
-    float zoneHeight;
     #endregion
 
     public Rectangle this[int key] {
@@ -50,13 +74,16 @@ class TextureSheet {
     }
 
     /// <summary>
-    /// Returns a rectangle specifying the texture coords to be used in Quad
+    /// Returns a rectangle specifying the texture coords to be used in Quad in pixels
+    /// This needs to be converted into a percentage of the texture to be used with Quad
     /// (origin.X, origin.Y, width, height)
     /// </summary>
     public Rectangle GetZone(int zone) {
+        int x = (zone + 1) % numCols;
+        int y = (zone + 1) / numCols;
         return new Rectangle(
-            (int) (zone * zoneWidth),
-            (int) ((numRows - (zone + 1)) * zoneHeight),
+            (int) ((x - 1) * zoneWidth),
+            (int) ((y - 1) * zoneHeight),
             (int) zoneWidth,
             (int) zoneHeight
         );

@@ -44,5 +44,7 @@ static class GameplayTransforms {
 }
 
 static class StageOne {
+    public const float WALL_OFFSET = 50f;
+    public const int NUM_WALLS = 5;
     public static Color BackgroundColor = new Color(195, 205, 191);
 }

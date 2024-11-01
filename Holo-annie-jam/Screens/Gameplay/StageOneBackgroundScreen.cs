@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 #endregion
 
 /// <summary>
@@ -24,8 +25,8 @@ class StageOneBackgroundScreen : GameScreen {
     float wallWidth;
     float wallHeight;
 
-    Quad leftWall;
-    Quad rightWall;
+    List<Quad> leftWall = new List<Quad>();
+    List<Quad> rightWall = new List<Quad>();
 
     #endregion
 
@@ -58,11 +59,11 @@ class StageOneBackgroundScreen : GameScreen {
         Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
 
         groundTexture = content.Load<Texture2D>("GameplayAssets/Background/cobblestone_3");
-        wallSheet = new TextureSheet(content.Load<Texture2D>("Beatmaps/Chikutaku/Assets/ChikuTaku_Wall_Background"), 5, 1);
+        wallSheet = new TextureSheet(content.Load<Texture2D>("Beatmaps/Chikutaku/Assets/ChikuTaku_Wall_Background"), StageOne.NUM_WALLS, 1);
 
         basicEffect = new BasicEffect(ScreenManager.GraphicsDevice);
         basicEffect.TextureEnabled = true;
-        basicEffect.Texture = groundTexture;
+        basicEffect.Texture = wallSheet.Texture;
         basicEffect.World = GameplayTransforms.GetWorldMatrix(viewport.Height);
         basicEffect.View = GameplayTransforms.GetViewMatrix();
         basicEffect.Projection = GameplayTransforms.GetProjectionMatrix();
@@ -74,23 +75,25 @@ class StageOneBackgroundScreen : GameScreen {
         groundWidth = groundTexture.Width * 5;
 
         wallWidth = GameConstants.NOTE_HORIZON_DISTANCE;
-        wallHeight = viewport.Height * 8;
+        wallHeight = viewport.Height * 9;
 
-        leftWall = new Quad(
-            new Vector3(-(groundWidth / 2), wallWidth / 2, wallHeight / 2),
-            new Vector3(1, 0, 0),
-            new Vector3(0, 0, 1),
-            wallWidth,
-            wallHeight
-        );
+        for (int i = 0; i < StageOne.NUM_WALLS; i++) {
+            leftWall.Add(new Quad(
+                new Vector3(-(groundWidth / 2) + StageOne.WALL_OFFSET * i, wallWidth / 2, wallHeight / 2),
+                new Vector3(1, 0, 0),
+                new Vector3(0, 0, 1),
+                wallWidth,
+                wallHeight
+            ));
 
-        rightWall = new Quad(
-            new Vector3(groundWidth / 2, wallWidth / 2, wallHeight / 2),
-            new Vector3(-1, 0, 0),
-            new Vector3(0, 0, 1),
-            wallWidth,
-            wallHeight
-        );
+            rightWall.Add(new Quad(
+                new Vector3((groundWidth / 2) - StageOne.WALL_OFFSET * i, wallWidth / 2, wallHeight / 2),
+                new Vector3(-1, 0, 0),
+                new Vector3(0, 0, 1),
+                wallWidth,
+                wallHeight
+            ));
+        }
     }
 
 
@@ -122,18 +125,25 @@ class StageOneBackgroundScreen : GameScreen {
         groundScrollY += 40f;
 
         // scroll walls
-        // dont ask me why, I just lucked on this number and it's perfect for this texture for now
-        // will need to actually do the math to figure out how to get this to correlate to whatever we choose
-        leftWall.SetTextureCoords(
-            Vector2.UnitX * (groundScrollY / groundTexture.Width),
-            wallWidth / groundTexture.Width,
-            wallHeight / groundTexture.Height
-        );
-        rightWall.SetTextureCoords(
-            Vector2.UnitX * (-groundScrollY / groundTexture.Width),
-            wallWidth / groundTexture.Width,
-            wallHeight / groundTexture.Height
-        );
+        for (int i = 0; i < StageOne.NUM_WALLS; i++) {
+            leftWall[i].SetTextureCoords(
+                new Vector2(
+                    (groundScrollY / (15 + 15 * (StageOne.NUM_WALLS - i - 1)) + wallSheet[i].Width) / wallSheet.Width,
+                    ((float)wallSheet[i].Y / (float)wallSheet.Height)
+                ),
+                (float)wallSheet[i].Width / (float)wallSheet.Width,
+                (float)wallSheet[i].Height / (float)wallSheet.Height
+            );
+
+            rightWall[i].SetTextureCoords(
+                new Vector2(
+                    -(groundScrollY / (15 + 15 * (StageOne.NUM_WALLS - i - 1)) + wallSheet[i].Width) / wallSheet.Width,
+                    ((float)wallSheet[i].Y / (float)wallSheet.Height)
+                ),
+                (float)wallSheet[i].Width / (float)wallSheet.Width,
+                (float)wallSheet[i].Height / (float)wallSheet.Height
+            );
+        }
     }
 
 
@@ -146,25 +156,6 @@ class StageOneBackgroundScreen : GameScreen {
         SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
         Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
         Rectangle fullscreen = new Rectangle(0, 0, viewport.Width, viewport.Height);
-
-        // sampler wraps textures to scroll evenly
-        ScreenManager.GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
-        foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes) {
-            pass.Apply();
-
-            // draw walls
-            ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(
-                PrimitiveType.TriangleList,
-                leftWall.Vertices, 0, 4,
-                leftWall.Indices, 0, 2
-            );
-
-            ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(
-                PrimitiveType.TriangleList,
-                rightWall.Vertices, 0, 4,
-                rightWall.Indices, 0, 2
-            );
-        }
 
         // Draw ground
         spriteBatch.Begin(
@@ -182,6 +173,28 @@ class StageOneBackgroundScreen : GameScreen {
             Color.White
         );
         spriteBatch.End();
+
+        // sampler wraps textures to scroll evenly
+        ScreenManager.GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
+        foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes) {
+            pass.Apply();
+
+            // draw walls
+            for (int i = 0; i < StageOne.NUM_WALLS; i++) {
+                // if (i != 1) continue;
+                ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(
+                    PrimitiveType.TriangleList,
+                    leftWall[i].Vertices, 0, 4,
+                    leftWall[i].Indices, 0, 2
+                );
+
+                ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(
+                    PrimitiveType.TriangleList,
+                    rightWall[i].Vertices, 0, 4,
+                    rightWall[i].Indices, 0, 2
+                );
+            }
+        }
     }
     #endregion
 }
