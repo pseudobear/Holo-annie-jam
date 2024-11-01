@@ -79,6 +79,7 @@ class MainGameScreen : GameScreen {
 
         this.beatmap = Beatmap.Builder.LoadFromFile(beatmapFilename)!.Build();
         this.beatmapPlayer = new BeatmapPlayer(beatmap);
+        this.beatmapPlayer.BeatmapEnd += this.OnBeatmapEnd;
 
         Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
 
@@ -165,8 +166,9 @@ class MainGameScreen : GameScreen {
         this.beatmapPlayer.Reset();
     }
 
-    public void OnBeatmapCompletion() {
+    void OnBeatmapEnd(object sender, PlayerIndexEventArgs e) {
         // TODO: Load post beatmap dialogue
+        throw new NullReferenceException("end of beatmap reached!");
     }
 
     #endregion
