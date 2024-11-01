@@ -241,9 +241,10 @@ class StageFourGameScreen : GameScreen {
     }
 
     void OnBeatmapEnd(object sender, PlayerIndexEventArgs e) {
+        // to END
         LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
-            new StageFourDialogueBackgroundScreen(),
-            new PostStageFourDialogueScreen()
+            new MenuBackgroundScreen(),
+            new MainMenuScreen()
         );
     }
 

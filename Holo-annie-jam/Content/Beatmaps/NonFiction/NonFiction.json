@@ -1,0 +1,2821 @@
+{
+  "RhythmEvents": [
+    {
+      "Tick": 0,
+      "Type": 1,
+      "Value": 180
+    },
+    {
+      "Tick": 23040,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 26880,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 29040,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 30720,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 34560,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 36720,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 38400,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 42240,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 46080,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 49920,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 51840,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 53760,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 61440,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 61660,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 61910,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 68160,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 69120,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 70560,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 71040,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 72480,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 72960,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 73920,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 74400,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 75360,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 76320,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 76800,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 77760,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 78240,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 83520,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 84000,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 84480,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 85920,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 86400,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 87840,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 88320,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 89280,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 89760,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 90720,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 91680,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 92160,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 93120,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 93600,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 98880,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 99840,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 100800,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 101280,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 102720,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 103680,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 104640,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 105120,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 106080,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 107040,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 107520,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 108480,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 108960,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 109920,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 110400,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 110880,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 114240,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 114720,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 115200,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 116640,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 117120,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 118080,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 118560,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 121920,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 122880,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 123360,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 129120,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 130560,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 134400,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 138000,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 138240,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 145920,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 152640,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 153600,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 155520,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 157440,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 159360,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 159840,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 160320,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 160800,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 161760,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 164160,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 165120,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 166080,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 167040,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 168000,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 168480,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 171840,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 172800,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 173760,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 174720,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 175680,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 176160,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 177600,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 178560,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 179520,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 180000,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 183360,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 184320,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 186720,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 187200,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 187680,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 189600,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 190080,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 190560,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 191040,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 192000,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 194880,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 195360,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 196800,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 197760,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 198720,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 199200,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 200640,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 201600,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 202560,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 203040,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 206400,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 207360,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 213600,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 214080,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 214560,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 216000,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 216960,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 217920,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 218400,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 219840,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 220800,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 221760,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 222240,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 223680,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 224640,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 225120,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 225600,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 226080,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 228960,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 229440,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 229920,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 230880,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 231360,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 231840,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 232800,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 233280,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 233760,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 235200,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 236160,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 236640,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 237120,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 237600,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 238560,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 239040,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 239520,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 240960,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 241440,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 242400,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 243360,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 244320,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 244800,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 245280,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 246720,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 247680,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 248640,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 249120,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 250560,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 251520,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 252480,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 252960,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 254400,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 255360,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 255840,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 256320,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 256800,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 257760,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 258240,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 258720,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 259680,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 260160,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 260640,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 261120,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 263760,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 264000,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 264480,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 267840,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 268320,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 270720,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 271200,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 271680,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 272160,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 276480,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 276960,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 277440,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 277920,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 278880,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 279360,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 279840,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 280320,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 280800,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 281280,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 281760,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 282720,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 283200,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 283680,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 284160,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 284640,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 285120,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 285600,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 286560,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 287040,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 287520,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 288000,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 290880,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 291840,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 293280,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 293760,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 295200,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 295680,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 296640,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 297120,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 298080,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 299040,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 299520,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 302400,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 302880,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 303360,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 306240,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 306720,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 307200,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 308640,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 309120,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 310560,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 311040,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 312000,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 312480,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 313440,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 314400,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 314880,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 317760,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 318720,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 321120,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 321600,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 322080,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 322560,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 324000,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 324480,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 325920,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 326400,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 327370,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 327840,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 328800,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 329760,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 330240,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 331200,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 331680,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 332640,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 333120,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 333600,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 336960,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 337440,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 337920,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 339360,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 339840,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 340800,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 341280,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 344640,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 345120,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 345600,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 346560,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 347040,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 348480,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 348960,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 352320,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 353280,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 354240,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 354720,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 356160,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 357120,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 357600,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 359040,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 360000,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 360960,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 362400,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 363840,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 367680,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 368160,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 368640,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 369600,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 370080,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 371520,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 372480,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 372960,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 374400,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 375360,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 376320,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 377760,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 379200,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 382560,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 383040,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 383520,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 384000,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 384960,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 385440,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 387360,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 387840,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 388800,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 389280,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 390240,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 391200,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 391680,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 392640,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 393120,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 394080,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 395040,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 398400,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 398880,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 399360,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 400320,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 400800,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 402240,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 402720,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 406080,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 406560,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 407040,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 408000,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 408480,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 409920,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 410400,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 413760,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 414720,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 416640,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 418560,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 420480,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 420960,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 421440,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 421920,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 422880,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 425280,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 426240,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 427200,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 428160,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 429120,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 429600,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 432960,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 433920,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 434880,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 435840,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 436800,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 437280,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 438720,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 439680,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 440640,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 441120,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 444480,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 445440,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 447840,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 448320,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 448800,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 451200,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 451680,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 452160,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 452640,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 453600,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 456000,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 456480,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 457920,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 458880,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 459840,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 460320,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 461760,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 462720,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 463680,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 464160,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 467520,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 468480,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 472320,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 474720,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 475200,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 475680,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 476640,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 477600,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 478560,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 479040,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 479520,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 480480,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 480960,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 481440,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 481920,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 482400,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 482880,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 483360,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 484320,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 486720,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 487200,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 488640,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 489120,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 489600,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 490080,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 490320,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 490560,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 490800,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 491040,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 492000,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 492960,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 493920,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 494400,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 494880,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 495840,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 496320,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 496800,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 497280,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 497760,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 498240,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 498720,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 499680,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 502080,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 502560,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 504960,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 505440,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 505920,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 506400,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 509760,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 510240,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 511200,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 511680,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 512160,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 512640,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 513120,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 513600,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 514080,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 515040,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 517440,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 517920,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 518400,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 519360,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 519840,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 520320,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 520800,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 521040,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 521280,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 521520,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 521760,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 522720,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 523680,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 524640,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 525120,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 525600,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 526560,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 527040,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 527520,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 528000,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 528480,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 529440,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 532800,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 533280,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 534240,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 534720,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 535200,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 535680,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 536160,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 537120,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 538560,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 539520,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 540480,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 540960,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 542400,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 543360,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 543840,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 544320,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 545760,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 546720,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 547200,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 547680,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 548160,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 548640,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 550080,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 551040,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 552000,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 552480,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 553920,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 554880,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 555840,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 556320,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 557760,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 558720,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 559200,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 559680,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 560160,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 563040,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 563520,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 564000,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 564960,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 565440,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 565920,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 566880,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 567360,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 567840,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 569280,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 570240,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 570720,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 571200,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 571680,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 572640,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 573120,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 573600,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 575040,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 575520,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 576480,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 577440,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 578400,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 578880,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 579360,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 580800,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 581760,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 582720,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 583200,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 584640,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 585600,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 586560,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 587040,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 588480,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 589440,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 589920,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 590400,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 590880,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 591840,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 592320,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 592800,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 593760,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 594240,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 594720,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 597840,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 598080,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 598560,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 600960,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 601920,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 602400,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 603840,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 604800,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 605760,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 606240,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 607680,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 608640,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 609120,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 610080,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 611520,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 612480,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 613440,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 613920,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 616320,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 617760,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 625440,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 625920,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 626160,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 627840,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 628800,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 629280,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 630960,
+      "Lane": 3,
+      "Type": 0
+    },
+    {
+      "Tick": 632400,
+      "Lane": 2,
+      "Type": 0
+    },
+    {
+      "Tick": 634560,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 640320,
+      "Lane": 1,
+      "Type": 0
+    },
+    {
+      "Tick": 640800,
+      "Lane": 3,
+      "Type": 0
+    }
+  ],
+  "SongName": "Non Fiction",
+  "AudioLocation": "Content/Beatmaps/NonFiction/NonFiction.ogg"
+}

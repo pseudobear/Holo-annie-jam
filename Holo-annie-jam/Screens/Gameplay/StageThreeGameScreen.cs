@@ -242,10 +242,18 @@ class StageThreeGameScreen : GameScreen {
     }
 
     void OnBeatmapEnd(object sender, PlayerIndexEventArgs e) {
-        LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
-            new StageThreeDialogueBackgroundScreen(),
-            new PostStageThreeDialogueScreen()
-        );
+        // if corrupt, load bad end
+        if (Game1.Corruption > 300) {
+            LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
+                new StageThreeDialogueBackgroundScreen(),
+                new PostStageThreeDialogueScreen()
+            );
+        } else {
+            LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
+                new StageFourDialogueBackgroundScreen(),
+                new PreStageFourDialogueScreen()
+            );
+        }
     }
 
     #endregion
