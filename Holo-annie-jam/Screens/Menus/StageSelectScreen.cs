@@ -53,11 +53,9 @@ class StageSelectScreen : MenuScreen {
         */
     }
     void StageThreeMenuEntrySelected(object sender, PlayerIndexEventArgs e) {
-        /*
         LoadingScreen.Load(ScreenManager, false, e.PlayerIndex,
             new PreStageThreeDialogueScreen()
         );
-        */
     }
     void StageFourMenuEntrySelected(object sender, PlayerIndexEventArgs e) {
         /*

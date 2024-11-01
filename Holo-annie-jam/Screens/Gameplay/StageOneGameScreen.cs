@@ -158,9 +158,9 @@ class StageOneGameScreen : GameScreen {
             1f
         );
 
-        attackAnimationMid = new Animation(20 * TimeSpan.TicksPerMillisecond); 
-        attackAnimationLeft = new Animation(20 * TimeSpan.TicksPerMillisecond);  
-        attackAnimationRight = new Animation(20 * TimeSpan.TicksPerMillisecond);
+        attackAnimationMid = new Animation(12 * TimeSpan.TicksPerMillisecond); 
+        attackAnimationLeft = new Animation(12 * TimeSpan.TicksPerMillisecond);  
+        attackAnimationRight = new Animation(12 * TimeSpan.TicksPerMillisecond);
         for (int i = 0; i < 8; i++) {
             attackAnimationMid.Frames.Add(i);
             attackAnimationLeft.Frames.Add(i);
