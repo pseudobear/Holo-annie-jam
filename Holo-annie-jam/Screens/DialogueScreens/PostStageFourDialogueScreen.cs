@@ -34,12 +34,7 @@ class PostStageFourDialogueScreen : DialogueScreen {
 
         Panels.Enqueue(new Panel(
             "test name",
-            "hello world!",
-            singleCharacterList
-        ));
-        Panels.Enqueue(new Panel(
-            "test name",
-            "hello world! AGAIN! Screen should load next after hitting next",
+            new List<string> { "a", "a" },
             singleCharacterList
         ));
     }

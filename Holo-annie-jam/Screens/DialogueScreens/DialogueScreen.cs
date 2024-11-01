@@ -15,11 +15,11 @@ class Panel {
     }
     string name;
 
-    public string Text {
+    public List<string> Text {
         get { return text; }
         set { text = value; }
     }
-    string text;
+    List<string> text = new List<string>();
 
     public List<Texture2D> Sprites {
         get { return sprites; }
@@ -27,7 +27,7 @@ class Panel {
     }
     List<Texture2D> sprites;
 
-    public Panel(string name, string text, List<Texture2D> sprites) {
+    public Panel(string name, List<string> text, List<Texture2D> sprites) {
         this.name = name;
         this.text = text;
         this.sprites = sprites;
@@ -220,12 +220,14 @@ class DialogueScreen : GameScreen {
             PanelConstants.GetTextPanelOrigin(),
             Color.White
         );
-        spriteBatch.DrawString(
-            font, 
-            activePanel.Text, 
-            PanelConstants.GetTextPanelOrigin() + Vector2.UnitY * 100,
-            Color.White
-        );
+        for (int i = 0; i < activePanel.Text.Count; i++) {
+            spriteBatch.DrawString(
+                font,
+                activePanel.Text[i],
+                PanelConstants.GetTextPanelOrigin() + Vector2.UnitY * (100 + 40 * i),
+                Color.White
+            );
+        }
 
         spriteBatch.End();
 

@@ -41,72 +41,72 @@ class PreStageOneDialogueScreen : DialogueScreen {
 
         Panels.Enqueue(new Panel(
             "Gura",
-            "Man, did anyone get the number of the whale that hit me?",
+            new List<string> { "Man, did anyone get the number of the whale that hit me?" },
             JustGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Huh? Why am I in a forest? Where am I?",
+            new List<string> { "Huh? Why am I in a forest? Where am I?" },
             JustGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "I swear this is Watson's fault somehow.",
+            new List<string> {"I swear this is Watson's fault somehow." },
             JustGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Watson? Do I know a Watson?",
+            new List<string> {"Watson? Do I know a Watson?" },
             JustGura
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Did someone sayyyy Watson?",
+            new List<string> {"Did someone sayyyy Watson?" },
             AmeGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "*Shrieks Incoherently*",
+            new List<string> {"*Shrieks Incoherently*" },
             GuraAme
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Ehehehe, gotcha! It’s been a while since I got to do that.",
+            new List<string> {"Ehehehe, gotcha! It’s been a while since I got to do that." },
             AmeGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Who are you?!?",
+            new List<string> {"Who are you?!?" },
             GuraAme
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Don't worry about it Goomba, the important thing is that you lost your memories, so you need to go on an adventure!",
+            new List<string> {"Don't worry about it Goomba, the important thing is that you lost", "your memories, so you need to go on an adventure!" },
             AmeGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Huh? What?",
+            new List<string> {"Huh? What?" },
             GuraAme
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Don't worry about it! Oh yeah, it’s dangerous to go alone, take this!",
+            new List<string> {"Don't worry about it! Oh yeah, it’s dangerous to go alone, take this!" },
             AmeGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "a",
+            new List<string> {"a" },
             GuraAme
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Oh, I broke her. Oh well, she'll figure it out, won’t she chat.",
+            new List<string> {"Oh, I broke her. Oh well, she'll figure it out, won’t she chat." },
             AmeGura
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Get ready, here they come!",
+            new List<string> {"Get ready, here they come!" },
             AmeGura
         ));
     }
