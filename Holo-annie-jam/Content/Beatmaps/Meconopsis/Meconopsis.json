@@ -1,6 +1,11 @@
 ﻿{
   "RhythmEvents": [
     {
+      "Tick": 0,
+      "Type": 1,
+      "Value": 170
+    },
+    {
       "Tick": 11520,
       "Lane": 3,
       "Type": 0
