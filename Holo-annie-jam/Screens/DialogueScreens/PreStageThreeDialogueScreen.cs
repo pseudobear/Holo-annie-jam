@@ -58,107 +58,107 @@ class PreStageThreeDialogueScreen : DialogueScreen {
 
         Panels.Enqueue(new Panel(
             "Ina",
-            "So did Ame ever tell you when your adventure would be over?",
+            new List<string> { "So did Ame ever tell you when your adventure would be over?" },
             InaGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Nah, I figured she'd pop up at some point to tell me I was done or something.",
+            new List<string> { "Nah, I figured she'd pop up at some point to", "tell me I was done or something." },
             GuraIna
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "She still hasn’t shown up though, and I've helped you, Calli and Kiara already!",
+            new List<string> { "She still hasn’t shown up though, and I've helped you,", "Calli and Kiara already!" },
             GuraIna
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "I thought for sure she’d have shown up to mess with me by now.",
+            new List<string> { "I thought for sure she’d have shown up to mess with me by now." },
             GuraIna
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "That's because you're too slow sharky. I've been waiting here for ages.",
+            new List<string> { "That's because you're too slow sharky.", "I've been waiting here for ages." },
             AmeGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Gah, not again!",
+            new List<string> { "Gah, not again!" },
             GuraAme
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Heh, never gets old. Anyway, good job!",
+            new List<string> { "Heh, never gets old. Anyway, good job!" },
             AmeGura
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "You found and helped everyone I asked you to. Woooo, Good job!!",
+            new List<string> { "You found and helped everyone I asked you to.", "Woooo, Good job!!" },
             AmeGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "You asked me to help people?",
+            new List<string> { "You asked me to help people?" },
             GuraAme
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Obviously dummy. What else would you be doing on an adventure?",
+            new List<string> { "Obviously dummy. What else would you be doing", "on an adventure?" },
             AmeGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Oh, good point.",
+            new List<string> { "Oh, good point." },
             GuraAme
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "As a reward for your good deeds, you get the chance to regain your memories!",
+            new List<string> { "As a reward for your good deeds, you get the chance", "to regain your memories!" },
             AmeGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Yeah, let's go! ...How am I gonna do that?",
+            new List<string> { "Yeah, let's go! ...How am I gonna do that?" },
             GuraAme
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Oh, just drink this.",
+            new List<string> { "Oh, just drink this." },
             AmeGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Okee Doke! Down the hatch.",
+            new List<string> { "Okee Doke! Down the hatch." },
             GuraAme
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "*glug glug*",
+            new List<string> { "*glug glug*" },
             JustGura 
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Ewww, why did that taste so gross?",
+            new List<string> { "Ewww, why did that taste so gross?" },
             JustGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Why am I feeling so... Sleepy...?",
+            new List<string> { "Why am I feeling so... Sleepy...?" },
             JustGura
         ));
         Panels.Enqueue(new Panel(
             "Ina",
-            "Ame, didn’t Koyo-chan give you that like a year ago.",
+            new List<string> { "Ame, didn’t Koyo-chan give you that like a year ago." },
             InaAme
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Don’t worry about it Ina, I went back and took it from the me that got it from her the day after. I'm not just a detective after all!",
+            new List<string> { "Don’t worry about it Ina, I went back and took it from the", "me that got it from her the day after. I'm not just a detective after all!" },
             AmeIna
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Oh, and Goomba, I hope you didn’t reset too much! Good Luck, Sweet Dreams!",
+            new List<string> { "Oh, and Goomba, I hope you didn’t reset too", "much! Good Luck, Sweet Dreams!" },
             JustAme
         ));
     }

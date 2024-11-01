@@ -41,77 +41,77 @@ class PreStageTwoDialogueScreen : DialogueScreen {
 
         Panels.Enqueue(new Panel(
             "Gura",
-            "Wow, this cave is pretty spooky.",
+            new List<string> { "Wow, this cave is pretty spooky." },
             JustGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Seems like the kinda place people do weird rituals.",
+            new List<string> { "Seems like the kinda place people do weird rituals." },
             JustGura
         )); 
         Panels.Enqueue(new Panel(
             "Ina",
-            "Hey, my rituals aren't weird.",
+            new List<string> { "Hey, my rituals aren't weird." },
             InaGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Ahh, not again!",
+            new List<string> { "Ahh, not again!" },
             GuraIna
         ));
         Panels.Enqueue(new Panel(
             "Ina",
-            "Oh Gura! Long time no see!",
+            new List<string> { "Oh Gura! Long time no see!" },
             InaGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Am I supposed to know you?",
+            new List<string> { "Am I supposed to know you?" },
             GuraIna
         ));
         Panels.Enqueue(new Panel(
             "Ina",
-            "Uhm, nope, I don't think so.",
+            new List<string> { "Uhm, nope, I don't think so." },
             InaGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Ok then. What are you doing in this cave?",
+            new List<string> { "Ok then. What are you doing in this cave?" },
             GuraIna
         ));
         Panels.Enqueue(new Panel(
             "Ina",
-            "I have a quest for you!",
+            new List<string> { "I have a quest for you!" },
             InaGura
         )); 
         Panels.Enqueue(new Panel(
             "Ina",
-            "My friend AO-chan went missing somewhere in this cave, and I need your help to find them.",
+            new List<string> { "My friend AO-chan went missing somewhere", "in this cave, and I need your help to find them." },
             InaGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Ooh, I can help you find them! What does AO-chan look like?",
+            new List<string> { "Ooh, I can help you find them! What does", "AO-chan look like?" },
             GuraIna
         ));
         Panels.Enqueue(new Panel(
             "Ina",
-            "AO-chan is the only thing in the cave that isn't a Takodachi.",
+            new List<string> { "AO-chan is the only thing in the cave that", "isn't a Takodachi." },
             InaGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "A what now?",
+            new List<string> { "A what now?" },
             GuraIna
         ));
         Panels.Enqueue(new Panel(
             "Ina",
-            "A takodachi. It looks like a purple slime. Now shoo, I need to keep drawing.",
+            new List<string> { "A takodachi. It looks like a purple slime.", "Now shoo, I need to keep drawing." },
             InaGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Got it! I'll be right back!",
+            new List<string> { "Got it! I'll be right back!" },
             GuraIna
         ));
     }

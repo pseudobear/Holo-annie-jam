@@ -41,72 +41,72 @@ class PostStageTwoDialogueScreen : DialogueScreen {
 
         Panels.Enqueue(new Panel(
             "Ina",
-            "Oh, are you 'right back' now?",
+            new List<string> {"Oh, are you 'right back' now?" },
             InaGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Huh?",
+            new List<string> {"Huh?" },
             GuraIna
         ));
         Panels.Enqueue(new Panel(
             "Ina",
-            "Oh don't worry about it. I see you found AO-chan!",
+            new List<string> {"Oh don't worry about it. I see you found AO-chan!" },
             InaGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "You could've mentioned AO-chan was a book.",
+            new List<string> {"You could've mentioned AO-chan was a book." },
             GuraIna
         ));
         Panels.Enqueue(new Panel(
             "Ina",
-            "AO-chan is a tablet sometimes too!",
+            new List<string> {"AO-chan is a tablet sometimes too!" },
             InaGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "I see. Is there anything else you lost in this here cave?",
+            new List<string> {"I see. Is there anything else you lost in this here cave?" },
             GuraIna
         ));
         Panels.Enqueue(new Panel(
             "Ina",
-            "No, AO-chan wandered off, but everything else is here.",
+            new List<string> {"No, AO-chan wandered off, but everything else is here." },
             InaGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Alright then, I'm gonna go then.",
+            new List<string> {"Alright then, I'm gonna go then." },
             GuraIna
         ));
         Panels.Enqueue(new Panel(
             "Ina",
-            "Wait, I'll come with you. I've been stuck in this cave for a long time.",
+            new List<string> {"Wait, I'll come with you.", "I've been stuck in this cave for a long time." },
             InaGura
         ));
         Panels.Enqueue(new Panel(
             "Ina",
-            "I guess you could say I'm excited to leave my house for the first time 'Ina' while.",
-            InaGura
-        ));
-        Panels.Enqueue(new Panel(
-            "Gura",
-            "...",
-            GuraIna
-        ));
-        Panels.Enqueue(new Panel(
-            "Ina",
-            "Hehehe...",
+            new List<string> {"I guess you could say I'm excited to leave", "my house for the first time 'Ina' while." },
             InaGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "I'm leaving.",
+            new List<string> {"..." },
             GuraIna
         ));
         Panels.Enqueue(new Panel(
             "Ina",
-            "Wait for me.",
+            new List<string> {"Hehehe..." },
+            InaGura
+        ));
+        Panels.Enqueue(new Panel(
+            "Gura",
+            new List<string> {"I'm leaving." },
+            GuraIna
+        ));
+        Panels.Enqueue(new Panel(
+            "Ina",
+            new List<string> { "Wait for me." },
             InaGura
         ));
     }
