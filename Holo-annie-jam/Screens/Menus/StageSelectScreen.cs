@@ -48,6 +48,7 @@ class StageSelectScreen : MenuScreen {
     }
     void StageTwoMenuEntrySelected(object sender, PlayerIndexEventArgs e) {
         LoadingScreen.Load(ScreenManager, false, e.PlayerIndex,
+            new StageTwoDialogueBackgroundScreen(),
             new PreStageTwoDialogueScreen()
         );
     }
