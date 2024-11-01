@@ -25,6 +25,30 @@
 /processorParam:TextureFormat=Color
 /build:background.png
 
+#begin Beatmaps/Chikutaku/Assets/ChikuTaku_Wall_Background.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Beatmaps/Chikutaku/Assets/ChikuTaku_Wall_Background.png
+
+#begin Beatmaps/NonFiction/Assets/Non_Fiction_Wall_Background.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Beatmaps/NonFiction/Assets/Non_Fiction_Wall_Background.png
+
 #begin blank.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -115,6 +139,42 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:GameplayAssets/Beatmap Objects/upright_object_sheet.png
+
+#begin GameplayAssets/Dialogue Assets/amelia_face.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:GameplayAssets/Dialogue Assets/amelia_face.png
+
+#begin GameplayAssets/Dialogue Assets/gawr_face2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:GameplayAssets/Dialogue Assets/gawr_face2.png
+
+#begin GameplayAssets/Dialogue Assets/ina'nis_face.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:GameplayAssets/Dialogue Assets/ina'nis_face.png
 
 #begin GameplayAssets/Stage Objects/GAWR_GURA_1.png
 /importer:TextureImporter
