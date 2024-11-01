@@ -51,7 +51,7 @@ class StageFourDialogueBackgroundScreen : GameScreen {
 
         Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
 
-        wallSheet = new TextureSheet(content.Load<Texture2D>("Beatmaps/Chikutaku/Assets/ChikuTaku_Wall_Background"), StageFour.NUM_WALLS + 1, 1);
+        wallSheet = new TextureSheet(content.Load<Texture2D>("Beatmaps/NonFiction/Assets/Non_Fiction_Wall_Background"), StageFour.NUM_WALLS, 1);
 
         basicEffect = new BasicEffect(ScreenManager.GraphicsDevice);
         basicEffect.TextureEnabled = true;
@@ -126,7 +126,7 @@ class StageFourDialogueBackgroundScreen : GameScreen {
             pass.Apply();
 
             // draw background
-            for (int i = 0; i < StageFour.NUM_WALLS; i++) {
+            for (int i = 1; i < StageFour.NUM_WALLS; i++) {
                 // if (i != 1) continue;
                 ScreenManager.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(
                     PrimitiveType.TriangleList,
