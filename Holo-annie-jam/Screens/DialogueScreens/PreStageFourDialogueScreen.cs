@@ -57,82 +57,82 @@ class PreStageFourDialogueScreen : DialogueScreen {
 
         Panels.Enqueue(new Panel(
             "Gura",
-            "Ugh, Ame, did you get the plate of the whale that hit me?",
+            new List<string> { "Ugh, Ame, did you get the plate of the whale that hit me?" },
             GuraAme
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Nope.",
+            new List<string> { "Nope." },
             AmeGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Darn. Eurgh, what did Koyori even put in that potion? I can still taste it!",
+            new List<string> { "Darn. Eurgh, what did Koyori even put in that potion? I can still taste it!" },
             GuraAme
         ));
         Panels.Enqueue(new Panel(
             "Ina",
-            "I think she mentioned finding an old stash of AsaCoco products.",
+            new List<string> { "I think she mentioned finding an old stash of AsaCoco products." },
             InaGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Ohhhh. That makes sense.",
+            new List<string> { "Ohhhh. That makes sense." },
             GuraIna
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Anyway, congratulations on getting your memories back!",
+            new List<string> { "Anyway, congratulations on getting your memories back!" },
             AmeGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Huh? Oh right, that's what we were doing, I forgot about that.",
+            new List<string> { "Huh? Oh right, that's what we were doing, I forgot about that." },
             GuraAme
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Yeah!!!!",
+            new List<string> { "Yeah!!!!" },
             JustGura
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Eh, it's ok, the plot was kinda rushed anyway.",
+            new List<string> { "Eh, it's ok, the plot was kinda rushed anyway." },
             AmeGura
         ));
         Panels.Enqueue(new Panel(
             "Ina",
-            "Hey, you shouldn't say that out loud Ame.",
+            new List<string> { "Hey, you shouldn't say that out loud Ame." },
             InaAme
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Oops, my bad. Chat probably figured it out a while ago anyway.",
+            new List<string> { "Oops, my bad. Chat probably figured it out a while ago anyway." },
             AmeIna
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Also, weren't Calli and Kiara supposed to be here too? Why didn't they come with me like Ina did?",
+            new List<string> { "Also, weren't Calli and Kiara supposed to be here too?", "Why didn't they come with me like Ina did?" },
             GuraAme
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "And, wasn't there supposed to be a final boss or something?",
+            new List<string> { "And, wasn't there supposed to be a final boss or something?" },
             GuraAme
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Stop asking questions Gura! The others will show up at some point!",
+            new List<string> { "Stop asking questions Gura! The others will show up at some point!" },
             AmeGura
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Look, a suspiciously evil corporation that's trying to take our subscribers! After them!",
+            new List<string> { "Look, a suspiciously evil corporation that's trying", "to take our subscribers! After them!" },
             AmeGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Ooh, where?",
+            new List<string> { "Ooh, where?" },
             JustGura
         ));
     }

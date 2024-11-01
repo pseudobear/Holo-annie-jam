@@ -37,27 +37,27 @@ class PostStageThreeDialogueScreen : DialogueScreen {
 
         Panels.Enqueue(new Panel(
             "Gura",
-            "Wahahahah, I'm free!! Watson you jerk, you thought you could pull one over good ol' Gura huh?",
+            new List<string> { "Wahahahah, I'm free!! Watson you jerk,", "you thought you could pull one over good ol' Gura huh?" },
             JustGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Well, I'm out to play now and nothing you do will be able to stop me!",
+            new List<string> { "Well, I'm out to play now and nothing you do will be able to stop me!" },
             JustGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Wahahahaha!",
+            new List<string> { "Wahahahaha!" },
             JustGura
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Oh, oops, guess she wasn't as good at rhythm games as I thought she was. Darn, now she's getting canceled.",
+            new List<string> { "Oh, oops, guess she wasn't as good at rhythm games as I", "thought she was. Darn, now she's getting canceled." },
             JustAme
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Guess I'll try again in a different timeline.",
+            new List<string> { "Guess I'll try again in a different timeline." },
             JustAme
         ));
     }

@@ -41,57 +41,57 @@ class PostStageOneDialogueScreen : DialogueScreen {
 
         Panels.Enqueue(new Panel(
             "Gura",
-            "What the heck was that! Why were clocks running at me???",
+            new List<string> { "What the heck was that! Why were clocks running at me???" },
             GuraAme
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "That's just my thing, you did pretty good though.",
+            new List<string> { "That's just my thing, you did pretty good though." },
             AmeGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "That doesn't answer my question.",
+            new List<string> { "That doesn't answer my question." },
             GuraAme
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "And it wasn't supposed to!",
+            new List<string> { "And it wasn't supposed to!" },
             AmeGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Oh, ok.",
+            new List<string> { "Oh, ok." },
             GuraAme
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Anyway, you need to finish going on an adventure! I think you should go... That-a-way!",
+            new List<string> { "Anyway, you need to finish going on an adventure!", "I think you should go... That-a-way!" },
             AmeGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Are you gonna explain anything else?",
+            new List<string> { "Are you gonna explain anything else?" },
             GuraAme
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "Don't reset too many times or you might regret it. Hehehe.",
+            new List<string> { "Don't reset too many times or you might regret it. Hehehe." },
             AmeGura
         ));
         Panels.Enqueue(new Panel(
             "Ame",
-            "OK byeeeeeee...",
+            new List<string> { "OK byeeeeeee..." },
             AmeGura
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "That's not helpful at all!",
+            new List<string> { "That's not helpful at all!" },
             GuraAme
         ));
         Panels.Enqueue(new Panel(
             "Gura",
-            "Well, Guess I have nothing better to do. Adventure time for Goomba!",
+            new List<string> { "Well, Guess I have nothing better to do.", "Adventure time for Goomba!" },
             GuraAme
         ));
     }
