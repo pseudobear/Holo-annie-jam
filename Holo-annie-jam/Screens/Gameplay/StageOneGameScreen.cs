@@ -294,16 +294,17 @@ class StageOneGameScreen : GameScreen {
             BeatmapHitResult result = beatmapPlayer.ConsumePlayerInput(InputType.Normal, lane);
             switch (result) {
                 case BeatmapHitResult.Perfect:
-                    // do something
+                    Game1.Score += 100;
                     break;
                 case BeatmapHitResult.Great:
-                    // do something
+                    Game1.Score += 90;
                     break;
                 case BeatmapHitResult.Good:
-                    // do something
+                    Game1.Score += 70;
                     break;
                 case BeatmapHitResult.Bad:
-                    // do something
+                    Game1.Score += 40;
+                    Game1.Corruption += 1;
                     break;
                 default:
                     // no matching event found, exit function early
@@ -405,6 +406,9 @@ class StageOneGameScreen : GameScreen {
         // draw previous hit result - TODO make this look prettier?
         spriteBatch.Begin();
         spriteBatch.DrawString(gameFont, previousHitResult.ToString(), new(100, 100), Color.Black);
+
+        // draw total score - TODO make this look prettier?
+        spriteBatch.DrawString(gameFont, $"Total Score: {Game1.Score}", new(500, 100), Color.Black);
         spriteBatch.End();
 
         // If the game is transitioning on or off, fade it out to black.
