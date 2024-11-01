@@ -58,7 +58,10 @@ class PauseMenuScreen : MenuScreen {
     /// transition from the game back to the main menu screen.
     /// </summary>
     void ConfirmQuitMessageBoxAccepted(object sender, PlayerIndexEventArgs e) {
-        LoadingScreen.Load(ScreenManager, false, null, new MainMenuScreen());
+        LoadingScreen.Load(ScreenManager, false, null, 
+            new MenuBackgroundScreen(),
+            new MainMenuScreen()
+        );
     }
 
     protected override void OnCancel(PlayerIndex playerIndex) {

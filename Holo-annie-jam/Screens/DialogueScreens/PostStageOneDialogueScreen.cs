@@ -110,6 +110,7 @@ class PostStageOneDialogueScreen : DialogueScreen {
 
     public override void OnCompletePanels(PlayerIndex? playerIndex) {
         LoadingScreen.Load(ScreenManager, false, playerIndex,
+            new MenuBackgroundScreen(),
             new StageSelectScreen()
         );
     } 

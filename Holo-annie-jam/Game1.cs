@@ -21,6 +21,7 @@ public class Game1 : Game {
         Components.Add(_screenManager);
 
         // start in main menu for now
+        _screenManager.AddScreen(new MenuBackgroundScreen(), null);
         _screenManager.AddScreen(new MainMenuScreen(), null);
     }
 
@@ -39,9 +40,6 @@ public class Game1 : Game {
     }
 
     protected override void Draw(GameTime gameTime) {
-        GraphicsDevice.Clear(Color.CornflowerBlue);
-
-        // this is just refresh, ScreenManager does all the drawing
         base.Draw(gameTime);
     }
 }

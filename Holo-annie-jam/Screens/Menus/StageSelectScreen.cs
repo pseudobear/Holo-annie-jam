@@ -63,6 +63,7 @@ class StageSelectScreen : MenuScreen {
 
     protected override void OnCancel(PlayerIndex playerIndex) {
         LoadingScreen.Load(ScreenManager, false, playerIndex,
+            new MenuBackgroundScreen(),
             new MainMenuScreen()
         );
     }
