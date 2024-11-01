@@ -63,7 +63,7 @@ static class StageOne {
 static class StageTwo {
     public const float WALL_OFFSET = 50f;
     public const int NUM_WALLS = 5;
-    public static Color BackgroundColor = new Color(195, 205, 191);
+    public static Color BackgroundColor = new Color(160, 206, 232);
 
     public const long BOB_RATE = 3000000;   // bob rate in ticks
 }

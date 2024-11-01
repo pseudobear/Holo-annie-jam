@@ -242,6 +242,7 @@ class StageTwoGameScreen : GameScreen {
 
     void OnBeatmapEnd(object sender, PlayerIndexEventArgs e) {
         LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
+            new StageTwoDialogueBackgroundScreen(),
             new PostStageTwoDialogueScreen()
         );
     }

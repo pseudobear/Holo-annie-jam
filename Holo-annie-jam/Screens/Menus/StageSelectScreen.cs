@@ -42,21 +42,25 @@ class StageSelectScreen : MenuScreen {
 
     void StageOneMenuEntrySelected(object sender, PlayerIndexEventArgs e) {
         LoadingScreen.Load(ScreenManager, false, e.PlayerIndex,
+            new StageOneDialogueBackgroundScreen(),
             new PreStageOneDialogueScreen()
         );
     }
     void StageTwoMenuEntrySelected(object sender, PlayerIndexEventArgs e) {
         LoadingScreen.Load(ScreenManager, false, e.PlayerIndex,
+            new StageTwoDialogueBackgroundScreen(),
             new PreStageTwoDialogueScreen()
         );
     }
     void StageThreeMenuEntrySelected(object sender, PlayerIndexEventArgs e) {
         LoadingScreen.Load(ScreenManager, false, e.PlayerIndex,
+            new StageThreeDialogueBackgroundScreen(),
             new PreStageThreeDialogueScreen()
         );
     }
     void StageFourMenuEntrySelected(object sender, PlayerIndexEventArgs e) {
         LoadingScreen.Load(ScreenManager, false, e.PlayerIndex,
+            new StageFourDialogueBackgroundScreen(),
             new PreStageFourDialogueScreen()
         );
     }
